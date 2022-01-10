@@ -23,3 +23,19 @@ def categoryProducts(request):
     }
 
     return render(request, 'category_products.html',context)
+
+def details(request):
+    context = {
+        'title' : 'Product Detail',
+        'class' : 'fastfood_1'       
+    }
+
+    return render(request,'product_details.html',context)
+
+def registration(request):
+    context = {
+        'title' : 'Registration | Customer',
+        'class' : 'fastfood_1'  
+    }
+
+    return render(request, 'customer_registration.html', context)

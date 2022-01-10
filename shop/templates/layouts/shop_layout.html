@@ -8,7 +8,7 @@
     <link rel="canonical" href="/" />
     <meta name="theme-color" content="#7796A8">
     <meta name="description" content="" />
-    <title>{{title}} - EcommerceDemo</title>
+    <title>{{title}} - TND</title>
     <link rel="icon" href="{% static '/assets/webImages/logoSmall.png' %}" >
     <!--
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -68,7 +68,7 @@
                             <div class="row">
                                 <div class="main-header-inner">
                                     <div class="nav-logo">
-                                        <a asp-area="" asp-controller="Home" asp-action="Index"><img src="{% static '/assets/webImages/Logo.png' %}" alt="The New Day Logo" title="Fast Food Logo" /></a>
+                                        <a href="{% url 'welcome' %}"><img src="{% static '/assets/webImages/Logo.png' %}" alt="The New Day Logo" title="Fast Food Logo" /></a>
                                         <h1 style="display:none"><a href="/">Fast Food</a></h1>
                                     </div>
                                     <div class="nav-top">
@@ -124,8 +124,8 @@
                                                     </a>
                                                 </li>
                                                 <li class="nav-item">
-                                                    <a href="./collections.html">
-                                                        <span>Super Deal</span>
+                                                    <a href="{% url 'cus_reg' %}">
+                                                        <span>Sign Up</span>
                                                     </a>
                                                 </li>
                                                 <li class="nav-item">
@@ -171,6 +171,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <!-- PC VIEW-->
                                             <div class="icon_accounts">
                                                 <div class="m_login-account">
                                                     <span class="dropdown-toggle login-icon" data-toggle="dropdown">
@@ -188,7 +189,7 @@
                                                                         </a>
                                                                     </li>
                                                                     <li class="account-item-title">
-                                                                        <a asp-area="Visitor" asp-controller="Home" asp-action="Registration" data-toggle="tab">
+                                                                        <a href = "{% url 'cus_reg' %}">
                                                                             Register
                                                                         </a>
                                                                     </li>
@@ -206,30 +207,11 @@
                                                                             <div class="action_bottom">
                                                                                 <button class="_btn" asp-area="Admin" asp-controller="DryDock" asp-action="Login" type="submit">Login</button>
                                                                                 <a href=""><span class="red"></span> Forgot your password?</a>
-                                                                                <a asp-area="Visitor" asp-controller="Home" asp-action="Registration"><span class="red"></span> Don't have an account? <span class="text-primary">Create Account</span>.</a>
+                                                                                <a href = "{% url 'cus_reg' %}"><span class="red"></span> Don't have an account? <span class="text-primary">Create Account</span>.</a>
                                                                             </div>
                                                                         </form>
                                                                     </div>
-                                                                    <div class="tab-pane account-item-content " id="account-register">
-                                                                        <form method="post" action="./register.html" id="create_customer" accept-charset="UTF-8">
-                                                                            <div class="clearfix large_form form-item">
-                                                                                <input placeholder="First Name" type="text" value="" name="customer[first_name]" id="first_name" class="text" size="30" />
-                                                                            </div>
-                                                                            <div class="clearfix large_form form-item">
-                                                                                <input placeholder="Last Name" type="text" value="" name="customer[last_name]" id="last_name" class="text" size="30" />
-                                                                            </div>
-                                                                            <div class="clearfix large_form form-item">
-                                                                                <input placeholder="Email" type="email" value="" name="customer[email]" id="email" class="text" size="30" />
-                                                                            </div>
-                                                                            <div class="clearfix large_form form-password form-item">
-                                                                                <input placeholder="Password" type="password" value="" name="customer[password]" id="password" class="password text" size="30" />
-                                                                                <span class="cs-icon icon-eye"></span>
-                                                                            </div>
-                                                                            <div class="action_bottom">
-                                                                                <button class="_btn" type="submit">Create</button>
-                                                                            </div>
-                                                                        </form>
-                                                                    </div>
+                                                                    
                                                                 </div>
                                                             </div>
                                                             <ul class="wish-compare-content">
@@ -259,7 +241,7 @@
                                     <!-- MOBILE VIEW-->
                                     <div class="navMobile-navigation">
                                         <div class="navMobile-logo">
-                                            <a href="./index.html"><img class="header-logo-image" src="{% static '/assets/webImages/Logo.png' %}" alt="TND Logo" title="Fast Food Logo" /></a>
+                                            <a href="{% url 'welcome' %}"><img class="header-logo-image" src="{% static '/assets/webImages/Logo.png' %}" alt="TND Logo" title="Fast Food Logo" /></a>
                                         </div>
                                         <div class="group_mobile_right">
                                             <div class="nav-icon">
@@ -327,7 +309,7 @@
                                                                             </a>
                                                                         </li>
                                                                         <li class="account-item-title">
-                                                                            <a asp-area="Visitor" asp-controller="Home" asp-action="Registration" data-toggle="tab">
+                                                                            <a href="{% url 'cus_reg' %}">
                                                                                 Register
                                                                             </a>
                                                                         </li>
@@ -345,30 +327,11 @@
                                                                                 <div class="action_bottom">
                                                                                     <button class="_btn" asp-area="Admin" asp-controller="DryDock" asp-action="Login" type="submit">Login</button>
                                                                                     <a href="./login-recover.html"><span class="red"></span> Forgot your password?</a>
-                                                                                    <a asp-area="Visitor" asp-controller="Home" asp-action="Registration"><span class="red"></span> Don't have an account? <span class="text-primary">Create Account</span>.</a>
+                                                                                    <a href="{% url 'cus_reg' %}"><span class="red"></span> Don't have an account? <span class="text-primary">Create Account</span>.</a>
                                                                                 </div>
                                                                             </form>
                                                                         </div>
-                                                                        <div class="tab-pane account-item-content " id="account-register-mobile">
-                                                                            <form method="post" action="./register.html" id="create_customer_mobile" accept-charset="UTF-8">
-                                                                                <div class="clearfix large_form form-item">
-                                                                                    <input placeholder="First Name" type="text" value="" name="customer[first_name]" class="text" size="30" />
-                                                                                </div>
-                                                                                <div class="clearfix large_form form-item">
-                                                                                    <input placeholder="Last Name" type="text" value="" name="customer[last_name]" class="text" size="30" />
-                                                                                </div>
-                                                                                <div class="clearfix large_form form-item">
-                                                                                    <input placeholder="Email" type="email" value="" name="customer[email]" class="text" size="30" />
-                                                                                </div>
-                                                                                <div class="clearfix large_form form-password form-item">
-                                                                                    <input placeholder="Password" type="password" value="" name="customer[password]" class="password text" size="30" />
-                                                                                    <span class="cs-icon icon-eye"></span>
-                                                                                </div>
-                                                                                <div class="action_bottom">
-                                                                                    <button class="_btn" type="submit">Create</button>
-                                                                                </div>
-                                                                            </form>
-                                                                        </div>
+
                                                                     </div>
                                                                 </div>
                                                                 <ul class="wish-compare-content">
@@ -453,8 +416,8 @@
                                                                 </a>
                                                             </li>
                                                             <li class="nav-item">
-                                                                <a href="./collections.html">
-                                                                    Drinks
+                                                                <a href="{% url 'cus_reg' %}">
+                                                                    Sign Up
                                                                 </a>
                                                             </li>
                                                             <li class="nav-item">

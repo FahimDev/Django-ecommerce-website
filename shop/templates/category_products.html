@@ -291,7 +291,7 @@
                                                                     </span>
                                                                 </span>
                                                             </div>
-                                                            <div class="product-title"><a id="prodName" asp-area="Visitor" asp-controller="Home" asp-action="Details" asp-route-id="@item.prodId" class="title-5">@item.prodName</a></div>
+                                                            <div class="product-title"><a id="prodName" href="{% url 'prod_details' %}" class="title-5">@item.prodName</a></div>
                                                             <div class="product-price">
                                                                 <span class="price">
                                                                     <span id="prodPrice" class="money" data-currency-usd="৳20.00">৳@item.price</span>

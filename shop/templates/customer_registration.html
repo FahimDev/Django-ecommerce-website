@@ -1,0 +1,96 @@
+{% extends 'layouts/shop_layout.html' %}
+
+{% load static %}
+
+{% block content %}
+
+
+<section class="customers-layout register-layout">
+    <div class="customers-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="customers-inner">
+                    <div class="customers-content">
+                        <div id="register" class="customers">
+                            <h2>Register</h2>
+                            <form method="post" action="registrationForm" accept-charset="UTF-8">
+                                <div class="clearfix large_form form-item">
+                                    <input type="text" value="" placeholder="Full Name" name="full_name" asp-for="full_name" class="text" size="30">
+                                </div>
+                                <span asp-validation-for="full_name" class="text-danger"></span>
+                                <div class="clearfix large_form form-item">
+                                    <input type="number" value="" placeholder="Contact" name="contact" asp-for="contact" class="text" size="30">
+                                </div>
+                                <span asp-validation-for="contact" class="text-danger"></span>
+                                <div class="clearfix large_form form-item">
+                                    <input type="email" value="" placeholder="Email" name="email" asp-for="email" class="text" size="30">
+                                </div>
+                                <span asp-validation-for="email" class="text-danger"></span>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="clearfix large_form form-item">
+                                            <input type="text" value="" placeholder="Area" name="location" asp-for="location" class="text" size="30">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="clearfix large_form form-item">
+                                            <input type="text" value="" placeholder="City" name="city" asp-for="city" class="text" size="30">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="clearfix large_form form-item">
+                                            <input type="number" value="" placeholder="Zip Code" name="zip" asp-for="zip" class="text" size="30">
+                                        </div>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="location" class="text-danger"></span>
+                                <span asp-validation-for="city" class="text-danger"></span>
+                                <span asp-validation-for="zip" class="text-danger"></span>
+                                <div class="clearfix large_form form-item">
+                                    <input type="url" value="" placeholder="Social Link" name="social_media_link" asp-for="social_media_link" class="text" size="30">
+                                </div>
+                                <span asp-validation-for="social_media_link" class="text-danger"></span>
+                                <div class="clearfix large_form form-item">
+                                    <input type="text" value="" placeholder="User Name" name="username" asp-for="username" class="text" size="30">
+                                </div>
+                                <span asp-validation-for="username" class="text-danger"></span>
+                                <div class="clearfix large_form form-password form-item">
+                                    <input type="password" value="" placeholder="Password" name="password" asp-for="password" class="password text" size="30">
+                                    <span class="cs-icon icon-eye"></span>
+                                </div>
+                                <span asp-validation-for="password" class="text-danger"></span>
+                                <div class="action_bottom">
+                                    <input asp-area="Visitor" asp-controller="Home" asp-action="Registration" class="_btn" type="submit" value="Register">
+                                    <span class="note"><span class="or">or</span><a href="{% url 'welcome' %}">Return to Store</a></span>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<!--
+
+        <script type="text/javascript">
+
+        $(function () {
+            var noti = '@TempData["action"]';
+            if (noti.length > 0) {
+                alertify.success(noti);
+            }
+        })
+
+    </script>
+
+-->
+
+
+{% endblock %}
