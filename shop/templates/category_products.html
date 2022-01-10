@@ -1,0 +1,332 @@
+{% extends 'layouts/shop_layout.html' %}
+
+{% load static %}
+
+{% block content %}
+<section class="heading-content">
+    <div class="heading-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="page-heading-inner heading-group">
+                    <div class="breadcrumb-group">
+                        <h1 class="hidden">Collections</h1>
+                        <div class="breadcrumb clearfix">
+                            <span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                                <a href="{% url 'welcome' %}" title="Fast Food" itemprop="url"><span itemprop="title"><i class="fa fa-home"></i></span></a>
+                            </span>
+                            <span class="arrow-space"></span>
+                            <span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                                <a href="{% url 'collections' %}" title="Collections" itemprop="url"><span itemprop="title">Collections</span></a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="collection-layout">
+    <div class="collection-wrapper">
+        <div class="container">
+            <div class="row">
+                <div id="shopify-section-collection-template" class="shopify-section">
+                    <div class="collection-inner collection-sidebar">
+                        <!-- Tags loading -->
+                        <div id="tags-load" style="display:none;"><i class="fa fa-spinner fa-pulse fa-2x"></i></div>
+                        <div id="collection">
+                            <div class="clearfix">
+                                <div class="collection-toolbar _mobile col-sm-9">
+                                    <a href="./collections.html" class="collection-banner-top">
+                                        <img src="{% static '/assets/images/870x326.png' %}" alt="image product" title="">
+                                    </a>
+                                    <div class="group_toolbar">
+                                        <div class="group-left">
+                                            <div class="filter-mobile">
+                                                <a href="javascript:void(0)" class="filter-icon">
+                                                    <span class="cs-icon icon-filter"></span>
+                                                </a>
+                                            </div>
+                                            <!-- Sort by -->
+                                            <div class="sortBy">
+                                                <div class="dropdown-toggle" data-toggle="dropdown">
+                                                    <span class="toolbar-title">Sort by</span>
+                                                    <button class="sortButton">
+                                                        <span class="name">Featured</span><i class="fa fa-caret-down"></i>
+                                                    </button>
+                                                    <i class="sub-dropdown1"></i>
+                                                    <i class="sub-dropdown"></i>
+                                                </div>
+                                                <div class="sortBox control-container dropdown-menu">
+                                                    <ul class="sortForm list-unstyled option-set text-left list-styled" data-option-key="sortBy">
+                                                        <li class="sort manual"><a href="./collections.html">Featured</a></li>
+                                                        <li class="sort price-ascending"><a href="./collections.html">Price, low to high</a></li>
+                                                        <li class="sort price-descending"><a href="./collections.html">Price, high to low</a></li>
+                                                        <li class="sort title-ascending"><a href="./collections.html">Alphabetically, A-Z</a></li>
+                                                        <li class="sort title-descending"><a href="./collections.html">Alphabetically, Z-A</a></li>
+                                                        <li class="sort created-ascending"><a href="./collections.html">Date, old to new</a></li>
+                                                        <li class="sort created-descending"><a href="./collections.html">Date, new to old</a></li>
+                                                        <li class="sort best-selling"><a href="./collections.html">Best Selling</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="collection-content">
+                                <!-- Side Content -->
+                                <div class="collection-leftsidebar sidebar col-sm-3 clearfix">
+                                    <div class="collection-leftsidebar-group">
+                                        <div class="sidebar-block collection-block">
+                                            <h3 class="sidebar-title">
+                                                <span class="text">Categories</span>
+                                                <span class="cs-icon icon-minus"></span>
+                                            </h3>
+                                            <div class="sidebar-content">
+                                                <ul class="list-cat">
+                                                    <li class="active"><a href="./collections.html">All Collections </a></li>
+                                                    <li><a href="">Drinks </a></li>
+                                                    <li><a href="">Fast food </a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="sidebar-block latest-block">
+                                            <h3 class="sidebar-title">
+                                                <span class="text">LATEST</span>
+                                                <span class="cs-icon icon-minus"></span>
+                                            </h3>
+                                            <div class="sidebar-content">
+                                                <div class="latest-inner">
+                                                    <div class="products-item">
+                                                        <div class="row-container product-circle">
+                                                            <div class="product home_product">
+                                                                <div class="row-left">
+                                                                    <a href="./product.html" class="container_item">
+                                                                        <div class="hoverBorderWrapper">
+                                                                            <img src="{% static '/assets/images/800x800.png' %}" class="not-rotation img-responsive front" alt="Coke">
+                                                                            <div class="mask"></div>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="row-right">
+                                                                    <div class="product-title"><a class="title-5" href="./product.html">Coke</a></div>
+                                                                    <div class="rating-star">
+                                                                        <span class="spr-badge" data-rating="5.0">
+                                                                            <span class="spr-starrating spr-badge-starrating"><i class="spr-icon spr-icon-star" style=""></i><i class="spr-icon spr-icon-star" style=""></i><i class="spr-icon spr-icon-star" style=""></i><i class="spr-icon spr-icon-star" style=""></i><i class="spr-icon spr-icon-star" style=""></i></span><span class="spr-badge-caption">1 review</span>
+                                                                        </span>
+
+                                                                    </div>
+                                                                    <div class="product-price">
+                                                                        <span class="price_sale"><span class="money" data-currency-usd="$10.00" data-currency="USD">$10.00</span></span>
+                                                                        <del class="price_compare"> <span class="money" data-currency-usd="$15.00" data-currency="USD">$15.00</span></del>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>                               
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- filter tags group -->
+                                        <!-- Advertise -->
+                                        <div class="sidebar-block banner-block">
+                                            <div class="sidebar-content">
+                                                <a href="{% url 'collections' %}">
+                                                    <img src="{% static '/assets/images/269x349.png' %}" alt="image product" title="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <!-- Mobile View -->
+                                        <div class="sidebarMobile sidebar-bottom">
+                                            <button class="sidebarMobile-clear _btn">
+                                                Clear All
+                                            </button>
+                                            <button class="sidebarMobile-close _btn">
+                                                Apply &amp; Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="collection-mainarea  col-sm-9 clearfix">
+                                    <div class="collection-toolbar _desktop">
+                                        <a href="" class="collection-banner-top">
+                                            <img src="{% static '/assets/images/870x326.png' %}" alt="image product" title="">
+                                        </a>
+                                        <div class="group_toolbar">
+                                            <div class="group-left">
+                                                <div class="filter-mobile">
+                                                    <a href="javascript:void(0)" class="filter-icon">
+                                                        <span class="cs-icon icon-filter"></span>
+                                                    </a>
+                                                </div>
+                                                <!-- Sort by -->
+                                                <div class="sortBy">
+                                                    <div class="dropdown-toggle" data-toggle="dropdown">
+                                                        <span class="toolbar-title">Sort by</span>
+                                                        <button class="sortButton">
+                                                            <span class="name">Featured</span><i class="fa fa-caret-down"></i>
+                                                        </button>
+                                                        <i class="sub-dropdown1"></i>
+                                                        <i class="sub-dropdown"></i>
+                                                    </div>
+                                                    <div class="sortBox control-container dropdown-menu">
+                                                        <ul class="sortForm list-unstyled option-set text-left list-styled" data-option-key="sortBy">
+                                                            <li class="sort manual"><a href="">Featured</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- View as -->
+                                            <div class="grid_list">
+                                                <ul class="list-inline option-set hidden-xs" data-option-key="layoutMode">
+                                                    <li data-option-value="fitRows" id="goGrid" class="active goAction" data-toggle="tooltip" data-placement="top" title="" data-original-title="Grid">
+                                                        <i class="icon-small icon-small-grid"></i>
+                                                    </li>
+                                                    <li data-option-value="straightDown" id="goList" class="goAction" data-toggle="tooltip" data-placement="top" title="" data-original-title="List">
+                                                        <i class="icon-small icon-small-list"></i>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="collection-items clearfix">
+                                        <div class="products">
+                                            
+                                                <div class="content_product col-sm-4 not-animated" data-animate="fadeInUp" data-delay="100">
+                                                    <div class="row-container product list-unstyled clearfix product-circle">
+                                                        <div class="row-left">
+                                                            <a href="./product.html" class="hoverBorder container_item">
+                                                                <div class="hoverBorderWrapper">
+                                                                    <img id="prodImg" src="https://www.ctgrentacar.com/upload/29389259_1723713254352724_8108795673849102336_n.jpg" class="img-responsive front" alt="@item.prodImage">
+                                                                    <div class="mask"></div>
+                                                                </div>
+                                                            </a>
+                                                            <div class="hover-mask">
+                                                                <div class="group-mask">
+                                                                    <div class="inner-mask">
+                                                                        <div class="group-actionbutton">
+                                                                            <ul class="quickview-wishlist-wrapper">
+                                                                                <li class="wishlist">
+                                                                                    <a title="Add To Wishlist" class="wishlist wishlist-juice-ice-tea" data-wishlisthandle="juice-ice-tea"><span class="cs-icon icon-heart"></span></a>
+                                                                                </li>
+                                                                                <li class="quickview hidden-xs hidden-sm">
+                                                                                    <div id="quickview" class="product-ajax-cart">
+                                                                                        <span class="overlay_mask"></span>
+                                                                                        <div data-handle="juice-ice-tea" data-target="#quick-shop-modal" class="quick_shop" data-toggle="modal">
+                                                                                            <a class=""><span class="cs-icon icon-eye"></span></a>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </li>
+                                                                                <li class="compare">
+                                                                                    <a title="Add To Compare" class="compare compare-juice-ice-tea" data-comparehandle="juice-ice-tea"><span class="cs-icon icon-retweet2"></span></a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                        <form action="./cart.html" method="post">
+                                                                            <div class="effect-ajax-cart">
+                                                                                <input type="hidden" name="quantity" value="1">
+                                                                                <button class="_btn add-to-cart" data-parent=".parent-fly" type="submit" name="add" title="Add To Cart">Add to cart</button>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                    <!--inner-mask-->
+                                                                </div>
+                                                                <!--Group mask-->
+                                                            </div>
+
+
+                                                            <!--
+                                                                                                                            @if (item.sale > 0)
+                                                            {
+                                                                <div class="product-label">
+                                                                    <div class="label-element deal-label">
+                                                                        <span>@item.sale%</span>
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                            else if (item.newProd)
+                                                            {
+                                                                <div class="product-label">
+                                                                    <div class="label-element new-label">
+                                                                        <span>New</span>
+                                                                    </div>
+                                                                </div>
+                                                            }else
+                                                            {
+                                                            <div class="product-label">
+                                                                <div class="label-element new-label">
+                                                                    <span>Bara</span>
+                                                                </div>
+                                                            </div>
+                                                            }
+                                                            
+                                                                <div class="product-label">
+                                                                    <div class="label-element hotting-label">
+                                                                        <span>Hot</span>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="product-label">
+                                                                    <div class="label-element best-label">
+                                                                        <span>Best</span>
+                                                                    </div>
+                                                                </div>
+
+                                                            -->
+
+                                                        </div>
+                                                        <input type="hidden" id="prodDescription" name="quantity" value="DESCIPTION">
+                                                        <div class="row-right animMix">
+                                                            <div class="rating-star">
+                                                                <span class="spr-badge" data-rating="@item.rating">
+
+                                                                    <span class="spr-starrating spr-badge-starrating">
+                                                                        <!--
+                                                                        @for (int j = 1; j <= item.rating; j++)
+                                                                        {
+                                                                            <i class="spr-icon spr-icon-star" style=""></i>
+                                                                        }
+                                                                        -->
+                                                                        <i class="spr-icon spr-icon-star" style=""></i>
+                                                                    </span>
+                                                                </span>
+                                                            </div>
+                                                            <div class="product-title"><a id="prodName" asp-area="Visitor" asp-controller="Home" asp-action="Details" asp-route-id="@item.prodId" class="title-5">@item.prodName</a></div>
+                                                            <div class="product-price">
+                                                                <span class="price">
+                                                                    <span id="prodPrice" class="money" data-currency-usd="৳20.00">৳@item.price</span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="collection-bottom-toolbar">
+                                        <div class="product-counter col-sm-6">
+                                            Items 1 to 18 of 20 total
+                                        </div>
+                                        <div class="product-pagination col-sm-6">
+                                            <div class="pagination_group">
+                                                <ul class="pagination pagination-collection">
+                                                    <li class="prev"><a class="disabled" href="">Prev</a></li>
+                                                    <li class="active"><a href="">1</a></li>
+                                                    <li><a href="">2</a></li>
+                                                    <li class="next"><a href="">Next</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}

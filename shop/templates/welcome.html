@@ -1,0 +1,959 @@
+{% extends 'layouts/shop_layout.html' %}
+{% load static %}
+{% block content %}
+
+<!--
+"Title" = "Home Page"
+"Class" = "index-template fastfood_1"
+-->
+
+<div class="fix-sticky"></div>
+<!-- Main Content -->
+<!-- BEGIN content_for_index -->
+<div id="shopify-section-1507179171162" class="shopify-section index-section index-section-slideshow">
+    <div data-section-id="1507179171162" data-section-type="slideshow-section">
+        <section class="home-slideshow-layout">
+            <div class="home-slideshow-wrapper">
+                <div class="group-home-slideshow">
+                    <div class="home-slideshow-inner">
+                        <div class="home-slideshow-content slideshow_1507179171162">
+                            <ul>
+                                <li data-transition="random-static" data-masterspeed="2000" data-saveperformance="on">
+                                    <img src="{% static '/assets/webImages/foodCover.jpg' %}" data-lazyload="{% static '/assets/webImages/foodCover.jpg' %}" alt="" data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
+                                    <div class="slideshow-caption position-left transition-fade">
+                                        <div class="group">
+                                            <a href="">
+                                                <img src="{% static '/assets/images/slideshow-caption-1.png' %}" alt="" />
+                                            </a>
+                                            <a class="_btn" href="">Find out more!</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li data-transition="random-static" data-masterspeed="2000" data-saveperformance="on">
+                                    <img src="{% static '/assets/webImages/foodCoverOffer.jpg' %}" data-lazyload="{% static '/assets/webImages/foodCoverOffer.jpg' %}" alt="" data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
+                                    <div class="slideshow-caption position-left transition-slideup">
+                                        <div class="group">
+                                            <a href="">
+                                                <img src="{% static '/assets/images/slideshow-caption-2.png' %}" alt="" />
+                                            </a>
+                                            <a class="_btn" href="">Buy now</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li data-transition="slideright" data-masterspeed="2000" data-saveperformance="on">
+                                    <img src="{% static '/assets/webImages/foodCover-Bashmati-Kachi.jpg' %}" data-lazyload="{% static '/assets/webImages/foodCover-Bashmati-Kachi.jpg' %}" alt="" data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
+                                    <div class="slideshow-caption position-middle transition-fade">
+                                        <div class="group">
+                                            <a href="">
+                                                <img src="{% static '/assets/images/slideshow-caption-3.png' %}" alt="" />
+                                            </a>
+                                            <a class="_btn" href="">Find out more!</a>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="tp-bannertimer"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<div id="shopify-section-1509012157667" class="shopify-section index-section index-section-banner">
+    <div data-section-id="1509012157667" data-section-type="banner-section">
+        <section class="home-banslider-layout">
+            <div class="container">
+                <div class="row">
+                    <div class="home-banslider-inner">
+                        <div class="home-banslider-content">
+                            <div class="banslider-item not-animated" data-animate="zoomIn" data-delay="100">
+                                <a href="./collections.html">
+                                    <img src="{% static '/assets/images/370x244.png' %}" alt="" title="">
+                                </a>
+                            </div>
+                            <div class="banslider-item not-animated" data-animate="zoomIn" data-delay="200">
+                                <a href="./collections.html">
+                                    <img src="{% static '/assets/images/370x244.png' %}" alt="" title="">
+                                </a>
+                            </div>
+                            <div class="banslider-item not-animated" data-animate="zoomIn" data-delay="300">
+                                <a href="./collections.html">
+                                    <img src="{% static '/assets/images/370x244.png' %}" alt="" title="">
+                                </a>
+                            </div>
+                            <div class="banslider-item not-animated" data-animate="zoomIn" data-delay="400">
+                                <a href="./collections.html">
+                                    <img src="{% static '/assets/images/370x244.png' %}" alt="" title="">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<div id="shopify-section-1509012338884" class="shopify-section index-section index-section-welcome">
+    <div data-section-id="1509012338884" data-section-type="welcome-section">
+        <section class="home-welcome-layout not-animated" data-animate="zoomIn" data-delay="200">
+            <div class="container">
+                <div class="row">
+                    <div class="home-welcome-inner">
+                        <h2 class="page-title">Biryani is Love!</h2>
+                        <div class="home-welcome-content">
+                            <span class="welcome-caption">
+                                Biryani is a mixed rice dish originating among the Bangalis. It is made with spices, rice, and meat, and sometimes,
+                                in addition, eggs and/or vegetables. Biryani is popular throughout the Bangladesh, as well as among its diaspora.
+                            </span>
+                            <img class="welcome-banner" src="{% static '/assets/webImages/popup-foodCover.png' %}" alt="" title="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#quickview").click(function () {
+
+            let node = document.getElementById("prodName");
+            let prodName = node.textContent;
+            let prodDes = $("#prodDescription").val();
+            let prodImg = $("#prodImg").attr('src');
+
+            var prodPrice = $("#prodPrice").text();
+            //let prodID = $("#prodUnit").val();
+            console.log(prodPrice);
+            $("#prod_title").html(prodName);
+            $("#prod_desc").html(prodDes);
+            $("#prod-img").attr('src', prodImg);
+            $("#prod-cost").text(prodPrice);
+
+        });
+    });
+</script>
+
+
+    <div class="shopify-section index-section index-section-product">
+        <div data-section-id="1509012370397" data-section-type="product-section">
+            <section class="home-product-layout">
+                <div class="container">
+                    <div class="row">
+                        <div class="banner-product-title not-animated" data-animate="fadeInUp" data-delay="200" style="background-image:  url(https://www.ctgrentacar.com/upload/29389259_1723713254352724_8108795673849102336_n.jpg); background-size: cover;">
+                            <div class="title-content">
+                                <h2>catagory_name</h2>
+                            </div>
+                        </div>
+                        <div class="home-product-inner">
+                            <div class="home-product-content">
+                                
+                                
+                                <!--Strat: Product Body-->
+                                
+                                    <div class="content_product col-sm-3 not-animated" data-animate="fadeInUp" data-delay="100">
+                                        <div class="row-container product list-unstyled clearfix product-circle">
+                                            <div class="row-left">
+                                                <a asp-area="Visitor" asp-controller="Home" asp-action="Details" asp-route-id="product.id" class="hoverBorder container_item">
+                                                    <div class="hoverBorderWrapper">
+                                                        <img id="prodImg" src="https://www.ctgrentacar.com/upload/29389259_1723713254352724_8108795673849102336_n.jpg" class="img-responsive front" alt="product.product_img">
+                                                        <div class="mask"></div>
+                                                    </div>
+                                                </a>
+                                                <div class="hover-mask">
+                                                    <div class="group-mask">
+                                                        <div class="inner-mask">
+                                                            <div class="group-actionbutton">
+                                                                <ul class="quickview-wishlist-wrapper">
+                                                                    <li class="wishlist">
+                                                                        <a title="Add To Wishlist" class="wishlist wishlist-product.product_name" data-wishlisthandle="product.product_name"><span class="cs-icon icon-heart"></span></a>
+                                                                    </li>
+                                                                    <li class="quickview hidden-xs hidden-sm">
+                                                                        <div id="quickview" class="product-ajax-cart">
+                                                                            <span class="overlay_mask"></span>
+                                                                            <div data-handle="product.product_name" data-target="#quick-shop-modal" class="quick_shop" data-toggle="modal">
+                                                                                <a class=""><span class="cs-icon icon-eye"></span></a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                    <li class="compare">
+                                                                        <a title="Add To Compare" class="compare compare-product.product_name" data-comparehandle="product.product_name"><span class="cs-icon icon-retweet2"></span></a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <div>
+                                                                <div class="effect-ajax-cart">
+                                                                    <input type="hidden" name="quantity" value="1">
+                                                                    <button class="_btn add-to-cart" id="product.id" data-parent=".parent-fly" name="add" title="Add To Cart">Add to cart</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--inner-mask-->
+                                                    </div>
+                                                    <!--Group mask-->
+                                                </div>
+                                               <!--
+                                                    @if (product.product_sell > 0)
+                                                {
+                                                    <div class="product-label">
+                                                        <div class="label-element deal-label">
+                                                            <span>@product.product_sell%</span>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                else if (product.id == item.hot_id)
+                                                {
+                                                    <div class="product-label">
+                                                        <div class="label-element hotting-label">
+                                                            <span>Hot</span>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                else if (product.id == item.best_id)
+                                                {
+                                                    <div class="product-label">
+                                                        <div class="label-element best-label">
+                                                            <span>Best</span>
+                                                        </div>
+                                                    </div>
+
+                                                }
+                                                else
+                                                {}                                               -->
+                                                    <div class="product-label">
+                                                        <div class="label-element new-label">
+                                                            <span>New</span>
+                                                        </div>
+                                                    </div>
+                                                
+
+                                            </div>
+                                            <input type="hidden" id="prodDescription" name="quantity" value="product.product_description">
+                                            <div class="row-right animMix">
+                                                <div class="rating-star">
+                                                    <span class="spr-badge" data-rating="0.0">
+                                                        <span class="spr-starrating spr-badge-starrating"><i class="spr-icon spr-icon-star-empty" style=""></i><i class="spr-icon spr-icon-star-empty" style=""></i><i class="spr-icon spr-icon-star-empty" style=""></i><i class="spr-icon spr-icon-star-empty" style=""></i><i class="spr-icon spr-icon-star-empty" style=""></i></span><span class="spr-badge-caption">No reviews</span>
+                                                    </span>
+                                                </div>
+                                                <div class="product-title"><a id="prodName" asp-area="Visitor" asp-controller="Home" asp-action="Details" asp-route-id="product.id" class="title-5">product.product_name</a></div>
+                                                <div class="product-price">
+                                                    <span class="price">
+                                                        <span id="prodPrice" class="money" data-currency-usd="৳20.00">৳product.product_price</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                <!--End: Product Body-->
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+}
+<div class="shopify-section index-section index-section-product">
+    <div data-section-id="1509012370397" data-section-type="product-section">
+        <section class="home-product-layout">
+            <div class="container">
+                <div class="row">
+                    <div class="banner-product-title not-animated" data-animate="fadeInUp" data-delay="200" style="background-image:  url(/static/assets/images/1170x182.png);">
+                        <div class="title-content">
+                            <h2>Pizza</h2>
+                        </div>
+                    </div>
+                    <div class="home-product-inner">
+                        <div class="home-product-content">
+                            <div class="content_product col-sm-3 not-animated" data-animate="fadeInUp" data-delay="100">
+                                <div class="row-container product list-unstyled clearfix product-circle">
+                                    <div class="row-left">
+                                        <a href="./product.html" class="hoverBorder container_item">
+                                            <div class="hoverBorderWrapper">
+                                                <img src="{% static '/assets/images/800x800.png' %}" class="img-responsive front" alt="Juice Ice Tea">
+                                                <div class="mask"></div>
+                                            </div>
+                                        </a>
+                                        <div class="hover-mask">
+                                            <div class="group-mask">
+                                                <div class="inner-mask">
+                                                    <div class="group-actionbutton">
+                                                        <ul class="quickview-wishlist-wrapper">
+                                                            <li class="wishlist">
+                                                                <a title="Add To Wishlist" class="wishlist wishlist-juice-ice-tea" data-wishlisthandle="juice-ice-tea"><span class="cs-icon icon-heart"></span></a>
+                                                            </li>
+                                                            <li class="quickview hidden-xs hidden-sm">
+                                                                <div class="product-ajax-cart">
+                                                                    <span class="overlay_mask"></span>
+                                                                    <div data-handle="juice-ice-tea" data-target="#quick-shop-modal" class="quick_shop" data-toggle="modal">
+                                                                        <a class=""><span class="cs-icon icon-eye"></span></a>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="compare">
+                                                                <a title="Add To Compare" class="compare compare-juice-ice-tea" data-comparehandle="juice-ice-tea"><span class="cs-icon icon-retweet2"></span></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <form action="./cart.html" method="post">
+                                                        <div class="effect-ajax-cart">
+                                                            <input type="hidden" name="quantity" value="1">
+                                                            <button class="_btn add-to-cart" data-parent=".parent-fly" type="submit" name="add" title="Add To Cart">Add to cart</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <!--inner-mask-->
+                                            </div>
+                                            <!--Group mask-->
+                                        </div>
+                                        <div class="product-label">
+                                            <div class="label-element best-label">
+                                                <span>Best</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row-right animMix">
+                                        <div class="rating-star">
+                                            <span class="spr-badge" data-rating="0.0">
+                                                <span class="spr-starrating spr-badge-starrating"><i class="spr-icon spr-icon-star-empty" style=""></i><i class="spr-icon spr-icon-star-empty" style=""></i><i class="spr-icon spr-icon-star-empty" style=""></i><i class="spr-icon spr-icon-star-empty" style=""></i><i class="spr-icon spr-icon-star-empty" style=""></i></span><span class="spr-badge-caption">No reviews</span>
+                                            </span>
+                                        </div>
+                                        <div class="product-title"><a class="title-5" href="./product.html">Veggie Lover’s</a></div>
+                                        <div class="product-price">
+                                            <span class="price">
+                                                <span class="money" data-currency-usd="$20.00">$20.00</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content_product col-sm-3 not-animated" data-animate="fadeInUp" data-delay="200">
+                                <div class="row-container product list-unstyled clearfix product-circle">
+                                    <div class="row-left">
+                                        <a href="./product.html" class="hoverBorder container_item">
+                                            <div class="hoverBorderWrapper">
+                                                <img src="{% static '/assets/images/800x800.png' %}" class="img-responsive front" alt="Coke">
+                                                <div class="mask"></div>
+                                            </div>
+                                        </a>
+                                        <div class="hover-mask">
+                                            <div class="group-mask">
+                                                <div class="inner-mask">
+                                                    <div class="group-actionbutton">
+                                                        <ul class="quickview-wishlist-wrapper">
+                                                            <li class="wishlist">
+                                                                <a title="Add To Wishlist" class="wishlist wishlist-coke" data-wishlisthandle="coke"><span class="cs-icon icon-heart"></span></a>
+                                                            </li>
+                                                            <li class="quickview hidden-xs hidden-sm">
+                                                                <div class="product-ajax-cart">
+                                                                    <span class="overlay_mask"></span>
+                                                                    <div data-handle="coke" data-target="#quick-shop-modal" class="quick_shop" data-toggle="modal">
+                                                                        <a class=""><span class="cs-icon icon-eye"></span></a>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="compare">
+                                                                <a title="Add To Compare" class="compare compare-coke" data-comparehandle="coke"><span class="cs-icon icon-retweet2"></span></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <form action="./cart.html" method="post">
+                                                        <div class="effect-ajax-cart">
+                                                            <button class="_btn select-option" type="button" onclick="window.location='./product.html';" title="Select Option">Select options</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <!--inner-mask-->
+                                            </div>
+                                            <!--Group mask-->
+                                        </div>
+                                        <div class="product-label">
+                                            <div class="label-element hotting-label">
+                                                <span>Hot</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row-right animMix">
+                                        <div class="rating-star">
+                                            <span class="spr-badge" data-rating="5.0">
+                                                <span class="spr-starrating spr-badge-starrating"><i class="spr-icon spr-icon-star" style=""></i><i class="spr-icon spr-icon-star" style=""></i><i class="spr-icon spr-icon-star" style=""></i><i class="spr-icon spr-icon-star" style=""></i><i class="spr-icon spr-icon-star" style=""></i></span><span class="spr-badge-caption">1 review</span>
+                                            </span>
+                                        </div>
+                                        <div class="product-title"><a class="title-5" href="./product.html">Hotdog</a></div>
+                                        <div class="product-price">
+                                            <span class="price_sale"><span class="money" data-currency-usd="$10.00">$10.00</span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content_product col-sm-3 not-animated" data-animate="fadeInUp" data-delay="300">
+                                <div class="row-container product list-unstyled clearfix product-circle">
+                                    <div class="row-left">
+                                        <a href="./product.html" class="hoverBorder container_item">
+                                            <div class="hoverBorderWrapper">
+                                                <img src="{% static '/assets/images/800x800.png' %}" class="img-responsive front" alt="Juice Ice Tea">
+                                                <div class="mask"></div>
+                                            </div>
+                                        </a>
+                                        <div class="hover-mask">
+                                            <div class="group-mask">
+                                                <div class="inner-mask">
+                                                    <div class="group-actionbutton">
+                                                        <ul class="quickview-wishlist-wrapper">
+                                                            <li class="wishlist">
+                                                                <a title="Add To Wishlist" class="wishlist wishlist-juice-ice-tea" data-wishlisthandle="juice-ice-tea"><span class="cs-icon icon-heart"></span></a>
+                                                            </li>
+                                                            <li class="quickview hidden-xs hidden-sm">
+                                                                <div class="product-ajax-cart">
+                                                                    <span class="overlay_mask"></span>
+                                                                    <div data-handle="juice-ice-tea" data-target="#quick-shop-modal" class="quick_shop" data-toggle="modal">
+                                                                        <a class=""><span class="cs-icon icon-eye"></span></a>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="compare">
+                                                                <a title="Add To Compare" class="compare compare-juice-ice-tea" data-comparehandle="juice-ice-tea"><span class="cs-icon icon-retweet2"></span></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <form action="./cart.html" method="post">
+                                                        <div class="effect-ajax-cart">
+                                                            <input type="hidden" name="quantity" value="1">
+                                                            <button class="_btn add-to-cart" data-parent=".parent-fly" type="submit" name="add" title="Add To Cart">Add to cart</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <!--inner-mask-->
+                                            </div>
+                                            <!--Group mask-->
+                                        </div>
+                                        <div class="product-label">
+                                            <div class="label-element deal-label">
+                                                <span>33%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row-right animMix">
+                                        <div class="rating-star">
+                                            <span class="spr-badge" data-rating="0.0">
+                                                <span class="spr-starrating spr-badge-starrating"><i class="spr-icon spr-icon-star-empty" style=""></i><i class="spr-icon spr-icon-star-empty" style=""></i><i class="spr-icon spr-icon-star-empty" style=""></i><i class="spr-icon spr-icon-star-empty" style=""></i><i class="spr-icon spr-icon-star-empty" style=""></i></span><span class="spr-badge-caption">No reviews</span>
+                                            </span>
+                                        </div>
+                                        <div class="product-title"><a class="title-5" href="./product.html">Chicken Supreme</a></div>
+                                        <div class="product-price">
+                                            <span class="price_sale"><span class="money" data-currency-usd="$10.00">$10.00</span></span>
+                                            <del class="price_compare"> <span class="money" data-currency-usd="$15.00">$15.00</span></del>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content_product col-sm-3 not-animated" data-animate="fadeInUp" data-delay="400">
+                                <div class="row-container product list-unstyled clearfix product-circle">
+                                    <div class="row-left">
+                                        <a href="./product.html" class="hoverBorder container_item">
+                                            <div class="hoverBorderWrapper">
+                                                <img src="{% static '/assets/images/800x800.png' %}" class="img-responsive front" alt="Juice Ice Tea">
+                                                <div class="mask"></div>
+                                            </div>
+                                        </a>
+                                        <div class="hover-mask">
+                                            <div class="group-mask">
+                                                <div class="inner-mask">
+                                                    <div class="group-actionbutton">
+                                                        <ul class="quickview-wishlist-wrapper">
+                                                            <li class="wishlist">
+                                                                <a title="Add To Wishlist" class="wishlist wishlist-juice-ice-tea" data-wishlisthandle="juice-ice-tea"><span class="cs-icon icon-heart"></span></a>
+                                                            </li>
+                                                            <li class="quickview hidden-xs hidden-sm">
+                                                                <div class="product-ajax-cart">
+                                                                    <span class="overlay_mask"></span>
+                                                                    <div data-handle="juice-ice-tea" data-target="#quick-shop-modal" class="quick_shop" data-toggle="modal">
+                                                                        <a class=""><span class="cs-icon icon-eye"></span></a>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="compare">
+                                                                <a title="Add To Compare" class="compare compare-juice-ice-tea" data-comparehandle="juice-ice-tea"><span class="cs-icon icon-retweet2"></span></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <form action="./cart.html" method="post">
+                                                        <div class="effect-ajax-cart">
+                                                            <input type="hidden" name="quantity" value="1">
+                                                            <button class="_btn add-to-cart" data-parent=".parent-fly" type="submit" name="add" title="Add To Cart">Add to cart</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <!--inner-mask-->
+                                            </div>
+                                            <!--Group mask-->
+                                        </div>
+                                        <div class="product-label">
+                                            <div class="label-element new-label">
+                                                <span>New</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row-right animMix">
+                                        <div class="rating-star">
+                                            <span class="spr-badge" data-rating="0.0">
+                                                <span class="spr-starrating spr-badge-starrating"><i class="spr-icon spr-icon-star-empty" style=""></i><i class="spr-icon spr-icon-star-empty" style=""></i><i class="spr-icon spr-icon-star-empty" style=""></i><i class="spr-icon spr-icon-star-empty" style=""></i><i class="spr-icon spr-icon-star-empty" style=""></i></span><span class="spr-badge-caption">No reviews</span>
+                                            </span>
+                                        </div>
+                                        <div class="product-title"><a class="title-5" href="./product.html">Ultimate Cheese</a></div>
+                                        <div class="product-price">
+                                            <span class="price">
+                                                <span class="money" data-currency-usd="$20.00">$20.00</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+
+<div id="shopify-section-1509012405077" class="shopify-section index-section index-section-banner">
+    <div data-section-id="1509012405077" data-section-type="banner-section">
+        <section class="home-banner-layout not-animated" data-animate="zoomIn" data-delay="200">
+            <div class="container">
+                <div class="row">
+                    <div class="home-banner-inner">
+                        <div class="home-banner-content">
+                            <a class="banner-image" href="./contact.html">
+                                <img src="{% static '/assets/images/1170x285.png' %}" alt="" title="">
+                            </a>
+                            <a class="banner-caption" href="./contact.html">
+                                <span class="banner-caption-group">
+                                    <span class="title">Free!</span>
+                                    <span class="caption">Home Delivery</span>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<!--Gallery-->
+<div id="shopify-section-1509012440185" class="shopify-section index-section index-section-gallery">
+    <div data-section-id="1509012440185" data-section-type="banner-section">
+        <section class="home-gallery-layout">
+            <div class="container">
+                <div class="row">
+                    <h2 class="page-title">Gallery</h2>
+                    <div class="home-gallery-inner">
+                        <div class="home-gallery-content">
+                            <div class="gallery-item col-sm-4 not-animated" data-animate="fadeInUp" data-delay="100">
+                                <a class="home-gallery-lookbook" rel="lookbook" href="{% static '/assets/images/900x564.png' %}g">
+                                    <img src="{% static '/assets/images/900x564.png' %}" alt="" title="">
+                                </a>
+                            </div>
+                            <div class="gallery-item col-sm-4 not-animated" data-animate="fadeInUp" data-delay="200">
+                                <a class="home-gallery-lookbook" rel="lookbook" href="{% static '/assets/images/900x564.png' %}">
+                                    <img src="{% static '/assets/images/900x564.png' %}" alt="" title="">
+                                </a>
+                            </div>
+                            <div class="gallery-item col-sm-4 not-animated" data-animate="fadeInUp" data-delay="300">
+                                <a class="home-gallery-lookbook" rel="lookbook" href="{% static '/assets/images/900x564.png' %}">
+                                    <img src="{% static '/assets/images/900x564.png' %}" alt="" title="">
+                                </a>
+                            </div>
+                            <div class="gallery-item col-sm-4 not-animated" data-animate="fadeInUp" data-delay="400">
+                                <a class="home-gallery-lookbook" rel="lookbook" href="{% static '/assets/images/900x564.png' %}">
+                                    <img src="{% static '/assets/images/900x564.png' %}" alt="" title="">
+                                </a>
+                            </div>
+                            <div class="gallery-item col-sm-4 not-animated" data-animate="fadeInUp" data-delay="500">
+                                <a class="home-gallery-lookbook" rel="lookbook" href="{% static '/assets/images/900x564.png' %}">
+                                    <img src="{% static '/assets/images/900x564.png' %}" alt="" title="">
+                                </a>
+                            </div>
+                            <div class="gallery-item col-sm-4 not-animated" data-animate="fadeInUp" data-delay="600">
+                                <a class="home-gallery-lookbook" rel="lookbook" href="{% static '/assets/images/900x564.png' %}">
+                                    <img src="{% static '/assets/images/900x564.png' %}" alt="" title="">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+
+<div id="shopify-section-1509012518613" class="shopify-section  index-section index-section-banner">
+    <div data-section-id="1509012518613" data-section-type="banner-section">
+        <section class="home-banner-layout not-animated" data-animate="zoomIn" data-delay="200">
+            <div class="container">
+                <div class="row">
+                    <div class="home-banner-inner">
+                        <div class="home-banner-content">
+                            <a class="banner-image" href="./super-deal.html">
+                                <img src="{% static '/assets/webImages/hoverFoodDeal.png' %}" alt="" title="">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+
+
+<!-- Modal QuickView -->
+<div id="quick-shop-modal" class="modal quick-shop" role="dialog" aria-hidden="true" tabindex="-1" data-width="800" style="display: none;">
+    <div class="modal-dialog fadeIn animated">
+        <div class="modal-content">
+            <div class="modal-header">
+                <i class="close lnr lnr-cross btooltip" data-toggle="tooltip" data-placement="top" title="" data-dismiss="modal" aria-hidden="true" data-original-title="Close"></i>
+            </div>
+            <div class="modal-body">
+                <div class="quick-shop-modal-bg" style="display: none;"></div>
+                <div class="clearfix">
+                    <div class="col-md-6 product-image">
+                        <div id="quick-shop-image" class="product-image-wrapper">
+                            <div id="featuted-image" class="main-image featured">
+                                <img id="prod-img" src="{% static '/assets/images/800x800.png' %}" alt="image product">
+                            </div>
+                            <div id="gallery_main_qs" class="product-image-thumb gallery-images-layout">
+                                <div class="gallery-images-inner">
+                                    <div class="show-image-load show-load-quick" style="display: none;">
+                                        <div class="show-image-load-inner"><i class="fa fa-spinner fa-pulse fa-2x"></i></div>
+                                    </div>
+                                    <div class="qs-vertical-slider vertical-image-content">
+                                        <div class="image-vertical image-thumb active">
+                                            <a class="cloud-zoom-gallery" href="{% static '/assets/images/800x800.png' %}" data-image="{% static '/assets/images/800x800.png' %}" data-zoom-image="{% static '/assets/images/800x800.png' %}">
+                                                <img src="{% static '/assets/images/800x800.png' %}" alt="image product">
+                                            </a>
+                                        </div>
+                                        <div class="image-vertical image-thumb">
+                                            <a class="cloud-zoom-gallery" href="{% static '/assets/images/800x800.png' %}" data-image="{% static '/assets/images/800x800.png' %}" data-zoom-image="{% static '/assets/images/800x800.png' %}">
+                                                <img src="{% static '/assets/images/800x800.png' %}" alt="image product">
+                                            </a>
+                                        </div>
+                                        <div class="image-vertical image-thumb">
+                                            <a class="cloud-zoom-gallery" href="{% static '/assets/images/800x800.png' %}" data-image="{% static '/assets/images/800x800.png' %}" data-zoom-image="{% static '/assets/images/800x800.png' %}">
+                                                <img src="{% static '/assets/images/800x800.png' %}" alt="image product">
+                                            </a>
+                                        </div>
+                                        <div class="image-vertical image-thumb">
+                                            <a class="cloud-zoom-gallery" href="~/assets/images/800x800.png" data-image="{% static '/assets/images/800x800.png' %}" data-zoom-image="{% static '/assets/images/800x800.png' %}">
+                                                <img src="{% static '/assets/images/800x800.png' %}" alt="image product">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 product-information">
+                        <div id="quick-shop-container">
+                            <h3 id="quick-shop-title"><a id="prod_title" href="./product.html">Extra Crispy</a></h3>
+                            <div class="rating-star"><span class="shopify-product-reviews-badge" data-id="6537875078"></span></div>
+                            <div class="quick-shop-management">
+                                <span class="management-title">Availability:</span>
+                                <div class="management-description">In-Stock</div>
+                            </div>
+                            <div class="description">
+                                <div id="quick-shop-description" class="text-left">
+                                    <p id="prod_desc">Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulp...</p>
+                                </div>
+                            </div>
+                            <form action="./cart.html" method="post" class="variants" id="quick-shop-product-actions" enctype="multipart/form-data">
+                                <div id="quick-shop-variants-container" class="variants-wrapper">
+                                    <div class="selector-wrapper variant-wrapper-size">
+                                        <label for="quick-shop-variants-213223800871-option-0">Size</label>
+                                        <select class="single-option-selector" data-option="option1" id="quick-shop-variants-213223800871-option-0"><option value="Small">Small</option><option value="Medium">Medium</option><option value="Large">Large</option></select>
+                                    </div>
+                                    <div class="selector-wrapper variant-wrapper-topping">
+                                        <label for="quick-shop-variants-213223800871-option-2">Topping</label>
+                                        <select class="single-option-selector" data-option="option3" id="quick-shop-variants-213223800871-option-2"><option value="Black Bottom Cupcakes">Black Bottom Cupcakes</option><option value="Blue-Ribbon Butter Cake">Blue-Ribbon Butter Cake</option><option value="Cheesy Mcplain">Cheesy Mcplain</option><option value="Chunky Apple Cake">Chunky Apple Cake</option></select>
+                                    </div>
+                                </div>
+                                <div class="swatch" id="show_swatch">
+                                    <div id="show_swatch_detail_1" class="swatch_quick color clearfix" data-option-index="1">
+                                        <label>Color</label>
+                                        <div id="element-color-Black" data-value="Black" class="swatch-element color Black available active">
+                                            <div class="tooltip">Black</div>
+                                            <input id="swatch-quick-1-Black" type="radio" name="option-1" value="Black">
+                                            <label id="label-color-Black" for="swatch-quick-1-Black" style="background-color: Black; border-color: Black; background-image: url('/assets/images/black.png')"><img class="crossed-out" src="{% static '/assets/images/soldout.png' %}" alt="image product"></label>
+                                        </div>
+                                        <div id="element-color-Red" data-value="Red" class="swatch-element color Red available ">
+                                            <div class="tooltip">Red</div>
+                                            <input id="swatch-quick-1-Red" type="radio" name="option-1" value="Red">
+                                            <label id="label-color-Red" for="swatch-quick-1-Red" style="background-color: Red; border-color: Red; background-image: url(/assets/images/red.png)"><img class="crossed-out" src="{% static '/assets/images/soldout.png' %}" alt="image product"></label>
+                                        </div>
+                                        <div id="element-color-Blue" data-value="Blue" class="swatch-element color Blue available ">
+                                            <div class="tooltip">Blue</div>
+                                            <input id="swatch-quick-1-Blue" type="radio" name="option-1" value="Blue">
+                                            <label id="label-color-Blue" for="swatch-quick-1-Blue" style="background-color: Blue; border-color: Blue; background-image: url(/assets/images/blue.png)"><img class="crossed-out" src="{% static '/assets/images/soldout.png' %}" alt="image product"></label>
+                                        </div>
+                                        <div id="element-color-yellow" data-value="yellow" class="swatch-element color yellow available ">
+                                            <div class="tooltip">yellow</div>
+                                            <input id="swatch-quick-1-yellow" type="radio" name="option-1" value="yellow">
+                                            <label id="label-color-yellow" for="swatch-quick-1-yellow" style="background-color: yellow; border-color: yellow; background-image: url(/assets/images/yellow.png)"><img class="crossed-out" src="{% static '/assets/images/soldout.png' %}" alt="image product"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="quick-shop-price-container" class="product-price">
+                                    <span class="price"><span id="prod-cost" class="money" data-currency-usd="৳10.00" data-currency="USD">৳10.00</span></span>
+                                </div>
+                                <div class="others-bottom">
+                                    <div class="purchase-section">
+                                        <div class="quantity-wrapper clearfix">
+                                            <div class="wrapper">
+                                                <input id="quantity" type="text" name="quantity" value="1" maxlength="5" size="5" class="item-quantity">
+                                                <div class="qty-btn-vertical">
+                                                    <span class="qty-down fa fa-chevron-down" title="Decrease" data-src="#quantity"></span>
+                                                    <span class="qty-up fa fa-chevron-up" title="Increase" data-src="#quantity"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="purchase">
+                                            <button id="quick-shop-add" onclick="change_qs_quantity('-qs');" class="_btn add-to-cart" type="submit" name="add" style="opacity: 1;"><span class="cs-icon icon-cart"></span>Add to cart</button>
+                                        </div>
+                                    </div>
+                                    <div class="comWish-content">
+                                        <a title="Add To Compare" class="_compareWishlist compare compare-extra-crispy-1" data-comparehandle="extra-crispy-1">
+                                            <span class="icon-small icon-small-retweet"></span>
+                                            <span class="_compareWishlist-text">Compare</span>
+                                        </a>
+                                        <a title="Add To Wishlist" class="wishlist wishlist-extra-crispy-1" data-wishlisthandle="extra-crispy-1">
+                                            <span class="icon-small icon-small-heart"></span>
+                                            <span class="_compareWishlist-text">Wishlist</span>
+                                        </a>
+                                        <a title="Send email" class="send-email">
+                                            <span class="icon-small icon-small-email"></span>
+                                            <span class="_compareWishlist-text">Send email</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="supports-fontface">
+                                <span class="social-title">Share this</span>
+                                <div class="quick-shop-social">
+                                    <a target="_blank" href="" class="share-facebook">
+                                        <span class="fa fa-facebook"></span>
+                                    </a>
+                                    <a target="_blank" href="" class="share-twitter">
+                                        <span class="fa fa-twitter"></span>
+                                    </a>
+                                    <a target="_blank" href="" class="share-pinterest">
+                                        <span class="fa fa-pinterest"></span>
+                                    </a>
+                                    <a target="_blank" href="" class="share-google">
+                                        <!-- Cannot get Google+ share count with JS yet -->
+                                        <span class="fa fa-google-plus"></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal WishList -->
+<div class="wishlist-model">
+    <div class="modal fade" id="modalwishlist1" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog white-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span class="cs-icon icon-close"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-note wishlist-note">
+                        Added to <a href="./wish-list.html">Wishlist</a>
+                    </div>
+                    <div class="modal-body-inner">
+                        <div class="modal-left wishlist-left">
+                            <div class="modal-product wishlist-product">
+                                <div class="product-left">
+                                    <div class="wishlist-image modal-image wishlist-image-213223800871">
+                                        <img src="{% static '/assets/images/800x800.png' %}" alt="Extra Crispy">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-right wishlist-right">
+                            <div class="wishlist-cart">
+                                <form action="./cart.html" method="post" class="variants-form variants" enctype="multipart/form-data">
+                                    <div class="form-left">
+                                        <div class="product-right">
+                                            <div class="name wishlist-name"><a href="./product.html">Extra Crispy</a></div>
+                                            <div class="wishlist-price wishlist-price-213223800871">
+                                                <span class="price"><span class="money" data-currency-usd="$10.00" data-currency="USD">$10.00</span></span>
+                                            </div>
+                                        </div>
+                                        <div class="quantity-content">
+                                            <label>QTY</label>
+                                            <input type="text" size="5" class="item-quantity item-quantity-qs" name="quantity" value="1">
+                                        </div>
+                                    </div>
+                                    <div class="form-right">
+                                        <div class="others-bottom">
+                                            <a class="_btn btn-quick-shop" href="./wish-list.html">View Wishlist</a>
+                                            <a href="./cart.html" class="_btn add-to-cart">Add to cart</a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Compare -->
+<div class="wishlist-model">
+    <div class="modal fade" id="modalCompare" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog white-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span class="cs-icon icon-close"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-note wishlist-note">
+                        Added to <a href="./compare.html">Compare</a>
+                    </div>
+                    <div class="modal-body-inner">
+                        <div class="modal-left wishlist-left">
+                            <div class="modal-product wishlist-product">
+                                <div class="product-left">
+                                    <div class="wishlist-image modal-image wishlist-image-213223800871">
+                                        <img src="{% static '/assets/images/800x800.png' %}" alt="Extra Crispy">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-right wishlist-right">
+                            <div class="wishlist-cart">
+                                <form action="./cart.html" method="post" class="variants-form variants" enctype="multipart/form-data">
+                                    <div class="form-left">
+                                        <div class="product-right">
+                                            <div class="name wishlist-name"><a href="./product.html">Extra Crispy</a></div>
+                                            <div class="wishlist-price wishlist-price-213223800871">
+                                                <span class="price"><span class="money" data-currency-usd="$10.00" data-currency="USD">$10.00</span></span>
+                                            </div>
+                                        </div>
+                                        <div class="quantity-content">
+                                            <label>QTY</label>
+                                            <input type="text" size="5" class="item-quantity item-quantity-qs" name="quantity" value="1">
+                                        </div>
+                                    </div>
+                                    <div class="form-right">
+                                        <div class="others-bottom">
+                                            <a class="_btn btn-quick-shop" href="./wish-list.html">View Compare</a>
+                                            <a href="./cart.html" class="_btn add-to-cart">Add to cart</a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Newsletter-->
+<div id="newsletter-popup" class="modal fade in" style="display: block; padding-right: 15px;" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="nl-wraper-popup bounceInDown animated">
+        <div class="nl-wraper-popup-inner">
+            <div class="popup-left">
+                <h4>Newsletter!</h4>
+                <p class="sale">up to 70% off</p>
+                <p class="caption">Food</p>
+                <form action="https://codespot.us5.list-manage.com/subscribe/post?u=ed73bc2d2f8ae97778246702e&amp;id=c63b4d644d" method="post" name="mc-embedded-subscribe-form" target="_blank">
+                    <div class="group_input">
+                        <input class="form-control" type="email" name="EMAIL" placeholder="Enter your email here">
+                        <button class="_btn" type="submit">Sign Up</button>
+                    </div>
+                </form>
+            </div>
+            <div class="popup-right">
+                <img src="{% static '/assets/webImages/FoodAdvertise.png' %}" alt="">
+            </div>
+        </div>
+        <div class="nl-popup-close">
+            <span onclick="$('#newsletter-popup').modal('hide')" data-toggle="tooltip" data-placement="top" title="" data-original-title="Close">
+            </span>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Search-->
+<div class="modal fade" id="lightbox-search" tabindex="-1" role="dialog" aria-labelledby="lightbox-search" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog animated" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span class="cs-icon icon-close"></span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Search something</h4>
+            </div>
+            <div class="modal-body">
+                <div id="search-info">
+                    <form class="search" action="./search.html" style="position: relative;">
+                        <input type="hidden" name="type" value="product">
+                        <input type="text" name="q" class="search_box" placeholder="search our store" value="" autocomplete="off">
+                        <span class="search-clear cs-icon icon-close" style="display: none;"></span>
+                        <button class="search-submit" type="submit">
+                            <span class="cs-icon icon-search"></span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Float right icon -->
+<div class="float-right-icon">
+    <ul>
+        <li>
+            <div id="scroll-to-top" data-toggle="" data-placement="left" title="Scroll to Top" class="off">
+                <i class="fa fa-angle-up"></i>
+            </div>
+        </li>
+    </ul>
+</div>
+<!--
+@section scripts{
+    <script type="text/javascript">
+
+
+        $(function () {
+            var noti = '@TempData["login_alert"]';
+            if (noti.length > 0) {
+                alertify.error(noti);
+            }
+        })
+
+    </script>
+}
+-->
+{% endblock %}
+
+

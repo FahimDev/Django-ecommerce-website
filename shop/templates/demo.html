@@ -1,0 +1,11 @@
+{% extends 'layouts/shop_layout' %}
+{% load static %}
+{% block content %}
+<!--Set Value-->
+{% with name="World" %}     
+<html>
+<div>Hello {{name}}!</div>
+</html>
+{% endwith %}
+
+{% endblock %}

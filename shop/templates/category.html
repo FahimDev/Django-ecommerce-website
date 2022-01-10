@@ -1,0 +1,70 @@
+{% extends 'layouts/shop_layout.html' %}
+
+{% load static %}
+
+{% block content %}
+
+
+<section class="heading-content">
+    <div class="heading-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="page-heading-inner heading-group">
+                    <div class="breadcrumb-group">
+                        <h1 class="hidden">List Collection</h1>
+                        <div class="breadcrumb clearfix">
+                            <span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                                <a href="{% url 'welcome' %}" title="Fast Food" itemprop="url"><span itemprop="title"><i class="fa fa-home"></i></span></a>
+                            </span>
+                            <span class="arrow-space"></span>
+                            <span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                                <a href="{% url 'collections' %}" title="List Collection" itemprop="url"><span itemprop="title">List Collection</span></a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="list-collection-content">
+    <div class="list-collections-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="products-wrapper">
+                    <div class="products-wrapper-inner">
+                        <div class="products masonry">
+                            
+                                <div class="col-sm-4 col-xs-12">
+                                    <div class="product ">
+                                        <!-- Begin product image -->
+                                        <div class="image">
+                                            <img src="https://www.ctgrentacar.com/upload/29389259_1723713254352724_8108795673849102336_n.jpg" alt="Drinks">
+                                        </div>
+                                        <!-- End product image -->
+                                        <!-- Begin product description -->
+                                        <div class="col-info">
+                                            <div class="col-info-group">
+                                                <h4 class="title">item.category_name</h4>
+                                                <span class="price">item.product_count  products</span>
+                                                <div class="hover_button">
+                                                    <a href="{% url 'prod_collection' %}">
+                                                        View More
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End product description -->
+                                    </div>
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}
