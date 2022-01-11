@@ -100,13 +100,12 @@
             <div class="container">
                 <div class="row">
                     <div class="home-welcome-inner">
-                        <h2 class="page-title">Biryani is Love!</h2>
+                        <h2 class="page-title">{{welcopme_caption}}</h2>
                         <div class="home-welcome-content">
                             <span class="welcome-caption">
-                                Biryani is a mixed rice dish originating among the Bangalis. It is made with spices, rice, and meat, and sometimes,
-                                in addition, eggs and/or vegetables. Biryani is popular throughout the Bangladesh, as well as among its diaspora.
+                                {{welcome_story}}
                             </span>
-                            <img class="welcome-banner" src="{% static '/assets/webImages/popup-foodCover.png' %}" alt="" title="">
+                            <img class="welcome-banner" src="{% static '/assets/webImages/' %}{{welcome_image_name}}" alt="" title="">
                         </div>
                     </div>
                 </div>
@@ -503,7 +502,7 @@
                                                 <span class="spr-starrating spr-badge-starrating"><i class="spr-icon spr-icon-star-empty" style=""></i><i class="spr-icon spr-icon-star-empty" style=""></i><i class="spr-icon spr-icon-star-empty" style=""></i><i class="spr-icon spr-icon-star-empty" style=""></i><i class="spr-icon spr-icon-star-empty" style=""></i></span><span class="spr-badge-caption">No reviews</span>
                                             </span>
                                         </div>
-                                        <div class="product-title"><a class="title-5" href="./product.html">Ultimate Cheese</a></div>
+                                        <div class="product-title"><a class="title-5" href="">Ultimate Cheese</a></div>
                                         <div class="product-price">
                                             <span class="price">
                                                 <span class="money" data-currency-usd="$20.00">$20.00</span>
@@ -533,8 +532,8 @@
                             </a>
                             <a class="banner-caption" href="./contact.html">
                                 <span class="banner-caption-group">
-                                    <span class="title">Free!</span>
-                                    <span class="caption">Home Delivery</span>
+                                    <span class="title">{{banner_title}}</span>
+                                    <span class="caption">{{banner_caption}}</span>
                                 </span>
                             </a>
                         </div>
@@ -600,7 +599,7 @@
                     <div class="home-banner-inner">
                         <div class="home-banner-content">
                             <a class="banner-image" href="./super-deal.html">
-                                <img src="{% static '/assets/webImages/hoverFoodDeal.png' %}" alt="" title="">
+                                <img src="{% static '/assets/webImages/' %}{{hover_deal}}" alt="" title="">
                             </a>
                         </div>
                     </div>

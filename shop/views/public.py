@@ -4,6 +4,10 @@ from django.shortcuts import redirect, render
 from django.http import HttpRequest,HttpResponseRedirect
 from django.urls import reverse
 
+from django.contrib import messages
+from django.db import transaction
+from django.contrib.auth import authenticate,login, logout
+
 from django.forms import inlineformset_factory
 from django.contrib.auth.forms import UserCreationForm
 from django.urls.conf import path
@@ -15,7 +19,14 @@ def welcome(request):
     contex = {
         'title' : 'Home Page',
         'h1_tag' : 'The New Day (TND) is a Cloud Kitchen of Fast Food & Restaurant with Multi Cuisine',
-        'class' : 'index-template fastfood_1'
+        'class' : 'index-template fastfood_1',
+        #------Content For Welcome Page------
+        'welcopme_caption' : 'Biryani is Love!', #h2 tag
+        'welcome_story' : 'Biryani is a mixed rice dish originating among the Bangalis. It is made with spices, rice, and meat, and sometimes, in addition, eggs and/or vegetables. Biryani is popular throughout the Bangladesh, as well as among its diaspora.',
+        'welcome_image_name' : 'popup-foodCover.png',
+        'banner_title' : 'Free!',
+        'banner_caption' : 'Home Delivery',
+        'hover_deal' : 'hoverFoodDeal.png'
     }
     return render(request,'welcome.html', contex)
 
@@ -48,29 +59,67 @@ def details(request):
 
 def registration(request):
     form = RegisterCustomer
-    context = {
-        'title' : 'Registration | Customer',
-        'h1_tag' : 'The New Day (TND) is a Cloud Kitchen of Fast Food & Restaurant with Multi Cuisine',
-        'form_title' : 'Customer Registration',
-        'class' : 'fastfood_1',  
-        'form' : form
-    }
 
     if request.method == 'POST':
         form = RegisterCustomer(request.POST)
+        
         if form.is_valid():
-            user = form.save()  #insert
-            #Get contact number from form and store at phone 
-            phone = form.cleaned_data.get('contact')
-            #Get Social Link from form and store at link 
-            link = form.cleaned_data.get('social_media_link')
+            with transaction.atomic():
+                user = form.save()  #insert
+                #Get contact number from form and store at phone 
+                phone = form.cleaned_data.get('contact')
+                #Get Social Link from form and store at link 
+                link = form.cleaned_data.get('social_media_link')
 
-            group = Group.objects.get(name='Customer')
-            #insert Group type at auth_user_groups table
-            user.groups.add(group)
-            Customer.objects.create(contact = phone, social_media_link = link, user_id = user)
+                group = Group.objects.get(name='Customer')
+                #insert Group type at auth_user_groups table
+                user.groups.add(group)
+                Customer.objects.create(contact = phone, social_media_link = link, user_id = user)
+
+                messages.success(request, 'New User Created Successfully')
+
+                return redirect('login')
+    context = {
+    'title' : 'Registration | Customer',
+    'h1_tag' : 'The New Day (TND) is a Cloud Kitchen of Fast Food & Restaurant with Multi Cuisine',
+    'form_title' : 'Customer Registration',
+    'class' : 'fastfood_1',  
+    'form' : form
+    }
+    return render(request, 'customer_registration.html', context)
+
+
+def loginPage(request):
+    context = {
+    'title' : 'Login | User',
+    'form_title' : 'Customer Registration',
+    'class' : 'fastfood_1',  
+    }
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username = username, password = password)
+        
+        if user is not None:
+            login(request, user)
             return redirect('welcome')
-    elif request.method == 'GET':
-        return render(request, 'customer_registration.html', context)
-    else:
-        return HttpResponseRedirect(reverse('welcome'))
+        else:
+            messages.info(request, 'Please enter the correct username and password for a staff account. Note that both fields may be case-sensitive.')
+            return render(request, 'login.html', context)
+
+    return render(request, 'login.html', context)
+
+def logoutUser(request):
+    logout(request)
+    return redirect('welcome')
+
+def error(request):
+    context = {
+        'title' : '404',
+        'h1_tag' : 'The New Day (TND) is a Cloud Kitchen of Fast Food & Restaurant with Multi Cuisine',
+        'class' : 'fastfood_1',  
+    }
+
+    return render(request, '404.html', context)

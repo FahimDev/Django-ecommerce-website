@@ -20,42 +20,37 @@
                                     {{form.first_name.label}}
                                     {{form.first_name}}
                                 </div>
-                                <span asp-validation-for="full_name" class="text-danger"></span>
                                 <div class="clearfix large_form form-item">
                                     {{form.last_name.label}}
                                     {{form.last_name}}
                                 </div>
-                                <span asp-validation-for="last_name" class="text-danger"></span>
                                 <div class="clearfix large_form form-item">
                                     {{form.email.label}}
                                     {{form.email}}
                                 </div>
-                                <span asp-validation-for="email" class="text-danger"></span>
                                 <div class="clearfix large_form form-item">
                                     {{form.contact.label}}
                                     {{form.contact}}
                                 </div>
-                                <span asp-validation-for="contact" class="text-danger"></span>
                                 <div class="clearfix large_form form-item">
                                     {{form.social_media_link.label}}
                                     {{form.social_media_link}}
                                 </div>
-                                <span asp-validation-for="social_media_link" class="text-danger"></span>
                                 <div class="clearfix large_form form-item">
                                     {{form.username.label}}
                                     {{form.username}}
                                 </div>
-                                <span asp-validation-for="username" class="text-danger"></span>
                                 <div class="clearfix large_form form-password form-item">
                                     {{form.password1.label}}
                                     {{form.password1}}
                                 </div>
-                                <span asp-validation-for="password1" class="text-danger"></span>
                                 <div class="clearfix large_form form-password form-item">
                                     {{form.password2.label}}
                                     {{form.password2}}
                                 </div>
-                                <span asp-validation-for="password2" class="text-danger"></span>
+                                <span class="text-danger">
+                                    {{form.errors}}
+                                </span>
                                 <div class="action_bottom">
                                     <input class="_btn" type="submit" value="Register">
                                     <span class="note"><span class="or">or</span><a href="{% url 'welcome' %}">Return to Store</a></span>
