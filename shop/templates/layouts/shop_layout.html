@@ -69,7 +69,7 @@
                                 <div class="main-header-inner">
                                     <div class="nav-logo">
                                         <a href="{% url 'welcome' %}"><img src="{% static '/assets/webImages/Logo.png' %}" alt="The New Day Logo" title="Fast Food Logo" /></a>
-                                        <h1 style="display:none"><a href="/">Fast Food</a></h1>
+                                        <h1 style="display:none"><a href="{% url 'welcome' %}">{{h1_tag}}</a></h1>
                                     </div>
                                     <div class="nav-top">
                                         <div class="nav-menu">
