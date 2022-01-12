@@ -31,7 +31,7 @@ def welcome(request):
         'banner_caption' : 'Home Delivery',
         'hover_deal' : 'hoverFoodDeal.png'
     }
-    return render(request,'welcome.html', contex)
+    return render(request,'visitors/welcome.html', contex)
 
 
 def category(request):
@@ -41,7 +41,7 @@ def category(request):
         'class' : 'fastfood_1'
     }
 
-    return render(request, 'category.html',context)
+    return render(request, 'visitors/category.html',context)
 
 def categoryProducts(request):
     context = {
@@ -50,7 +50,7 @@ def categoryProducts(request):
         'class' : 'fastfood_1'
     }
 
-    return render(request, 'category_products.html',context)
+    return render(request, 'visitors/category_products.html',context)
 
 def details(request):
     context = {
@@ -59,7 +59,7 @@ def details(request):
         'class' : 'fastfood_1'       
     }
 
-    return render(request,'product_details.html',context)
+    return render(request,'visitors/product_details.html',context)
 
 
 @auth_user_page_restriction
@@ -93,7 +93,7 @@ def registration(request):
     'class' : 'fastfood_1',  
     'form' : form
     }
-    return render(request, 'customer_registration.html', context)
+    return render(request, 'visitors/customer_registration.html', context)
 
 @auth_user_page_restriction
 def loginPage(request):
@@ -111,12 +111,12 @@ def loginPage(request):
         
         if user is not None:
             login(request, user)
-            return redirect('test')
+            return redirect('unlock')
         else:
             messages.info(request, 'Please enter the correct username and password for a staff account. Note that both fields may be case-sensitive.')
             return render(request, 'login.html', context)
 
-    return render(request, 'login.html', context)
+    return render(request, 'visitors/login.html', context)
 
 def logoutUser(request):
     logout(request)
@@ -132,18 +132,12 @@ def error(request,exception=None):
         'sub_text': 'Looks like the page you are trying to visit does not exist. Please check the URL and try your lick again'
     }
 
-    return render(request, '404.html', context)
+    return render(request, 'visitors/404.html', context)
 
 
 @allowed_user
-def test(request):
-    context = {
-    'title' : 'Admin',
-    'h1_tag' : 'The New Day (TND) is a Cloud Kitchen of Fast Food & Restaurant with Multi Cuisine',
-    'class' : 'fastfood_1',  
+def unlock(request):
+    return redirect('cus_profile')
 
-    'caption': 'Welcome!!!',
-    'sub_text': 'Looks like You have done it!'
-    }
-
-    return render(request, '404.html', context)
+def demo(request):
+    pass

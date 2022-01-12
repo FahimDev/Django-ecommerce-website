@@ -1,8 +1,11 @@
 from django.db import models
+from django.db.models.fields import files
 from django.forms import ModelForm, fields
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
+
+from shop.models import BillingAddress,Product
 
 
 class RegisterCustomer(UserCreationForm):
@@ -18,3 +21,8 @@ class RegisterCustomer(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'password1', 'password2','first_name', 'last_name', 'email', 'contact', 'social_media_link']
+
+class BillingAddressCustomer(ModelForm):
+    class Meta:
+        model = BillingAddress
+        fields = '__all__'

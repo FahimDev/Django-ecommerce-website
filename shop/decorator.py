@@ -24,7 +24,7 @@ def auth_user_page_restriction(view_func):
                 'sub_text': 'Looks like the page you are trying to visit does not exist for this session. Please check the URL and try your lick again'
             }
 
-            return render(request, '404.html', context)
+            return render(request, 'visitors/404.html', context)
         else:
             return view_func(request, *args, **kwargs)
     return wrapper_func

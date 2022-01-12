@@ -18,7 +18,10 @@ urlpatterns = [
     path('flush-logout', views.public.logoutUser, name= 'logoutFlush'),
     path('404', views.public.error, name= '404'),
 
-    path('test', views.public.test, name= 'test'),
-    #path(r'^admin/(.*)', admin.site.root),
+    path('test', views.public.unlock, name= 'unlock'),
+
+
+    #-------------------->customer
+    path('profile', views.customer.profile, name= 'cus_profile'),
 
 ]
