@@ -7,6 +7,9 @@ from django.urls import reverse
 from django.contrib import messages
 from django.db import transaction
 from django.contrib.auth import authenticate,login, logout
+from shop.decorator import auth_user_page_restriction,allowed_user #Custom DesignPattern
+
+
 
 from django.forms import inlineformset_factory
 from django.contrib.auth.forms import UserCreationForm
@@ -29,6 +32,7 @@ def welcome(request):
         'hover_deal' : 'hoverFoodDeal.png'
     }
     return render(request,'welcome.html', contex)
+
 
 def category(request):
     context = {
@@ -57,6 +61,8 @@ def details(request):
 
     return render(request,'product_details.html',context)
 
+
+@auth_user_page_restriction
 def registration(request):
     form = RegisterCustomer
 
@@ -64,6 +70,7 @@ def registration(request):
         form = RegisterCustomer(request.POST)
         
         if form.is_valid():
+            #Transaction is a very impornt module in Django ORM. Here multiple operation will take place in different table. This module will ensure none of those will not get miss 
             with transaction.atomic():
                 user = form.save()  #insert
                 #Get contact number from form and store at phone 
@@ -88,7 +95,7 @@ def registration(request):
     }
     return render(request, 'customer_registration.html', context)
 
-
+@auth_user_page_restriction
 def loginPage(request):
     context = {
     'title' : 'Login | User',
@@ -104,7 +111,7 @@ def loginPage(request):
         
         if user is not None:
             login(request, user)
-            return redirect('welcome')
+            return redirect('test')
         else:
             messages.info(request, 'Please enter the correct username and password for a staff account. Note that both fields may be case-sensitive.')
             return render(request, 'login.html', context)
@@ -115,11 +122,28 @@ def logoutUser(request):
     logout(request)
     return redirect('welcome')
 
-def error(request):
+def error(request,exception=None):
     context = {
         'title' : '404',
         'h1_tag' : 'The New Day (TND) is a Cloud Kitchen of Fast Food & Restaurant with Multi Cuisine',
         'class' : 'fastfood_1',  
+
+        'caption': 'Oh my gosh! you found it !!!',
+        'sub_text': 'Looks like the page you are trying to visit does not exist. Please check the URL and try your lick again'
+    }
+
+    return render(request, '404.html', context)
+
+
+@allowed_user
+def test(request):
+    context = {
+    'title' : 'Admin',
+    'h1_tag' : 'The New Day (TND) is a Cloud Kitchen of Fast Food & Restaurant with Multi Cuisine',
+    'class' : 'fastfood_1',  
+
+    'caption': 'Welcome!!!',
+    'sub_text': 'Looks like You have done it!'
     }
 
     return render(request, '404.html', context)

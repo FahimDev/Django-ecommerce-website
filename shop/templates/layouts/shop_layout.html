@@ -118,11 +118,11 @@
                                                         </li>
                                                     </ul>
                                                 </li>
+                                                {% if request.user.is_staff %}
                                                 <li class="nav-item">
-                                                    <a>
-                                                        <span>Fast food</span>
-                                                    </a>
+                                                    <a href="{% url 'admin:index' %}" type="button" class="btn btn-info">Office</a>
                                                 </li>
+                                                {% endif %}
                                                 <li class="nav-item">
                                                     <a href="{% url 'cus_reg' %}">
                                                         <span>Sign Up</span>
