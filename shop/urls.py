@@ -9,7 +9,6 @@ from . import views
 
 urlpatterns = [
     path('', views.public.welcome,name='welcome'),
-    path('admin/', admin.site.urls, name='admin'),
     path('product-category', views.public.category,name= 'collections'),
     path('products-by-category', views.public.categoryProducts, name='prod_collection'),
     path('product-detail',views.public.details, name= 'prod_details'),
@@ -23,6 +22,6 @@ urlpatterns = [
 
     #-------------------->customer
     path('profile', views.customer.profile, name= 'cus_profile'),
-    path('update-customer-profile', views.customer.editProfile, name= 'update_customer')
-
+    path('update-customer-profile', views.customer.editProfile, name= 'update_customer'),
+    path('add-billing-address', views.customer.addBillingAddress, name= 'create_address')
 ]

@@ -23,17 +23,17 @@ class RegisterCustomerForm(UserCreationForm):
         fields = ['username', 'password1', 'password2','first_name', 'last_name', 'email', 'contact', 'social_media_link']
 
 class UpdateCustomerForm(UserChangeForm):
-    birthdate = forms.DateField(label='Birth Date', widget=forms.DateInput(attrs={'type': 'date'}))
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'birthdate']
+        fields = ['first_name', 'last_name', 'email']
 
 class CustomerInfoFrom(ModelForm):
+    birthdate = forms.DateField(label='Birth Date', widget=forms.DateInput(attrs={'type': 'date'}))
     class Meta:
         model = Customer
-        fields = '__all__'
+        fields = ['social_media_link', 'gender', 'contact', 'profile_image', 'birthdate']
 
 class BillingAddressForm(ModelForm):
     class Meta:
         model = BillingAddress
-        fields = '__all__'
+        fields = ['division', 'city', 'zip_code', 'address', 'user']

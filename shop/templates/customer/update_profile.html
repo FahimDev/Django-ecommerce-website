@@ -43,6 +43,8 @@
                                     <img src="{% static 'default_images/profile/' %}{{gender}}" id="output" width="200" />
                                 {% endif %}
                               </div>
+                              <p><samp>Click to Change Image</samp></p>
+
                             <div class="mt-3">
                                 <h4>{{user.first_name}} {{user.last_name}}</h4>
                                 <p class="text-secondary mb-1">User Name: <code>{{user.username}}</code></p>
@@ -78,7 +80,7 @@
                     </h6>
                 
                     <div class="card-body">
-                        <form method="put" >
+                        <form method="post" >
                             {% csrf_token %}
                             <div class="row">
                                 <div class="col-sm-3">
@@ -121,7 +123,7 @@
                                     <h6 class="mb-0">Date of Birth</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    {{user_form.birthdate}}
+                                    {{customer_form.birthdate}}
                                 </div>
                             </div>
                             <hr>
@@ -135,8 +137,17 @@
                             </div>
                             <hr>
                             <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Social Media Link</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{customer_form.social_media_link}}
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
                                 <div class="col-sm-12">
-                                    <a class="btn btn-primary " target="__blank" href="{% url 'update_customer' %}">Update</a>
+                                    <button type="submit" class="btn btn-primary " target="__blank">Update</button>
                                 </div>
                             </div>
                         </form>

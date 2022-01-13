@@ -8,6 +8,22 @@
 <div>Hello {{name}}!</div>
 </html>
 -->
+    <div class="app-download">
+        <label id="first-title">Download Our App</label>
+        <label id="second-title">!Download Now</label>
+        <i class="fa fa-mobile-phone bounce"></i>
+        <a class="close-download-app fa fa-close"></a>
+    </div> 
+<!--
+<div class="badges"><br>
+    <p>
+        <span class="firstLine">GET UP TO</span><br>
+        <span class="secondLine">$10,000</span><br>
+        <span class="thirdLine">PER MONTH</span><br>
+        <span class="fourthLine">AS A POPULAR INVESTOR</span>
+    </p>
+</div>
+-->
 
 <div class="container">
     <div class="main-body">
@@ -31,11 +47,11 @@
                                   <span>Profile Picture</span>
                                 </label>
                                 <input id="file" type="file" onchange="loadFile(event)"/>
-                                {% if profile_image == '' and gender == 'N' %}
+                                {% if customer_info.profile_image == '' and gender == 'N' %}
                                     <img src="{% static 'default_images/profile/profile-image-placeholder.png' %}" id="output" width="200" />
-                                {% elif profile_image == '' and gender == 'M' %}
+                                {% elif customer_info.profile_image == '' and gender == 'M' %}
                                     <img src="{% static 'default_images/profile/male-placeholder.jpg' %}" id="output" width="200" />
-                                {% elif profile_image == '' and gender == 'F' %}
+                                {% elif customer_info.profile_image == '' and gender == 'F' %}
                                     <img src="{% static 'default_images/profile/female-placeholder.jpg' %}" id="output" width="200" />
                                 {% else %}
                                     <img src="{% static 'default_images/profile/' %}{{gender}}" id="output" width="200" />
@@ -58,6 +74,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-md-8">
                 <div class="card mb-3">
                     <div class="card-body">
@@ -84,7 +101,34 @@
                                 <h6 class="mb-0">Phone</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                            (239) 816-9029
+                                {{customer_info.contact}}
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Date of Birth</h6>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <div id="badgeContainer" class="badges"><br>
+                                            <p>
+                                                <button type="button" class="btn btn-primary">
+                                                    <span class="thirdLine">Keep Your</span><br>
+                                                    <span class="secondLine">Birthday Updated</span><br>
+                                                    <span class="thirdLine">For</span><br>
+                                                    <span class="secondLine">Offer!</span><br>
+                                                </button>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6 text-secondary">
+                                        {{customer_info.birthdate}}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <hr>
@@ -93,7 +137,7 @@
                                 <h6 class="mb-0">Gender</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                            Male
+                                {{customer_info.get_gender_display}}
                             </div>
                         </div>
                         <hr>
@@ -102,7 +146,7 @@
                                 <h6 class="mb-0">Membership</h6>
                             </div>
                             <button type="button" class="btn btn-primary">
-                                Bronze <span class="badge badge-light">⭐</span>
+                                {{customer_info.get_membership_display}} <span class="badge badge-light">⭐</span>
                             </button>
                         </div>
                         <hr>
@@ -129,13 +173,14 @@
             </div>
         </div>
 
-              <div class="row gutters-sm">
-                    <div class="col-sm-6 mb-3">
+            <div class="row gutters-sm">
+                <div class="col-sm-6 mb-3">
                         <div class="card">
                             <div class="card-body">
                                 <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">Add New </i>Billing Address</h6>
-                                <form method="POST">
+                                <form method="POST" action="{% url 'create_address' %}">
                                     {% csrf_token %}
+                                    {{form.user.as_hidden}}
                                     <div class="row mb-3">
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">Division</h6>
@@ -183,9 +228,9 @@
                         </div>
                     </div>
                     <div class="col-sm-6 mb-3">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">Optional </i>Billing Address</h6>
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">Optional </i>Billing Address</h6>
                                 <small>Status: <code> Optional </code></small>
                                 <hr>
                                 <div class="row">
@@ -227,15 +272,14 @@
                                         <input type="button" class="btn btn-success px-4" value="Select as Billing Address">
                                     </div>
                                 </div>
+                            </div>
                         </div>
-                    </div>
                     </div>
                 </div>
             </div>
-          </div>
-
         </div>
     </div>
+</div>
 
 <style type="text/css">
 body{
@@ -328,6 +372,198 @@ body{
   display: inline-flex;
   padding: 0.2em;
   height: 2em;
+}
+
+
+/*  BADGE  */
+
+#badgeContainer{
+    zoom: 0.3;
+    -moz-transform: scale(0.5);
+}
+
+.firstLine {
+    font-size: 24px;
+    font-weight: 300;
+}.secondLine {
+    font-size: 36px;
+    line-height: 36px;
+    font-weight: 600;
+} .thirdLine {
+    font-size: 26px;
+    line-height: 32px;
+    font-weight: 300;
+}.fourthLine {
+    font-size: 12px;
+    font-weight: 300;
+    position: relative;
+    top: -10px;
+}
+
+.badges {
+    position:relative;
+    margin:10px auto;
+    width:200px;
+    height:200px;
+    background:#552F87;
+    border-radius:100%;
+    color: rgb(238, 238, 238);
+    line-height: 25px;
+    text-align: center;
+    text-transform: uppercase;
+    font-family: "Open Sans",sans-serif;
+    -webkit-animation: 3s ease-in-out 0s normal none infinite running swing;
+    -moz-animation: 3s ease-in-out 0s normal none infinite running swing;
+    -o-animation: 3s ease-in-out 0s normal none infinite running swing;
+    animation: 3s ease-in-out 0s normal none infinite running swing;
+    
+    -webkit-transform-origin: 100px -71px;
+    -moz-transform-origin: 100px -71px;
+    -o-transform-origin: 100px -71px;
+    transform-origin: 100px -71px;
+}
+.badges:before{
+    content:'';
+    position:absolute;
+    top:90px;left:90px;
+    width:20px;height:20px;
+    border-radius:100%;
+    -webkit-box-shadow: 0px -82px 0px -2px #fff;
+    /*
+    , 0px -100px #552F87,20px -98px #552F87,39px -94px #552F87,56px -85px #552F87,71px -72px #552F87,
+                83px -57px #552F87,93px -40px #552F87,98px -20px #552F87,100px 0px #552F87,
+                
+                -20px -98px #552F87,-39px -94px #552F87,-71px -72px #552F87,
+                -56px -85px #552F87,-83px -57px #552F87,-93px -40px #552F87,-98px -20px #552F87,-100px 0px #552F87,
+                
+                0px 100px #552F87,-20px 98px #552F87,-39px 94px #552F87,-56px 85px #552F87,
+                -71px 72px #552F87,-83px 57px #552F87,-93px -40px #552F87,-98px 20px #552F87,-93px 40px #552F87,
+                
+                20px 98px #552F87,39px 94px #552F87,56px 85px #552F87,
+                71px 72px #552F87,83px 57px #552F87,93px 40px #552F87,98px 20px #552F87
+    */
+                
+    
+    -moz-box-shadow: 0px -82px 0px -2px #fff;
+                
+    
+    -o-box-shadow: 0px -82px 0px -2px #fff;
+                
+    
+    box-shadow: 0px -82px 0px -2px #fff;
+}
+.badges:after{
+    content:'';
+    position:absolute;
+    top:-70px;left:99px;
+    width:2px;height:81px;
+    border-radius:0%;
+    background:#000;
+}
+
+@-webkit-keyframes swing{
+    0%{-webkit-transform:rotate(5deg);}
+    50%{-webkit-transform:rotate(-5deg);}
+    100%{-webkit-transform:rotate(5deg);}
+}
+@-moz-keyframes swing{
+    0%{-moz-transform:rotate(5deg);}
+    50%{-moz-transform:rotate(-5deg);}
+    100%{-moz-transform:rotate(5deg);}
+}
+@-o-keyframes swing{
+    0%{-o-transform:rotate(5deg);}
+    50%{-o-transform:rotate(-5deg);}
+    100%{-o-transform:rotate(5deg);}
+}
+@keyframes swing{
+    0%{transform:rotate(5deg);}
+    50%{transform:rotate(-5deg);}
+    100%{transform:rotate(5deg);}
+}
+
+/* Badge 2 */
+
+.app-download {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  direction: rtl;
+  background-color: #dc1e4d;
+  top: 0;
+  position: fixed;
+  flex-direction: column;
+  z-index: 100;
+  left: 2rem;
+  border-bottom-right-radius: 50%;
+  border-bottom-left-radius: 50%;
+  box-shadow: 1px 2px 14px 5px #00000070;
+  padding: 1rem;
+}
+.app-download:focus {
+  outline: none;
+}
+.app-download label {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  color: #fff;
+  cursor: pointer;
+}
+.app-download label#first-title {
+  font-size: 1rem;
+}
+.app-download label#second-title {
+  font-size: 0.8rem;
+}
+.app-download .fa-mobile-phone {
+  color: #fff;
+  font-size: 2.5rem;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  border: 2px dotted #fff;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin: 0.5rem 0;
+  cursor: pointer;
+}
+.app-download .close-download-app {
+  color: #fff;
+  margin-top: 0.5rem;
+  font-size: 0.7rem;
+  cursor: pointer;
+}
+
+.bounce {
+  animation: bounce 0.5s;
+  animation-direction: alternate;
+  animation-timing-function: cubic-bezier(0.5, 0.05, 1, 0.5);
+  animation-iteration-count: infinite;
+  -webkit-animation-name: bounce;
+  -webkit-animation-duration: 0.5s;
+  -webkit-animation-direction: alternate;
+  -webkit-animation-timing-function: cubic-bezier(0.5, 0.05, 1, 0.5);
+  -webkit-animation-iteration-count: infinite;
+}
+
+@keyframes bounce {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 3px, 0);
+  }
+}
+@-webkit-keyframes bounce {
+  from {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    -webkit-transform: translate3d(0, 3px, 0);
+    transform: translate3d(0, 3px, 0);
+  }
 }
 </style>
 {% endwith %}

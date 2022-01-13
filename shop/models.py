@@ -30,10 +30,10 @@ class Customer(models.Model):
 
     profile_image = models.ImageField(null= True, blank= True)
     gender = models.CharField(max_length= 50, choices= GENDER_VALUES, default= GENDER_NONE)
-    user_id = models.OneToOneField(User, null= True, on_delete= models.CASCADE)
+    user = models.OneToOneField(User, null= True, on_delete= models.CASCADE)
     contact = models.CharField (max_length= 15,unique=True)
     social_media_link = models.CharField (max_length= 200)
-    birthdate = models.DateTimeField(auto_now=True)
+    birthdate = models.DateTimeField(auto_now=False)
     membership = models.CharField(max_length= 12, choices=MEMBERSHIP_CHOICES, default= MEMBERSHIP_BRONGE) 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -113,13 +113,21 @@ class ProductImage(models.Model):
 #-----------------------------------------------------------------------------------------------------------------
 
 class BillingAddress(models.Model):
-    customer_id = models.ForeignKey(Customer, on_delete= models.PROTECT)
+    CURRENT_DELIVERY = 1
+    OPTIONAL_ADDRESS = 0
+    ORDER_STATUS = [
+        (OPTIONAL_ADDRESS, 'Optional Address'),
+        (CURRENT_DELIVERY, 'Current Delivery')
+    ]
+
+    user = models.ForeignKey(User, null= True, on_delete= models.CASCADE)
     address = models.TextField()
     city = models.CharField(max_length= 100)
     zip_code = models.IntegerField()
     division = models.CharField(max_length= 100)
     latitude = models.CharField(max_length=200)
     longitude = models.CharField(max_length=200)
+    status = models.CharField(max_length= 100, choices= ORDER_STATUS, default= OPTIONAL_ADDRESS)
 
 #-----------------------------------------------------------------------------------------------------------------
 

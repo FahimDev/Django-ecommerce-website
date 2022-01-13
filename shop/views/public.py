@@ -71,7 +71,7 @@ def registration(request):
         if form.is_valid():
             #Transaction is a very impornt module in Django ORM. Here multiple operation will take place in different table. This module will ensure none of those will not get miss 
             with transaction.atomic():
-                user = form.save()  #insert
+                user = form.save()  #Insert / Update
                 #Get contact number from form and store at phone 
                 phone = form.cleaned_data.get('contact')
                 #Get Social Link from form and store at link 
@@ -80,7 +80,7 @@ def registration(request):
                 group = Group.objects.get(name='Customer')
                 #insert Group type at auth_user_groups table
                 user.groups.add(group)
-                Customer.objects.create(contact = phone, social_media_link = link, user_id = user)
+                Customer.objects.create(contact = phone, social_media_link = link, user = user)
 
                 messages.success(request, 'New User Created Successfully')
 

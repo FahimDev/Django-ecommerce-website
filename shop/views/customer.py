@@ -9,6 +9,8 @@ from django.http import HttpRequest,HttpResponseRedirect
 
 from shop.forms import BillingAddressForm,UpdateCustomerForm,CustomerInfoFrom
 
+
+from django.contrib.auth.models import User
 from shop.models import Customer
 
 
@@ -16,7 +18,7 @@ from shop.models import Customer
 def profile(request):
     customer_info = Customer.objects.get(user_id = request.user.id)
 
-    form = BillingAddressForm
+    form = BillingAddressForm(initial={'user': request.user.id})
 
     if request.method == 'POST':
         form = BillingAddressForm(request.POST)
@@ -28,7 +30,7 @@ def profile(request):
     'title' : 'Profile',
     'h1_tag' : 'The New Day (TND) is a Cloud Kitchen of Fast Food & Restaurant with Multi Cuisine',
     'class' : 'fastfood_1',  
-    'profile_image' : customer_info.profile_image,
+    'customer_info' : customer_info,
     'gender' : customer_info.gender,
     'form' : form
     }
@@ -43,7 +45,23 @@ def editProfile(request):
 
     user_form = UpdateCustomerForm(instance=request.user)
 
-    user_form.initial["birthdate"] = customer_info.birthdate
+
+    if request.method == 'POST':
+        
+        user_info = User.objects.get(id = request.user.id)
+        user_form = UpdateCustomerForm(request.POST,instance = user_info)
+        customer_form = CustomerInfoFrom(request.POST,instance = customer_info)
+        
+        print(customer_form.errors)
+
+
+        if user_form.is_valid() and customer_form.is_valid():
+
+            user_form.save()
+            customer_form.save()
+            #Customer.objects.filter(user = request.user.id).update(user_form)
+            return redirect('cus_profile')
+        
 
     context = {
     'title' : 'Edit Profile',
@@ -56,3 +74,17 @@ def editProfile(request):
     'customer_form' : customer_form
     }
     return render(request, 'customer/update_profile.html', context)
+
+
+@allowed_user
+def addBillingAddress(request):
+    if request.method == 'POST':
+        address_form = BillingAddressForm(request.POST)
+        #address_form.initial['user'] = request.user.id
+        
+        print(address_form.errors)
+        if address_form.is_valid():
+            instance = address_form.instance
+            instance.user = request.user
+            instance.save()
+            return redirect('cus_profile')

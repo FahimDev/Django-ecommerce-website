@@ -18,6 +18,9 @@ from django.urls import path,include
 
 import shop
 
+admin.site.site_header = 'Office Area'
+admin.site.site_title = 'Super Admin'
+
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     path('', include('shop.urls'))
