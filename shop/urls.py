@@ -15,7 +15,7 @@ urlpatterns = [
     path('product-detail',views.public.details, name= 'prod_details'),
     path('customer-registration', views.public.registration, name= 'cus_reg'),
     path('user-login', views.public.loginPage, name= 'login'),
-    path('flush-logout', views.public.logoutUser, name= 'logoutFlush'),
+    path('flush-logout', views.public.logoutUser, name= 'logout_flush'),
     path('404', views.public.error, name= '404'),
 
     path('test', views.public.unlock, name= 'unlock'),
@@ -23,5 +23,6 @@ urlpatterns = [
 
     #-------------------->customer
     path('profile', views.customer.profile, name= 'cus_profile'),
+    path('update-customer-profile', views.customer.editProfile, name= 'update_customer')
 
 ]

@@ -1,0 +1,268 @@
+{% extends '../layouts/shop_layout.html' %}
+
+{% load static %}
+{% block content %}
+<!--Set Value
+{% with name="World" %}     
+<html>
+<div>Hello {{name}}!</div>
+</html>
+-->
+
+<div class="container">
+    <div class="main-body">
+    
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb" class="main-breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'welcome' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'cus_profile' %}">User Profile</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Update Profile</li>
+        </ol>
+        </nav>
+        <!-- /Breadcrumb -->
+    
+        <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            <div class="profile-pic">
+                                <label class="-label" for="file">
+                                    <i class="fa fa-angle-down"></i>
+                                  <span>Change Image</span>
+                                </label>
+                                <input id="file" type="file" onchange="loadFile(event)"/>
+                                {% if profile_image == '' and gender == 'N' %}
+                                    <img src="{% static 'default_images/profile/profile-image-placeholder.png' %}" id="output" width="200" />
+                                {% elif profile_image == '' and gender == 'M' %}
+                                    <img src="{% static 'default_images/profile/male-placeholder.jpg' %}" id="output" width="200" />
+                                {% elif profile_image == '' and gender == 'F' %}
+                                    <img src="{% static 'default_images/profile/female-placeholder.jpg' %}" id="output" width="200" />
+                                {% else %}
+                                    <img src="{% static 'default_images/profile/' %}{{gender}}" id="output" width="200" />
+                                {% endif %}
+                              </div>
+                            <div class="mt-3">
+                                <h4>{{user.first_name}} {{user.last_name}}</h4>
+                                <p class="text-secondary mb-1">User Name: <code>{{user.username}}</code></p>
+                                <p class="text-muted font-size-sm">Last Login: 
+                                    <span class="badge badge-pill badge-secondary">
+                                        {{user.last_login}}
+                                    </span>
+                                </p>
+                                <button class="btn btn-primary">Order List</button>
+                                <a href="{% url 'collections' %}" type="button" class="btn btn-success">
+                                    Quick Shop <span class="badge badge-light">🛒</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--
+                <button onclick="document.getElementById('myImage').src='pic_bulbon.gif'">Turn on the light</button>
+
+                <img id="myImage" src="pic_bulboff.gif" style="width:100px">
+
+                <button onclick="document.getElementById('myImage').src='pic_bulboff.gif'">Turn off the light</button>
+            -->
+            <div class="col-md-8">
+                <div class="card mb-3">
+                    <h6 class="d-flex align-items-center mb-3">
+                        <small>Last Updated:  
+                            <span class="badge badge-pill badge-secondary">
+                                {{last_updated_at}}
+                            </span>
+                        </small>
+                    </h6>
+                
+                    <div class="card-body">
+                        <form method="put" >
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">First Name</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{user_form.first_name}}
+                                </div>
+                            </div>
+                                <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Last Name</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{user_form.last_name}}
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Email</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{user_form.email}}
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Phone</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{customer_form.contact}}
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Date of Birth</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{user_form.birthdate}}
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Gender</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{customer_form.gender}}
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <a class="btn btn-primary " target="__blank" href="{% url 'update_customer' %}">Update</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="row gutters-sm">
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    var loadFile = function (event) {
+    var image = document.getElementById("output");
+    image.src = URL.createObjectURL(event.target.files[0]);
+    };
+</script>
+
+<style type="text/css">
+body{
+    margin-top:20px;
+    color: #1a202c;
+    text-align: left;
+    background-color: #e2e8f0;    
+}
+.main-body {
+    padding: 15px;
+}
+.card {
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+}
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 0 solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+}
+
+.card-body {
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1rem;
+}
+
+.gutters-sm {
+    margin-right: -8px;
+    margin-left: -8px;
+}
+
+.gutters-sm>.col, .gutters-sm>[class*=col-] {
+    padding-right: 8px;
+    padding-left: 8px;
+}
+.mb-3, .my-3 {
+    margin-bottom: 1rem!important;
+}
+
+.bg-gray-300 {
+    background-color: #e2e8f0;
+}
+.h-100 {
+    height: 100%!important;
+}
+.shadow-none {
+    box-shadow: none!important;
+}
+
+.profile-pic {
+  color: transparent;
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.profile-pic input {
+  display: none;
+}
+
+.profile-pic img {
+  position: absolute;
+  object-fit: cover;
+  width: 165px;
+  height: 165px;
+  box-shadow: 0 0 10px 0 rgba(255, 255, 255, 0.35);
+  border-radius: 100px;
+  z-index: 0;
+}
+
+.profile-pic:hover .-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 10000;
+  color: #fafafa;
+  transition: background-color 0.2s ease-in-out;
+  border-radius: 100px;
+  margin-bottom: 0;
+}
+
+.profile-pic .-label {
+  cursor: pointer;
+  height: 165px;
+  width: 165px;
+}
+
+.profile-pic span {
+  display: inline-flex;
+  padding: 0.2em;
+  height: 2em;
+}
+
+</style>
+{% endwith %}
+
+{% endblock %}

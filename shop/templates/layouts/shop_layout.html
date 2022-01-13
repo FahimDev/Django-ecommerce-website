@@ -123,11 +123,13 @@
                                                     <a href="{% url 'admin:index' %}" type="button" class="btn btn-info">Office</a>
                                                 </li>
                                                 {% endif %}
+                                                {% if user.id is None %}
                                                 <li class="nav-item">
                                                     <a href="{% url 'cus_reg' %}">
                                                         <span>Sign Up</span>
                                                     </a>
                                                 </li>
+                                                {% endif %}
                                                 <li class="nav-item">
                                                     <a href="{% url 'collections' %}">
                                                         <span>Food Categories</span>
@@ -171,7 +173,9 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            {% if user.id is None %}
                                             <!-- PC VIEW-->
+                                            
                                             <div class="icon_accounts">
                                                 <div class="m_login-account">
                                                     <span class="dropdown-toggle login-icon" data-toggle="dropdown">
@@ -184,7 +188,7 @@
                                                             <div class="login-register-content">
                                                                 <ul class="nav nav-tabs">
                                                                     <li class="account-item-title active">
-                                                                        <a href="#account-login" data-toggle="tab">
+                                                                        <a href="{% url 'login' %}">
                                                                             Login
                                                                         </a>
                                                                     </li>
@@ -219,9 +223,9 @@
                                                                 <li class="link-item"><a href="./compare.html">My Compare</a></li>
                                                             </ul>
                                                             <ul class="currencies currencies-content">
-                                                                <li class="currency-USD active">
-                                                                    <a href="javascript:;">USD</a>
-                                                                    <input type="hidden" value="USD" />
+                                                                <li class="currency-BDT active">
+                                                                    <a href="javascript:;">BDT</a>
+                                                                    <input type="hidden" value="BDT" />
                                                                 </li>
                                                                 <li class="currency-GBP">
                                                                     <a href="javascript:;">GBP</a>
@@ -236,6 +240,28 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            {% else %}
+                                            <li class="nav-item dropdown navigation">
+                                                <a href="" type="button" class="dropdown-toggle dropdown-link btn btn-info" data-toggle="dropdown">
+                                                    <span><i class="fa fa-angle-down"></i> User</span>
+                                                    <i class="fa fa-angle-down"></i>
+                                                    <i class="sub-dropdown1  visible-sm visible-md visible-lg"></i>
+                                                    <i class="sub-dropdown visible-sm visible-md visible-lg"></i>
+                                                </a>
+                                                <ul class="dropdown-menu">
+                                                    <li class="li-sub-mega">
+                                                        <a href="{% url 'cus_profile' %}" tabindex="-1" href="#">
+                                                            Profile
+                                                        </a>
+                                                    </li>
+                                                    <li class="li-sub-mega">
+                                                        <a href="{% url 'logout_flush' %}" type="button" class="btn btn-info"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            
+                                            {% endif %}
+
                                         </div>
                                     </div>
                                     <!-- MOBILE VIEW-->
@@ -292,6 +318,8 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!--Mobile Login-->
+                                                {% if user.id is None %}
                                                 <div class="icon_accounts">
                                                     <div class="m_login-account">
                                                         <span class="dropdownMobile-toggle login-icon">
@@ -304,7 +332,7 @@
                                                                 <div class="login-register-content">
                                                                     <ul class="nav nav-tabs">
                                                                         <li class="account-item-title active">
-                                                                            <a href="#account-login-mobile" data-toggle="tab">
+                                                                            <a href="{% url 'login' %}">
                                                                                 Login
                                                                             </a>
                                                                         </li>
@@ -335,13 +363,13 @@
                                                                     </div>
                                                                 </div>
                                                                 <ul class="wish-compare-content">
-                                                                    <li class="link-item"><a href="./wish-list.html">My Wishlist</a></li>
-                                                                    <li class="link-item"><a href="./compare.html">My Compare</a></li>
+                                                                    <li class="link-item"><a href="">My Wishlist</a></li>
+                                                                    <li class="link-item"><a href="">My Compare</a></li>
                                                                 </ul>
                                                                 <ul class="currencies currencies-content">
-                                                                    <li class="currency-USD active">
-                                                                        <a href="javascript:;">USD</a>
-                                                                        <input type="hidden" value="USD" />
+                                                                    <li class="currency-BDT active">
+                                                                        <a href="javascript:;">BDT</a>
+                                                                        <input type="hidden" value="BDT" />
                                                                     </li>
                                                                     <li class="currency-GBP">
                                                                         <a href="javascript:;">GBP</a>
@@ -356,6 +384,11 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                {% else %}
+                                                <li class="nav-item">
+                                                    <a href="{% url 'logout_flush' %}" type="button" class="btn btn-info">Logout</a>
+                                                </li>
+                                                {% endif %}
                                             </div>
                                             <div class="navMobile-menu">
                                                 <div class="group_navbtn">
@@ -415,11 +448,13 @@
                                                                     Fast food
                                                                 </a>
                                                             </li>
+                                                            {% if user.id is None %}
                                                             <li class="nav-item">
                                                                 <a href="{% url 'cus_reg' %}">
-                                                                    Sign Up
+                                                                    <span>Sign Up</span>
                                                                 </a>
                                                             </li>
+                                                            {% endif %}
                                                             <li class="nav-item">
                                                                 <a href="{% url 'collections' %}">
                                                                     Food Categories

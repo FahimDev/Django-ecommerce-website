@@ -11,10 +11,9 @@ from shop.decorator import auth_user_page_restriction,allowed_user #Custom Desig
 
 
 
-from django.forms import inlineformset_factory
-from django.contrib.auth.forms import UserCreationForm
+
 from django.urls.conf import path
-from shop.forms import RegisterCustomer
+from shop.forms import RegisterCustomerForm
 
 from shop.models import Customer
 
@@ -64,10 +63,10 @@ def details(request):
 
 @auth_user_page_restriction
 def registration(request):
-    form = RegisterCustomer
+    form = RegisterCustomerForm
 
     if request.method == 'POST':
-        form = RegisterCustomer(request.POST)
+        form = RegisterCustomerForm(request.POST)
         
         if form.is_valid():
             #Transaction is a very impornt module in Django ORM. Here multiple operation will take place in different table. This module will ensure none of those will not get miss 
