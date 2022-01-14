@@ -54,7 +54,7 @@
                                 {% elif customer_info.profile_image == '' and gender == 'F' %}
                                     <img src="{% static 'default_images/profile/female-placeholder.jpg' %}" id="output" width="200" />
                                 {% else %}
-                                    <img src="{% static 'default_images/profile/' %}{{gender}}" id="output" width="200" />
+                                    <img src="{% static 'media/' %}{{customer_info.profile_image}}" id="output" width="200" />
                                 {% endif %}
                               </div>
                             <div class="mt-3">
@@ -74,7 +74,27 @@
                     </div>
                 </div>
             </div>
-
+            {% for message in messages %}
+                                    
+                {% if 'success' in message.tags %}
+                <div class="card">
+                    <div class="card-body">
+                        <div id ="messages" class="alert alert-success" role="alert">
+                            {{message}}
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="card">
+                    <div class="card-body">
+                        <div id ="messages" class="alert alert-danger" role="alert">
+                            {{message}}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+            
             <div class="col-md-8">
                 <div class="card mb-3">
                     <div class="card-body">
@@ -152,10 +172,24 @@
                         <hr>
                         <div class="row">
                             <div class="col-sm-3">
-                                <h6 class="mb-0">Address</h6>
+                                <h6 class="mb-0">Billing Address</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                            Bay Area, San Francisco, CA
+                                
+                                {% for item in address %}
+                                    {% if item.status == '1' %}
+                                        {{item.city}}, {{item.division}}, {{item.zip_code}}
+                                        </br>
+                                        <p><small>{{item.address}}</small></p>
+                                    {% endif %}
+                                {% endfor %}
+
+                                <!--
+                                    <div class="alert alert-danger" role="alert">
+                                        Please create / select a Billing Address.
+                                    </div>
+                                -->
+                                
                             </div>
                         </div>
                         <hr>
@@ -172,7 +206,26 @@
 
             </div>
         </div>
-
+        {% for message in messages %}
+                                    
+            {% if 'success' in message.tags %}
+            <div class="card">
+                <div class="card-body">
+                    <div id ="messages" class="alert alert-success" role="alert">
+                        {{message}}
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="card">
+                <div class="card-body">
+                    <div id ="messages" class="alert alert-danger" role="alert">
+                        {{message}}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
             <div class="row gutters-sm">
                 <div class="col-sm-6 mb-3">
                         <div class="card">
@@ -227,18 +280,32 @@
                             </div>
                         </div>
                     </div>
+                    {% for item in address %}
                     <div class="col-sm-6 mb-3">
                         <div class="card h-100">
                             <div class="card-body">
-                                <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">Optional </i>Billing Address</h6>
-                                <small>Status: <code> Optional </code></small>
+                                {% if item.status == '1' %}
+                                <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2"> 
+                                        Selected
+                                </i>Billing Address</h6>
+                                <small>Status: <code> 
+                                        Selected
+                                </code></small>
+                                {% else %}
+                                <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2"> 
+                                        Optional
+                                </i>Billing Address</h6>
+                                <small>Status: <code> 
+                                        Optional
+                                </code></small>
+                                {% endif %}    
                                 <hr>
                                 <div class="row">
                                     <div class="col-sm-3">
                                     <h6 class="mb-0">Division</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        Dhaka
+                                        {{item.division}}
                                     </div>
                                 </div>
                                 <div class="row">
@@ -246,7 +313,7 @@
                                     <h6 class="mb-0">City</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        Dhaka City
+                                        {{item.city}}
                                     </div>
                                 </div>
                                 <div class="row">
@@ -254,7 +321,7 @@
                                     <h6 class="mb-0">Zip Code</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        1219
+                                        {{item.zip_code}}
                                     </div>
                                 </div>
                                 <div class="row">
@@ -262,19 +329,43 @@
                                     <h6 class="mb-0">Address</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        House: 21, Road: 01, Block: E, Banasree
+                                        {{item.address}}
                                     </div>
                                 </div>
                                 <hr>
                                 <div class="row">
-                                    <div class="col-sm-3"></div>
+                                    <!--
+                                        <div class="col-sm-12">
+                                        <div id="googleMap" style="width:100%;height:400px;"></div>
+                                        <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY&callback=myMap"></script>
+                                        <script>
+                                        function myMap() {
+                                        var mapProp= {
+                                        center:new google.maps.LatLng(27.2046,77.4977),
+                                        zoom:5,
+                                        };
+                                        var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+                                        }
+                                        </script>
+
+                                        
+                                    </div>
+                                    -->
+                                </div>
+                                <hr>
+                                <div class="row">
                                     <div class="col-sm-9 text-secondary">
-                                        <input type="button" class="btn btn-success px-4" value="Select as Billing Address">
+                                        <a href="{% url 'set_address' item.id %}" class="btn btn-success px-4">Select as Billing Address</a>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <a href="{% url 'flush_address' item.id %}" class="btn btn-danger px-4">Remove</a>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>

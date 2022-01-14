@@ -8,17 +8,28 @@ from django.shortcuts import redirect, render
 from django.http import HttpRequest,HttpResponseRedirect
 
 from shop.forms import BillingAddressForm,UpdateCustomerForm,CustomerInfoFrom
-
+from django.contrib import messages
 
 from django.contrib.auth.models import User
-from shop.models import Customer
+from django.db import transaction
+from shop.models import BillingAddress, Customer
 
 
 @allowed_user
 def profile(request):
-    customer_info = Customer.objects.get(user_id = request.user.id)
+    
 
-    form = BillingAddressForm(initial={'user': request.user.id})
+    try:
+        customer_info = Customer.objects.get(user_id = request.user.id)
+
+        form = BillingAddressForm(initial={'user': request.user.id})
+
+        address = BillingAddress.objects.filter(user_id = request.user.id)
+    except:
+        messages.info(request, 'Something went wrong! Data Retriving Error')
+        return render(request, 'customer/profile.html')
+    
+    print(request.user.customer.contact)
 
     if request.method == 'POST':
         form = BillingAddressForm(request.POST)
@@ -32,6 +43,7 @@ def profile(request):
     'class' : 'fastfood_1',  
     'customer_info' : customer_info,
     'gender' : customer_info.gender,
+    'address' : address,
     'form' : form
     }
     return render(request, 'customer/profile.html', context)
@@ -50,17 +62,21 @@ def editProfile(request):
         
         user_info = User.objects.get(id = request.user.id)
         user_form = UpdateCustomerForm(request.POST,instance = user_info)
-        customer_form = CustomerInfoFrom(request.POST,instance = customer_info)
+        customer_form = CustomerInfoFrom(request.POST,request.FILES,instance = customer_info)
         
-        print(customer_form.errors)
-
+        print(customer_form.errors)#{{customer_form.initial.profile_image}}
 
         if user_form.is_valid() and customer_form.is_valid():
+            try:
+                user_form.save()
+                customer_form.save()
+                #Customer.objects.filter(user = request.user.id).update(user_form)
+                messages.success(request, 'Profile Updated')
+                return redirect('cus_profile')
+            except:
+                messages.info(request, 'Something went wrong!')
+                return redirect('cus_profile')
 
-            user_form.save()
-            customer_form.save()
-            #Customer.objects.filter(user = request.user.id).update(user_form)
-            return redirect('cus_profile')
         
 
     context = {
@@ -84,7 +100,37 @@ def addBillingAddress(request):
         
         print(address_form.errors)
         if address_form.is_valid():
-            instance = address_form.instance
-            instance.user = request.user
-            instance.save()
+
+            try:
+                instance = address_form.instance
+                instance.user = request.user
+                instance.save()
+                messages.success(request, 'New Billing Address Created')
+                return redirect('cus_profile')
+            except:
+                messages.info(request, 'Something went wrong! Please Try again')
+                return redirect('cus_profile')
+
+def setBillingAddress(request, sent_pk):
+    try:
+        with transaction.atomic():
+            BillingAddress.objects.filter(user_id = request.user.id).update(status = 0)
+            BillingAddress.objects.filter(pk = sent_pk, user_id = request.user.id).update(status = 1)
+            messages.success(request, 'Billing Address Selected')
             return redirect('cus_profile')
+    except:
+        messages.info(request, 'Something went wrong! Please try again.')
+        return redirect('cus_profile')
+            
+@allowed_user
+def deleteBillingAddress(request, sent_pk):
+    try:
+        address = BillingAddress(pk = sent_pk, user_id = request.user.id)
+        address.delete()
+        messages.success(request, 'Billing Address Removed')
+        return redirect('cus_profile')
+    except:
+        messages.info(request, 'Something went wrong!')
+        return redirect('cus_profile')
+
+

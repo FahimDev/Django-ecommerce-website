@@ -29,11 +29,13 @@ class UpdateCustomerForm(UserChangeForm):
 
 class CustomerInfoFrom(ModelForm):
     birthdate = forms.DateField(label='Birth Date', widget=forms.DateInput(attrs={'type': 'date'}))
+    #profile_image = forms.ImageField(label='Profile Image', widget=forms.FileInput(attrs={'type': 'hidden','accept':'image/*'}))
     class Meta:
         model = Customer
         fields = ['social_media_link', 'gender', 'contact', 'profile_image', 'birthdate']
 
 class BillingAddressForm(ModelForm):
+    address = forms.CharField(label='Address', widget=forms.Textarea(attrs={'rows': 3}))
     class Meta:
         model = BillingAddress
         fields = ['division', 'city', 'zip_code', 'address', 'user']

@@ -40,7 +40,7 @@
                                 {% elif profile_image == '' and gender == 'F' %}
                                     <img src="{% static 'default_images/profile/female-placeholder.jpg' %}" id="output" width="200" />
                                 {% else %}
-                                    <img src="{% static 'default_images/profile/' %}{{gender}}" id="output" width="200" />
+                                    <img src="{% static 'media/' %}{{profile_image}}" id="output" width="200" />
                                 {% endif %}
                               </div>
                               <p><samp>Click to Change Image</samp></p>
@@ -69,6 +69,26 @@
 
                 <button onclick="document.getElementById('myImage').src='pic_bulboff.gif'">Turn off the light</button>
             -->
+            {% for message in messages %}
+                                    
+                {% if 'success' in message.tags %}
+                <div class="card">
+                    <div class="card-body">
+                        <div id ="messages" class="alert alert-success" role="alert">
+                            {{message}}
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="card">
+                    <div class="card-body">
+                        <div id ="messages" class="alert alert-danger" role="alert">
+                            {{message}}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
             <div class="col-md-8">
                 <div class="card mb-3">
                     <h6 class="d-flex align-items-center mb-3">
@@ -80,8 +100,9 @@
                     </h6>
                 
                     <div class="card-body">
-                        <form method="post" >
+                        <form method="post" enctype="multipart/form-data" >
                             {% csrf_token %}
+                            
                             <div class="row">
                                 <div class="col-sm-3">
                                     <h6 class="mb-0">First Name</h6>
@@ -146,6 +167,15 @@
                             </div>
                             <hr>
                             <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Update Image</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{customer_form.profile_image}}
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
                                 <div class="col-sm-12">
                                     <button type="submit" class="btn btn-primary " target="__blank">Update</button>
                                 </div>
@@ -166,6 +196,8 @@
 <script>
     var loadFile = function (event) {
     var image = document.getElementById("output");
+    var path = document.getElementById("file").value;
+    document.getElementById("id_profile_image").value = path;
     image.src = URL.createObjectURL(event.target.files[0]);
     };
 </script>
