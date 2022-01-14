@@ -22,14 +22,14 @@ def profile(request):
     try:
         customer_info = Customer.objects.get(user_id = request.user.id)
 
-        form = BillingAddressForm(initial={'user': request.user.id})
+        form = BillingAddressForm(initial={'customer': request.user.customer.id})
 
-        address = BillingAddress.objects.filter(user_id = request.user.id)
+        address = BillingAddress.objects.filter(customer_id = request.user.customer.id)
     except:
         messages.info(request, 'Something went wrong! Data Retriving Error')
         return render(request, 'customer/profile.html')
     
-    print(request.user.customer.contact)
+    print(request.user.customer.id)
 
     if request.method == 'POST':
         form = BillingAddressForm(request.POST)
@@ -75,9 +75,7 @@ def editProfile(request):
                 return redirect('cus_profile')
             except:
                 messages.info(request, 'Something went wrong!')
-                return redirect('cus_profile')
-
-        
+                return redirect('cus_profile')       
 
     context = {
     'title' : 'Edit Profile',
@@ -103,7 +101,7 @@ def addBillingAddress(request):
 
             try:
                 instance = address_form.instance
-                instance.user = request.user
+                instance.customer = request.user.customer
                 instance.save()
                 messages.success(request, 'New Billing Address Created')
                 return redirect('cus_profile')
@@ -114,8 +112,8 @@ def addBillingAddress(request):
 def setBillingAddress(request, sent_pk):
     try:
         with transaction.atomic():
-            BillingAddress.objects.filter(user_id = request.user.id).update(status = 0)
-            BillingAddress.objects.filter(pk = sent_pk, user_id = request.user.id).update(status = 1)
+            BillingAddress.objects.filter(customer_id = request.user.customer.id).update(status = 0)
+            BillingAddress.objects.filter(pk = sent_pk, customer_id = request.user.customer.id).update(status = 1)
             messages.success(request, 'Billing Address Selected')
             return redirect('cus_profile')
     except:
@@ -125,7 +123,7 @@ def setBillingAddress(request, sent_pk):
 @allowed_user
 def deleteBillingAddress(request, sent_pk):
     try:
-        address = BillingAddress(pk = sent_pk, user_id = request.user.id)
+        address = BillingAddress(pk = sent_pk, customer_id = request.user.customer.id)
         address.delete()
         messages.success(request, 'Billing Address Removed')
         return redirect('cus_profile')

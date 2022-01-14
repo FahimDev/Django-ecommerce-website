@@ -38,4 +38,4 @@ class BillingAddressForm(ModelForm):
     address = forms.CharField(label='Address', widget=forms.Textarea(attrs={'rows': 3}))
     class Meta:
         model = BillingAddress
-        fields = ['division', 'city', 'zip_code', 'address', 'user']
+        fields = ['division', 'city', 'zip_code', 'address', 'customer']

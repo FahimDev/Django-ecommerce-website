@@ -233,7 +233,7 @@
                                 <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">Add New </i>Billing Address</h6>
                                 <form method="POST" action="{% url 'create_address' %}">
                                     {% csrf_token %}
-                                    {{form.user.as_hidden}}
+                                    {{form.customer.as_hidden}}
                                     <div class="row mb-3">
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">Division</h6>

@@ -120,7 +120,7 @@ class BillingAddress(models.Model):
         (CURRENT_DELIVERY, 'Current Delivery')
     ]
 
-    user = models.ForeignKey(User, null= True, on_delete= models.CASCADE)
+    customer = models.ForeignKey(Customer, null= True, on_delete= models.CASCADE)
     address = models.TextField()
     city = models.CharField(max_length= 100)
     zip_code = models.IntegerField()
