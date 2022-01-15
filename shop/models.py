@@ -5,12 +5,13 @@ from django.db.models.base import Model
 from django.db.models.deletion import CASCADE, PROTECT
 
 from django.contrib.auth.models import User
+import datetime
 
 
 #-----------------------------------------------------------------------------------------------------------------
 def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    return 'user_{0}/{1}'.format('customer/', str(instance.user.customer.contact)+'.jpg')
+    return 'user_{0}/{1}'.format('customer/', str(instance.user.username)+'_'+ str(datetime.datetime.now())+str(instance.user.id)+'786'+'.jpg')
     #https://docs.djangoproject.com/en/dev/ref/models/fields/#django.db.models.FileField.upload_to
 class Customer(models.Model):
     MEMBERSHIP_GOLD = 'G'
