@@ -1,3 +1,4 @@
+from distutils.command.upload import upload
 from django.db import models
 from django.db.models import fields
 from django.db.models.base import Model
@@ -7,6 +8,10 @@ from django.contrib.auth.models import User
 
 
 #-----------------------------------------------------------------------------------------------------------------
+def user_directory_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    return 'user_{0}/{1}'.format('customer/', str(instance.user.customer.contact)+'.jpg')
+    #https://docs.djangoproject.com/en/dev/ref/models/fields/#django.db.models.FileField.upload_to
 class Customer(models.Model):
     MEMBERSHIP_GOLD = 'G'
     MEMBERSHIP_SILVER = 'S'
@@ -28,7 +33,7 @@ class Customer(models.Model):
         (GENDER_NONE, 'None')
     ]
 
-    profile_image = models.ImageField(null= True, blank= True)
+    profile_image = models.ImageField(null= True, blank= True, upload_to = user_directory_path)
     gender = models.CharField(max_length= 50, choices= GENDER_VALUES, default= GENDER_NONE)
     user = models.OneToOneField(User, null= True, on_delete= models.CASCADE)
     contact = models.CharField (max_length= 15,unique=True)
