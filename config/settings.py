@@ -52,6 +52,8 @@ INSTALLED_APPS = [
     'shop',
 ]
 
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

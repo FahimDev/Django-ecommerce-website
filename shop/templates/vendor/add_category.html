@@ -10,29 +10,39 @@
     <div class="content mt-3">
         <div class="animated fadeIn">
             <div class="row">
-                <div class="col-lg-3"></div>
+                <div class="col-lg-3">
+                    
+                </div>
                 <div class="col-lg-6">
                     <div class="card">
                         <div class="card-header"><strong>Create</strong><small> Category</small></div>
+                        {% for message in messages %}
+                                    
+                            {% if 'success' in message.tags %}
+        
+                                    <div id ="messages" class="alert alert-success" role="alert">
+                                        {{message}}
+                                    </div>
+    
+                            {% else %}
+                
+                                    <div id ="messages" class="alert alert-danger" role="alert">
+                                        {{message}}
+                                    </div>
+                
+                            {% endif %}
+                        {% endfor %}
                         <div class="card-body card-block">
-                            <form method="post" action="registrationForm" enctype="multipart/form-data" accept-charset="UTF-8">
+                            <form method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+                                {% csrf_token %}
                                 <div class="form-group">
-                                    <label for="name" class=" form-control-label">Category Name</label>
-                                    <input type="text" value="" placeholder="Category Name" name="category_name" asp-for="category_name" class="form-control">
+                                    <label for="name" class=" form-control-label">{{ form.category_name.label }}</label>
+                                    {{ form.category_name }}
                                     <span asp-validation-for="category_name" class="text-danger"></span>
                                 </div>
-                                <label for="name" class=" form-control-label">Unit</label>
+                                <label for="name" class=" form-control-label">{{ form.unit.label }}</label>
                                 <div class="input-group mb-3">
-                                    <select name="category_unit" asp-for="category_unit" class="custom-select">
-                                        <option disabled>Choose...</option>
-                                        <option value="Kilogram">Kilogram (kg)</option>
-                                        <option value="gram">Gram (gm)</option>
-                                        <option value="Pound">Pound</option>
-                                        <option value="Milliliter">Milliliter (ml)</option>
-                                        <option value="Liter">Liter</option>
-                                        <option value="Person">Person</option>
-                                        <option value="Inch">Inch</option>
-                                    </select>
+                                    {{ form.unit }}
                                     <div class="input-group-append">
                                         <label class="input-group-text" for="inputGroupSelect02">Options</label>
                                     </div>
@@ -40,44 +50,67 @@
                                 <span asp-validation-for="category_unit" class="text-danger"></span>
 
                                 <div class="form-group">
-                                    <label for="size" class=" form-control-label">Small</label>
-                                    <input type="number" value="" placeholder="Size (Small)" name="volume_small" asp-for="volume_small" class="form-control">
+                                    <label for="size" class=" form-control-label">{{ form.small.label }}</label>
+                                    {{ form.small }}
                                 </div>
 
                                 <span asp-validation-for="volume_small" class="text-danger"></span>
 
                                 <div class="form-group">
-                                    <label for="size" class=" form-control-label">Medium</label>
-                                    <input type="number" value="" placeholder="Size (Medium)" name="volume_medium" asp-for="volume_medium" class="form-control">
+                                    <label for="size" class=" form-control-label">{{ form.medium.label }}</label>
+                                    {{ form.medium }}
                                 </div>
                                 <span asp-validation-for="volume_medium" class="text-danger"></span>
 
                                 <div class="form-group">
-                                    <label for="size" class=" form-control-label">Large</label>
-                                    <input type="number" value="" placeholder="Size (Large)" name="volume_large" asp-for="volume_large" class="form-control">
+                                    <label for="size" class=" form-control-label">{{ form.large.label }}</label>
+                                    {{ form.large }}
                                 </div>
                                 <span asp-validation-for="volume_large" class="text-danger"></span>
 
                                 <div class="row form-group">
-                                    <div class="col col-md-12"><label for="description" class=" form-control-label">Category Policy</label></div>
-                                    <div class="col-12 col-md-12"><textarea name="category_policy" asp-for="category_policy" id="textarea-input" rows="4" placeholder="Policy..." class="form-control"></textarea></div>
+                                    <div class="col col-md-12"><label for="description" class=" form-control-label">{{ form.policy.label }}</label></div>
+                                    <div class="col-12 col-md-12">{{ form.policy }}</div>
                                 </div>
-                                <span asp-validation-for="volume_large" class="text-danger"></span>
+
+
+                                <div class="row form-group">
+                                    <div class="col col-md-12"><label for="description" class=" form-control-label">{{ form.meta_keywords.label }}</label></div>
+                                    <div class="col-12 col-md-12">{{ form.meta_keywords }}</div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col col-md-12"><label for="description" class=" form-control-label">{{ form.meta_description.label }}</label></div>
+                                    <div class="col-12 col-md-12">{{ form.meta_description }}</div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col col-md-12"><label for="description" class=" form-control-label">{{ form.slug.label }}</label></div>
+                                    <div class="col-12 col-md-12">{{ form.slug }}</div>
+                                </div>
 
                                 <div class="form-group">
                                     <label for="displayBanner" class=" form-control-label">Category Home-Page Banner</label></br><span class="badge badge-info"> Make sure you have selected a High Quality image for cropping <span class="badge badge-secondary">1170X182 (px)</span> </span></br></br>
-                                    <input type="file" id="home-banner-image" name="category_banner_image" asp-for="category_banner_image" class="form-control-file">
+                                    {{form.banner_img_path}}
+
+                                    {{form.x}}
+                                    {{form.y}}
+                                    {{form.image_width}}
+                                    {{form.image_height}}
                                 </div>
-                                <input type="hidden" asp-for="imageblob_banner" name="imageblob_banner" id="imageblob-banner" />
+
                                 <div class="form-group">
                                     <label for="displayImage" class=" form-control-label">Category Display Image</label><input type="text" placeholder="380X200 (px)" disabled>
-                                    <input type="file" id="m-image" name="category_image" asp-for="category_image" class="form-control-file">
+                                    {{form.category_img_path}}
                                 </div>
-                                <input type="hidden" asp-for="imageblob" name="imageblob" id="imageblob" />
+                                <input type="hidden" name="imageblob" id="imageblob" />
                                 <div class="form-group">
-                                    <input asp-area="Admin" asp-controller="Category" asp-action="Create" class="btn btn-success btn-lg btn-block" type="submit" value="Create">
+                                    <button type="submit" id="submit" class="btn btn-success btn-lg btn-block" >Create</button>
                                 </div>
                             </form>
+
+                           
+
                         </div>
                     </div>
                 </div>
@@ -179,7 +212,66 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.11/cropper.min.js"></script>
+    <script src="{% static 'js/jquery-cropper.min.js' %}"></script>
     <script>
+
+        
+        // $('#submit').on("click", function(){
+
+        //     const csrf = $('input[name=csrfmiddlewaretoken]').val();
+        //     const title = $('#id_category_name').val();
+        //     const unit = $('#id_unit').val();
+        //     const small = $('#id_small').val();
+        //     const medium = $('#id_medium').val();
+        //     const large = $('#id_large').val();
+        //     const policy = $('#id_policy').val();
+        //     const meta_key = $('#id_meta_keywords').val();
+        //     const meta_desc = $('#id_meta_description').val();
+        //     const slug_url = $('#id_slug').val();
+        //     blob_banner = $('#id_imageblob_banner').val();
+        //     blob_display = $('#imageblob').val();
+
+        //     const targetURL = "{% url 'add_category' %}";
+
+        //     blob_banner = blob_banner.replace('data:image/png;base64,','');
+        //     blob_display = blob_display.replace('data:image/png;base64,','');
+
+        //     console.log('--------------------------------------------------')
+        //     console.log(blob_banner)
+        //     console.log(blob_banner)
+
+        //     const catData = new FormData();
+        //     catData.append('csrfmiddlewaretoken', csrf)
+        //     catData.append('banner_img_path', blob_banner)
+        //     catData.append('category_img_path', blob_display)
+        //     catData.append('category_name', title)
+        //     catData.append('unit', unit)
+        //     catData.append('small', small)
+        //     catData.append('medium', medium)
+        //     catData.append('large', large)
+        //     catData.append('policy', policy)
+        //     catData.append('meta_keywords', meta_key)
+        //     catData.append('meta_description', meta_desc)
+        //     catData.append('slug', slug_url)
+
+
+        //     $.ajax({
+        //         type: 'POST',
+        //         url: targetURL,
+        //         enctype: 'multipart/form-data',
+        //         data: catData,
+        //         success: function(response){
+        //             console.log(response)
+        //         },
+        //         error: function(error){
+        //             console.log(error)
+        //         },
+        //         cache: false,
+        //         contentType: false,
+        //         processData: false,
+        //     })
+        // });
+
 
         var bs_modal = $("#modal");
         var home_bn_modal = $("#banner-cropper-modal");
@@ -187,7 +279,7 @@
         var banner_image = document.getElementById("home-banner-image-crop-View");
         var cropper, reader, file;
 
-        $("body").on("change", "#m-image", function (e) {
+        $("body").on("change", "#id_category_img_path", function (e) {
             var files = e.target.files;
             var done = function (url) {
                 image.src = url;
@@ -209,7 +301,7 @@
             }
         });
 
-        $("body").on("change", "#home-banner-image", function (e) {
+        $("body").on("change", "#id_banner_img_path", function (e) {
             var files = e.target.files;
             var done = function (url) {
                 banner_image.src = url;
@@ -239,46 +331,60 @@
                     preview: ".preview",
                     dragMode: "none",
                     cropBoxResizable: false,
+                    crop: function(e){
+                        let data = e.detail;
+                        $("#id_x").val(data.x);
+                        $("#id_y").val(data.y);
+                        $("#id_image_height").val(data.height);
+                        $("#id_image_width").val(data.width);
+
+                        console.log()
+                    }
                 });
             })
             .on("hidden.bs.modal", function () {
                 cropper.destroy();
                 cropper = null;
             });
+        
 
         $("#crop-banner").click(function () {
             canvas = cropper.getCroppedCanvas({
                 width: 160,
                 height: 160,
             });
+            
+            
+            // canvas.toBlob(function (blob) {
+            //     url = URL.createObjectURL(blob);
+            //     var reader = new FileReader();
+            //     reader.readAsDataURL(blob);
+            //     reader.onloadend = function () {
+            //         var base64data = reader.result;
 
-            canvas.toBlob(function (blob) {
-                url = URL.createObjectURL(blob);
-                var reader = new FileReader();
-                reader.readAsDataURL(blob);
-                reader.onloadend = function () {
-                    var base64data = reader.result;
+            //         canvas = cropper.getCroppedCanvas({
+            //             width: 1170,
+            //             height: 182,
+            //         });
 
-                    canvas = cropper.getCroppedCanvas({
-                        width: 1170,
-                        height: 182,
-                    });
-
-                    canvas.toBlob(function (blob) {
-                        url = URL.createObjectURL(blob);
-                        var reader = new FileReader();
-                        reader.readAsDataURL(blob);
-                        reader.onloadend = function () {
-                            var base64data = reader.result;
-                            //let file = new File([base64data], "name.png");
-                            $("#imageblob-banner").val(base64data.toString());
-                            console.log($("#imageblob-banner").val())
-                            home_bn_modal.modal("hide");
-                        };
-                    });
-                };
-            });
+            //         canvas.toBlob(function (blob) {
+            //             url = URL.createObjectURL(blob);
+            //             var reader = new FileReader();
+            //             reader.readAsDataURL(blob);
+            //             reader.onloadend = function () {
+            //                 var base64data = reader.result;
+            //                 //let file = new File([base64data], "name.png");
+            //                 $("#id_imageblob_banner").val(base64data.toString());
+            //                 console.log($("#id_imageblob_banner").val())
+            //                 home_bn_modal.modal("hide");
+            //             };
+            //         });
+            //     };
+            // });
         });
+
+
+
 
         //---------------------------------------------------------------------
 
@@ -330,6 +436,65 @@
                 };
             });
         });
+
+        
+
+//         $(function(){
+
+// /* SCRIPT TO OPEN THE MODAL WITH THE PREVIEW */
+//         $("#id_banner_img_path").change(function (e) {
+//         if (this.files && this.files[0]) {
+//             var reader = new FileReader();
+//             reader.onload = function (e) {
+//             $("#home-banner-image-crop-View").attr("src", e.target.result);
+//             $("#banner-cropper-modal").modal("show");
+//             }
+//             reader.readAsDataURL(this.files[0]);
+//         }
+//         });
+
+//         /* SCRIPTS TO HANDLE THE CROPPER BOX */
+//         var $image = $("#home-banner-image-crop-View");
+//         var cropBoxData;
+//         var canvasData;
+//         $("#banner-cropper-modal").on("shown.bs.modal", function () {
+//         $image.cropper({
+//             viewMode: 1,
+//             aspectRatio: 1/1,
+//             minCropBoxWidth: 200,
+//             minCropBoxHeight: 200,
+//             ready: function () {
+//             $image.cropper("setCanvasData", canvasData);
+//             $image.cropper("setCropBoxData", cropBoxData);
+//             }
+//         });
+//         }).on("hidden.bs.modal", function () {
+//         cropBoxData = $image.cropper("getCropBoxData");
+//         canvasData = $image.cropper("getCanvasData");
+//         $image.cropper("destroy");
+//         });
+
+//         // Enable zoom in button
+//         $(".js-zoom-in").click(function () {
+//         $image.cropper("zoom", 0.1);
+//         });
+
+//         // Enable zoom out button
+//         $(".js-zoom-out").click(function () {
+//         $image.cropper("zoom", -0.1);
+//         });
+
+//         /* SCRIPT TO COLLECT THE DATA AND POST TO THE SERVER */
+//         $(".js-crop-and-upload").click(function () {
+//         var cropData = $image.cropper("getData");
+//         $("#id_x").val(cropData["x"]);
+//         $("#id_y").val(cropData["y"]);
+//         $("#id_image_height").val(cropData["height"]);
+//         $("#id_image_width").val(cropData["width"]);
+//         $("#formUploadButton").click();
+//         });
+
+//         })
     </script>
 
 

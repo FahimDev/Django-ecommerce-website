@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 import datetime
 
 
+
 #-----------------------------------------------------------------------------------------------------------------
 def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
@@ -47,14 +48,20 @@ class Customer(models.Model):
 
 
 #-----------------------------------------------------------------------------------------------------------------
+def shop_directory_path(instance,filename):
+    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    return 'shop_{0}/{1}'.format('category/', 'category_type_image_'+ str(datetime.datetime.now())+'.jpg')
+    #https://docs.djangoproject.com/en/dev/ref/models/fields/#django.db.models.FileField.upload_to
+
+
 class Category(models.Model):
     category_name = models.CharField(max_length=100)
-    banner_img_path = models.CharField(max_length= 200)
-    category_img_path = models.CharField(max_length= 200)
+    banner_img_path = models.ImageField(null= True, blank= True, upload_to = shop_directory_path)
+    category_img_path = models.ImageField(null= True, blank= True, upload_to = shop_directory_path)
     policy = models.TextField(null= True)
     meta_keywords = models.CharField(max_length=400, null= True)
     meta_description = models.TextField(null= True)
-    slug = models.SlugField()
+    slug = models.SlugField(unique= True,max_length=150)
     large = models.DecimalField(max_digits=6,decimal_places=2)
     medium = models.DecimalField(max_digits=6,decimal_places=2)
     small = models.DecimalField(max_digits=6,decimal_places=2)
