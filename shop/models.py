@@ -108,15 +108,15 @@ class Product(models.Model):
     product_title = models.CharField(max_length=200)
     meta_keywords = models.CharField(max_length=400, null= True)
     meta_description = models.TextField(null= True)
-    category_id = models.ForeignKey(Category, on_delete= models.CASCADE)
-    merchant_id = models.PositiveBigIntegerField(default=1) #For Future Development
+    category = models.ForeignKey(Category, on_delete= models.CASCADE)
+    merchant = models.PositiveBigIntegerField(default=1) #For Future Development
     video_url = models.URLField(max_length=300)
     slug = models.SlugField()
     product_description = models.TextField()
     product_material = models.TextField()
     product_brand = models.CharField(max_length= 100) 
     packing_type = models.CharField(max_length=100, choices= PACKING_TYPES, default= PACKING_POLY_BAG)
-    product_sale = models.DecimalField(max_digits=3,decimal_places=2)
+    product_sale = models.DecimalField(max_digits=6,decimal_places=2)
     price = models.DecimalField(max_digits=6,decimal_places=2)
     status = models.CharField(max_length=100,choices= PRODUCT_STATUS, default= PRODUCT_STOCKED)
     created_at = models.DateTimeField(auto_now_add=True)

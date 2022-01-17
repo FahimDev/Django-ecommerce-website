@@ -62,15 +62,12 @@ def createProduct(request):
         
         print(form.errors)
         if form.is_valid():
-            #instance = form.instance
-            #instance.banner_img_path = form.cleaned_data.get('imageblob_banner')
-            
             try:
                 form.save()
-                messages.success(request, 'New Category Created')
-                return redirect('add_category')
+                messages.success(request, 'New Product Added')
+                return redirect('add_product')
             except:
                 messages.info(request, 'Something went wrong!')
-                return redirect('add_category')
+                return redirect('add_product')
 
     return render(request, 'vendor/add_product.html', context)

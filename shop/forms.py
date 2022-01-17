@@ -127,45 +127,9 @@ class CreateProductForm(ModelForm):
     meta_description = forms.CharField(label='Meta Description (SEO)', widget=forms.Textarea(attrs={'rows': 3, 'class': 'form-control', 'placeholder': 'Write a short description about this category. (100 Words max)'}))
     slug = forms.CharField(label='Slug (URL-SEO)', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'name-of-the-category'}))
 
-    x = forms.FloatField(widget=forms.HiddenInput())
-    y = forms.FloatField(widget=forms.HiddenInput())
-    image_width = forms.FloatField(widget=forms.HiddenInput())
-    image_height = forms.FloatField(widget=forms.HiddenInput())
-
-    x1 = forms.FloatField(widget=forms.HiddenInput())
-    y1 = forms.FloatField(widget=forms.HiddenInput())
-    image_width1 = forms.FloatField(widget=forms.HiddenInput())
-    image_height1 = forms.FloatField(widget=forms.HiddenInput())
-	
-	
-    #banner_img_path = forms.ImageField(label='Banner',required=False, widget=forms.FileInput(attrs={'class': 'form-control'})) #, initial='no'
 
     class Meta:
         model = Product
         fields = '__all__'
 
-    def save(self):
-        photo = super(CreateProductForm, self).save(commit=False)
-
-        x = self.cleaned_data.get('x')
-        y = self.cleaned_data.get('y')
-        w = self.cleaned_data.get('image_width')
-        h = self.cleaned_data.get('image_height')
-
-        x1 = self.cleaned_data.get('x1')
-        y1 = self.cleaned_data.get('y1')
-        w1 = self.cleaned_data.get('image_width1')
-        h1 = self.cleaned_data.get('image_height1')
-
-        image = Image.open(photo.banner_img_path)
-        image1 = Image.open(photo.category_img_path)
-        print(x)
-        cropped_image = image.crop((x, y, w + x, h + y))
-        #resized_image = cropped_image.resize((117, 182), Image.ANTIALIAS) 
-        cropped_image.save(photo.banner_img_path.path)
-
-        cropped_image1 = image1.crop((x1, y1, w1 + x1, h1 + y1))
-        #resized_image = cropped_image.resize((117, 182), Image.ANTIALIAS) 
-        cropped_image1.save(photo.category_img_path.path)
-        
-        return super(CreateProductForm, self).save(commit=True)
+    
