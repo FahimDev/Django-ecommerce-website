@@ -31,4 +31,6 @@ urlpatterns = [
     path('vendor-office', views.vendor.dashboard, name= 'dash'),
     path('add-category', views.vendor.createCategory, name= 'add_category'),
 
+    path('add-product', views.vendor.createProduct, name= 'add_product'),
+
 ]

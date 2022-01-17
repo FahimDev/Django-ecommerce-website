@@ -13,7 +13,7 @@ from shop.decorator import auth_user_page_restriction,allowed_user #Custom Desig
 
 
 from django.urls.conf import path
-from shop.forms import CreateCategoryForm
+from shop.forms import CreateCategoryForm, CreateProductForm
 
 from shop.models import Customer
 
@@ -38,21 +38,39 @@ def createCategory(request):
         
         print(form.errors)
         if form.is_valid():
-            #instance = form.instance
-            #instance.customer = request.user.customer
-                
-            #instance.banner_img_path = form.cleaned_data.get('imageblob_banner')
-            print('Flag1')
-            form.save()
-            print(form.errors)
-            messages.success(request, 'New Category Created')
-            return redirect('add_category')
-            """
             try:
-
+                form.save()
+                messages.success(request, 'New Category Created')
+                return redirect('add_category')
             except:
-                messages.info(request, form.errors)
-                return redirect('welcome')
-            """
+                messages.info(request, 'Something went wrong!')
+                return redirect('add_category')
 
     return render(request, 'vendor/add_category.html', context)
+
+def createProduct(request):
+
+    form = CreateProductForm
+    context = {
+        'title' : 'Create Product',
+        'form' : form
+    }
+
+    if request.method == 'POST':
+        form = CreateProductForm(request.POST,request.FILES)
+        #address_form.initial['user'] = request.user.id
+        
+        print(form.errors)
+        if form.is_valid():
+            #instance = form.instance
+            #instance.banner_img_path = form.cleaned_data.get('imageblob_banner')
+            
+            try:
+                form.save()
+                messages.success(request, 'New Category Created')
+                return redirect('add_category')
+            except:
+                messages.info(request, 'Something went wrong!')
+                return redirect('add_category')
+
+    return render(request, 'vendor/add_product.html', context)

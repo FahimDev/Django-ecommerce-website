@@ -102,6 +102,11 @@
                                 <div class="form-group">
                                     <label for="displayImage" class=" form-control-label">Category Display Image</label><input type="text" placeholder="380X200 (px)" disabled>
                                     {{form.category_img_path}}
+
+                                    {{form.x1}}
+                                    {{form.y1}}
+                                    {{form.image_width1}}
+                                    {{form.image_height1}}
                                 </div>
                                 <input type="hidden" name="imageblob" id="imageblob" />
                                 <div class="form-group">
@@ -151,7 +156,7 @@
                             data-dismiss="modal">
                         Cancel
                     </button>
-                    <button type="button" class="btn btn-primary" id="crop">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">
                         Crop
                     </button>
                 </div>
@@ -190,7 +195,7 @@
                             data-dismiss="modal">
                         Cancel
                     </button>
-                    <button type="button" class="btn btn-primary" id="crop-banner">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">
                         Crop
                     </button>
                 </div>
@@ -396,6 +401,16 @@
                     preview: ".preview",
                     dragMode: "none",
                     cropBoxResizable: false,
+                    crop: function(e){
+                        let data = e.detail;
+                        $("#id_x1").val(data.x);
+                        $("#id_y1").val(data.y);
+                        $("#id_image_height1").val(data.height);
+                        $("#id_image_width1").val(data.width);
+
+                        console.log()
+                    }
+                    
                 });
             })
             .on("hidden.bs.modal", function () {
@@ -409,32 +424,32 @@
                 height: 160,
             });
 
-            canvas.toBlob(function (blob) {
-                url = URL.createObjectURL(blob);
-                var reader = new FileReader();
-                reader.readAsDataURL(blob);
-                reader.onloadend = function () {
-                    var base64data = reader.result;
+            // canvas.toBlob(function (blob) {
+            //     url = URL.createObjectURL(blob);
+            //     var reader = new FileReader();
+            //     reader.readAsDataURL(blob);
+            //     reader.onloadend = function () {
+            //         var base64data = reader.result;
 
-                    canvas = cropper.getCroppedCanvas({
-                        width: 380,
-                        height: 200,
-                    });
+            //         canvas = cropper.getCroppedCanvas({
+            //             width: 380,
+            //             height: 200,
+            //         });
 
-                    canvas.toBlob(function (blob) {
-                        url = URL.createObjectURL(blob);
-                        var reader = new FileReader();
-                        reader.readAsDataURL(blob);
-                        reader.onloadend = function () {
-                            var base64data = reader.result;
-                            //let file = new File([base64data], "name.png");
-                            $("#imageblob").val(base64data.toString());
-                            console.log($("#imageblob").val())
-                            bs_modal.modal("hide");
-                        };
-                    });
-                };
-            });
+            //         canvas.toBlob(function (blob) {
+            //             url = URL.createObjectURL(blob);
+            //             var reader = new FileReader();
+            //             reader.readAsDataURL(blob);
+            //             reader.onloadend = function () {
+            //                 var base64data = reader.result;
+            //                 //let file = new File([base64data], "name.png");
+            //                 $("#imageblob").val(base64data.toString());
+            //                 console.log($("#imageblob").val())
+            //                 bs_modal.modal("hide");
+            //             };
+            //         });
+            //     };
+            // });
         });
 
         

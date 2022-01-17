@@ -5,11 +5,12 @@ from django.contrib.auth.forms import UserCreationForm,UserChangeForm
 from django.contrib.auth.models import User
 from django import forms
 
-from shop.models import BillingAddress, Category,Customer
+from shop.models import BillingAddress, Category,Customer, Product
 
 
 from PIL import Image
-
+import os
+from pprint import pprint
 
 
 class RegisterCustomerForm(UserCreationForm):
@@ -62,6 +63,11 @@ class CreateCategoryForm(ModelForm):
     y = forms.FloatField(widget=forms.HiddenInput())
     image_width = forms.FloatField(widget=forms.HiddenInput())
     image_height = forms.FloatField(widget=forms.HiddenInput())
+
+    x1 = forms.FloatField(widget=forms.HiddenInput())
+    y1 = forms.FloatField(widget=forms.HiddenInput())
+    image_width1 = forms.FloatField(widget=forms.HiddenInput())
+    image_height1 = forms.FloatField(widget=forms.HiddenInput())
 	
 	
     #banner_img_path = forms.ImageField(label='Banner',required=False, widget=forms.FileInput(attrs={'class': 'form-control'})) #, initial='no'
@@ -78,9 +84,88 @@ class CreateCategoryForm(ModelForm):
         w = self.cleaned_data.get('image_width')
         h = self.cleaned_data.get('image_height')
 
+        x1 = self.cleaned_data.get('x1')
+        y1 = self.cleaned_data.get('y1')
+        w1 = self.cleaned_data.get('image_width1')
+        h1 = self.cleaned_data.get('image_height1')
+
         image = Image.open(photo.banner_img_path)
+       
+        cropped_image = image.crop((x, y, w + x, h + y))
+        c_path = photo.banner_img_path.path
+        c_name = photo.banner_img_path
+        cropped_image.save(c_path)
+        photo.banner_img_path = c_name.name
+        #pprint(c_name.name)
+
+        #---------------------------------------------------------------------
+
+        image1 = Image.open(photo.category_img_path)
+
+        cropped_image1 = image1.crop((x1, y1, w1 + x1, h1 + y1))
+        c_path1 = photo.category_img_path.path
+        c_name1 = photo.category_img_path
+        cropped_image1.save(c_path1) 
+        photo.category_img_path = c_name1.name
+
+        return super(CreateCategoryForm, self).save(commit=True)
+
+
+#-------------------------------------------------------------------------------------------------
+
+class CreateProductForm(ModelForm):
+    product_title = forms.CharField(label='Product Name', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your product name'}))
+    product_description = forms.CharField(label='Product Description', widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 3,'placeholder': 'Write a description about this product. (300 Words max)'}))
+    video_url = forms.URLField(label='Video_URL', widget=forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'www.example.com/demo/user'}))
+    product_material = forms.CharField(label='Product Ingredients', widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Mention the ingredients'}))
+    product_brand = forms.CharField(label='Product Brand',required= False ,widget=forms.TextInput(attrs={'placeholder': 'Brand Name', 'class': 'form-control'}))
+    product_sale = forms.DecimalField(label='Price Off' ,widget=forms.NumberInput(attrs={'placeholder': 'n < 100 (%)', 'class': 'form-control'}))
+    price = forms.DecimalField(label='Product Price',widget=forms.NumberInput(attrs={'placeholder': 'Price of the Product (MRP in Taka)', 'class': 'form-control'}))
+
+
+    meta_keywords = forms.CharField(label='Meta Keywords (SEO)', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'keywords1, keywords2, keywords3,.........'}))
+    meta_description = forms.CharField(label='Meta Description (SEO)', widget=forms.Textarea(attrs={'rows': 3, 'class': 'form-control', 'placeholder': 'Write a short description about this category. (100 Words max)'}))
+    slug = forms.CharField(label='Slug (URL-SEO)', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'name-of-the-category'}))
+
+    x = forms.FloatField(widget=forms.HiddenInput())
+    y = forms.FloatField(widget=forms.HiddenInput())
+    image_width = forms.FloatField(widget=forms.HiddenInput())
+    image_height = forms.FloatField(widget=forms.HiddenInput())
+
+    x1 = forms.FloatField(widget=forms.HiddenInput())
+    y1 = forms.FloatField(widget=forms.HiddenInput())
+    image_width1 = forms.FloatField(widget=forms.HiddenInput())
+    image_height1 = forms.FloatField(widget=forms.HiddenInput())
+	
+	
+    #banner_img_path = forms.ImageField(label='Banner',required=False, widget=forms.FileInput(attrs={'class': 'form-control'})) #, initial='no'
+
+    class Meta:
+        model = Product
+        fields = '__all__'
+
+    def save(self):
+        photo = super(CreateProductForm, self).save(commit=False)
+
+        x = self.cleaned_data.get('x')
+        y = self.cleaned_data.get('y')
+        w = self.cleaned_data.get('image_width')
+        h = self.cleaned_data.get('image_height')
+
+        x1 = self.cleaned_data.get('x1')
+        y1 = self.cleaned_data.get('y1')
+        w1 = self.cleaned_data.get('image_width1')
+        h1 = self.cleaned_data.get('image_height1')
+
+        image = Image.open(photo.banner_img_path)
+        image1 = Image.open(photo.category_img_path)
         print(x)
         cropped_image = image.crop((x, y, w + x, h + y))
         #resized_image = cropped_image.resize((117, 182), Image.ANTIALIAS) 
         cropped_image.save(photo.banner_img_path.path)
-        return super(CreateCategoryForm, self).save(commit=True)
+
+        cropped_image1 = image1.crop((x1, y1, w1 + x1, h1 + y1))
+        #resized_image = cropped_image.resize((117, 182), Image.ANTIALIAS) 
+        cropped_image1.save(photo.category_img_path.path)
+        
+        return super(CreateProductForm, self).save(commit=True)

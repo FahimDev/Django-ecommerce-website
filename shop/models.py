@@ -1,4 +1,5 @@
 from distutils.command.upload import upload
+import imp
 from django.db import models
 from django.db.models import fields
 from django.db.models.base import Model
@@ -7,7 +8,7 @@ from django.db.models.deletion import CASCADE, PROTECT
 from django.contrib.auth.models import User
 import datetime
 
-
+from pprint import pprint
 
 #-----------------------------------------------------------------------------------------------------------------
 def user_directory_path(instance, filename):
@@ -48,16 +49,18 @@ class Customer(models.Model):
 
 
 #-----------------------------------------------------------------------------------------------------------------
-def shop_directory_path(instance,filename):
-    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    return 'shop_{0}/{1}'.format('category/', 'category_type_image_'+ str(datetime.datetime.now())+'.jpg')
-    #https://docs.djangoproject.com/en/dev/ref/models/fields/#django.db.models.FileField.upload_to
+# def shop_directory_path(instance,filename):
+
+#     #pprint(dir(instance))
+#     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+#     return 'shop_{0}/{1}'.format('category/', 'category_type_image_'+ str(datetime.datetime.now())+'.jpg')
+#     #https://docs.djangoproject.com/en/dev/ref/models/fields/#django.db.models.FileField.upload_to
 
 
 class Category(models.Model):
     category_name = models.CharField(max_length=100)
-    banner_img_path = models.ImageField(null= True, blank= True, upload_to = shop_directory_path)
-    category_img_path = models.ImageField(null= True, blank= True, upload_to = shop_directory_path)
+    banner_img_path = models.ImageField(max_length=500, null= True, blank= True)
+    category_img_path = models.ImageField(max_length=500,null= True, blank= True)
     policy = models.TextField(null= True)
     meta_keywords = models.CharField(max_length=400, null= True)
     meta_description = models.TextField(null= True)
@@ -68,7 +71,11 @@ class Category(models.Model):
     unit = models.CharField(max_length= 100)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return u'{0}'.format(self.category_name)
 #-----------------------------------------------------------------------------------------------------------------
+
 #-----------------------------------------------------------------------------------------------------------------
 class Product(models.Model):
 
