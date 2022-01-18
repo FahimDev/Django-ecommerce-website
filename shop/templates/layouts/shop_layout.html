@@ -200,7 +200,8 @@
                                                                 </ul>
                                                                 <div class="tab-content group_form">
                                                                     <div class="tab-pane active account-item-content" id="account-login">
-                                                                        <form method="post" action="loginForm" id="customer_login" accept-charset="UTF-8">
+                                                                        <form method="post" action="{% url 'login' %}" id="customer_login" accept-charset="UTF-8">
+                                                                            {% csrf_token %}
                                                                             <div class="clearfix large_form form-item">
                                                                                 <input type="text"  value="" name="username" class="form-control" placeholder="User Name *" />
                                                                             </div>
@@ -344,7 +345,8 @@
                                                                     </ul>
                                                                     <div class="tab-content group_form">
                                                                         <div class="tab-pane active account-item-content" id="account-login-mobile">
-                                                                            <form method="post" action="loginForm" id="customer_login_mobile" accept-charset="UTF-8">
+                                                                            <form method="post" action="{% url 'login' %}" id="customer_login_mobile" accept-charset="UTF-8">
+                                                                                {% csrf_token %}
                                                                                 <div class="clearfix large_form form-item">
                                                                                     <input type="text" value="" name="username" class="form-control" placeholder="User Name *" />
                                                                                 </div>
@@ -645,7 +647,7 @@
                                 <li><a href="./login.html" title="Login">Login</a></li>
                             </ul>
                         </div>
-                        <div class="footer_copyright">Copyright &copy; 2021 <a href="./index.html" title="">Md. Ariful Islam & Md. Antonin Islam</a>. All Rights Reserved</div>
+                        <div class="footer_copyright">Copyright &copy; 2021 <a href="" title="">Md. Ariful Islam & Md. Antonin Islam</a>. All Rights Reserved</div>
                     </div>
                 </div>
             </section>
@@ -736,11 +738,11 @@
             updateCart();
             $(".add-to-cart").on('click', (e) => {
                 let prodID = e.currentTarget.id;
-                if (typeof (Storage) !== "undefined") {
-                    if (localStorage.getItem("products")) {
-                        let products = JSON.parse(localStorage.getItem("products"));                        
-                        let changed = false;
-                        products.some(prod => {
+                if (typeof (Storage) !== "undefined") { //Do my browser support it or not ?
+                    if (localStorage.getItem("products")) {     // value inside local storage
+                        let products = JSON.parse(localStorage.getItem("products"));  // Converted to object                      
+                        let changed = false;    // pore
+                        products.some(prod => {         //Check Quantity with ID (some is like Break)
                             if (prod.id == prodID) {
                                 prod.quantity = parseInt(prod.quantity) + 1;
                                 changed = true;
@@ -748,21 +750,21 @@
                             return changed;
                         })
 
-                        if (!changed) {
+                        if (!changed) {             //If clicked 1st time create new object
                             products.push({
                                 id: prodID,
                                 quantity: 1
                             })
                         }                       
                         localStorage.setItem("products", JSON.stringify(products));
-                    } else {
+                    } else {    // Else CART is empty
                         let products = [
                             {
                                 id: prodID,
                                 quantity: 1
                             }
                         ];
-                        localStorage.setItem("products", JSON.stringify(products));                        
+                        localStorage.setItem("products", JSON.stringify(products));   //From Array Converted to JSON                     
                     }
                     setCount(1);
                     updateCart();
@@ -778,19 +780,11 @@
                 deleteFromCart(e.currentTarget.id);
             })
             $(".cart-clear").click(() => {              
-                //localStorage.removeItem("products");
-                //setCount(0)
-                //$('.cart-count').html("0");
-                //let content = '';
-                //$('.items').html(content);
                 $("#cart-infos").hide(); 
             })
         });
     </script>
-    <!--<script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @RenderSection("Scripts", required: false)-->
+
    
 </body>
 </html>

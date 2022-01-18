@@ -15,9 +15,15 @@ from shop.decorator import auth_user_page_restriction,allowed_user #Custom Desig
 from django.urls.conf import path
 from shop.forms import RegisterCustomerForm
 
-from shop.models import Customer
+from shop.models import Customer,Product,ProductImage,Category
+
+from pprint import pp, pprint
 
 def welcome(request):
+
+    categories = Category.objects.all()
+    #pprint(dir(obj))
+
     contex = {
         'title' : 'Home Page',
         'h1_tag' : 'The New Day (TND) is a Cloud Kitchen of Fast Food & Restaurant with Multi Cuisine',
@@ -28,16 +34,19 @@ def welcome(request):
         'welcome_image_name' : 'popup-foodCover.png',
         'banner_title' : 'Free!',
         'banner_caption' : 'Home Delivery',
-        'hover_deal' : 'hoverFoodDeal.png'
+        'hover_deal' : 'hoverFoodDeal.png',
+        'categories' : categories
     }
     return render(request,'visitors/welcome.html', contex)
 
 
 def category(request):
+    categories = Category.objects.all()
     context = {
         'title' : 'Category Collections',
         'h1_tag' : 'The New Day (TND) is a Cloud Kitchen of Fast Food & Restaurant with Multi Cuisine',
-        'class' : 'fastfood_1'
+        'class' : 'fastfood_1',
+        'categories' : categories
     }
 
     return render(request, 'visitors/category.html',context)

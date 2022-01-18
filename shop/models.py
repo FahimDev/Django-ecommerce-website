@@ -108,7 +108,7 @@ class Product(models.Model):
     product_title = models.CharField(max_length=200)
     meta_keywords = models.CharField(max_length=400, null= True)
     meta_description = models.TextField(null= True)
-    category = models.ForeignKey(Category, on_delete= models.CASCADE)
+    category = models.ForeignKey(Category, related_name='products', on_delete= models.CASCADE)
     merchant = models.PositiveBigIntegerField(default=1) #For Future Development
     video_url = models.URLField(max_length=300)
     slug = models.SlugField()

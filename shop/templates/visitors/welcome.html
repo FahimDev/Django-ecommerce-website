@@ -134,118 +134,122 @@
     });
 </script>
 
-
+    {% for cat in categories %}
     <div class="shopify-section index-section index-section-product">
         <div data-section-id="1509012370397" data-section-type="product-section">
             <section class="home-product-layout">
                 <div class="container">
                     <div class="row">
-                        <div class="banner-product-title not-animated" data-animate="fadeInUp" data-delay="200" style="background-image:  url(https://www.ctgrentacar.com/upload/29389259_1723713254352724_8108795673849102336_n.jpg); background-size: cover;">
+                        <div class="banner-product-title not-animated" data-animate="fadeInUp" data-delay="200" style="background-image:  url('/static/media/{{cat.banner_img_path}}'); background-size: cover;">
                             <div class="title-content">
-                                <h2>catagory_name</h2>
+                                <h2>{{cat}}</h2>
                             </div>
                         </div>
                         <div class="home-product-inner">
                             <div class="home-product-content">
                                 
                                 
-                                <!--Strat: Product Body-->
-                                
-                                    <div class="content_product col-sm-3 not-animated" data-animate="fadeInUp" data-delay="100">
-                                        <div class="row-container product list-unstyled clearfix product-circle">
-                                            <div class="row-left">
-                                                <a asp-area="Visitor" asp-controller="Home" asp-action="Details" asp-route-id="product.id" class="hoverBorder container_item">
-                                                    <div class="hoverBorderWrapper">
-                                                        <img id="prodImg" src="https://www.ctgrentacar.com/upload/29389259_1723713254352724_8108795673849102336_n.jpg" class="img-responsive front" alt="product.product_img">
-                                                        <div class="mask"></div>
-                                                    </div>
-                                                </a>
-                                                <div class="hover-mask">
-                                                    <div class="group-mask">
-                                                        <div class="inner-mask">
-                                                            <div class="group-actionbutton">
-                                                                <ul class="quickview-wishlist-wrapper">
-                                                                    <li class="wishlist">
-                                                                        <a title="Add To Wishlist" class="wishlist wishlist-product.product_name" data-wishlisthandle="product.product_name"><span class="cs-icon icon-heart"></span></a>
-                                                                    </li>
-                                                                    <li class="quickview hidden-xs hidden-sm">
-                                                                        <div id="quickview" class="product-ajax-cart">
-                                                                            <span class="overlay_mask"></span>
-                                                                            <div data-handle="product.product_name" data-target="#quick-shop-modal" class="quick_shop" data-toggle="modal">
-                                                                                <a class=""><span class="cs-icon icon-eye"></span></a>
-                                                                            </div>
-                                                                        </div>
-                                                                    </li>
-                                                                    <li class="compare">
-                                                                        <a title="Add To Compare" class="compare compare-product.product_name" data-comparehandle="product.product_name"><span class="cs-icon icon-retweet2"></span></a>
-                                                                    </li>
-                                                                </ul>
+                                        {% for prod in cat.products.all %}
+                                        <!--Strat: Product Body-->
+                                            <div class="content_product col-sm-3 not-animated" data-animate="fadeInUp" data-delay="100">
+                                                <div class="row-container product list-unstyled clearfix product-circle">
+                                                    <div class="row-left">
+                                                        <a href="/{{prod.slug}}/{{prod.id}}" class="hoverBorder container_item">
+                                                            <div class="hoverBorderWrapper">
+                                                                
+                                                                <img id="prodImg" src="{% static 'media/' %}{{prod.productimage_set.first.product_img_src}}" class="img-responsive front" title="{{prod.productimage_set.first.img_title}}" alt="{{prod.productimage_set.first.img_alt}}">
+                                                                <div class="mask"></div>
                                                             </div>
-                                                            <div>
-                                                                <div class="effect-ajax-cart">
-                                                                    <input type="hidden" name="quantity" value="1">
-                                                                    <button class="_btn add-to-cart" id="product.id" data-parent=".parent-fly" name="add" title="Add To Cart">Add to cart</button>
+                                                        </a>
+                                                        <div class="hover-mask">
+                                                            <div class="group-mask">
+                                                                <div class="inner-mask">
+                                                                    <div class="group-actionbutton">
+                                                                        <ul class="quickview-wishlist-wrapper">
+                                                                            <li class="wishlist">
+                                                                                <a title="Add To Wishlist" class="wishlist wishlist-product.product_name" data-wishlisthandle="product.product_name"><span class="cs-icon icon-heart"></span></a>
+                                                                            </li>
+                                                                            <li class="quickview hidden-xs hidden-sm">
+                                                                                <div id="quickview" class="product-ajax-cart">
+                                                                                    <span class="overlay_mask"></span>
+                                                                                    <div data-handle="product.product_name" data-target="#quick-shop-modal" class="quick_shop" data-toggle="modal">
+                                                                                        <a class=""><span class="cs-icon icon-eye"></span></a>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </li>
+                                                                            <li class="compare">
+                                                                                <a title="Add To Compare" class="compare compare-product.product_name" data-comparehandle="product.product_name"><span class="cs-icon icon-retweet2"></span></a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                    <div>
+                                                                        <div class="effect-ajax-cart">
+                                                                            <input type="hidden" name="quantity" value="1">
+                                                                            <button class="_btn add-to-cart" id="{{prod.id}}" data-parent=".parent-fly" name="add" title="Add To Cart">Add to cart</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!--inner-mask-->
+                                                            </div>
+                                                            <!--Group mask-->
+                                                        </div>
+                                                    <!--
+                                                            @if (product.product_sell > 0)
+                                                        {
+                                                            <div class="product-label">
+                                                                <div class="label-element deal-label">
+                                                                    <span>@product.product_sell%</span>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <!--inner-mask-->
+                                                        }
+                                                        else if (product.id == item.hot_id)
+                                                        {
+                                                            <div class="product-label">
+                                                                <div class="label-element hotting-label">
+                                                                    <span>Hot</span>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                        else if (product.id == item.best_id)
+                                                        {
+                                                            <div class="product-label">
+                                                                <div class="label-element best-label">
+                                                                    <span>Best</span>
+                                                                </div>
+                                                            </div>
+        
+                                                        }
+                                                        else
+                                                        {}                                               -->
+                                                            <div class="product-label">
+                                                                <div class="label-element new-label">
+                                                                    <span>New</span>
+                                                                </div>
+                                                            </div>
+                                                        
+        
                                                     </div>
-                                                    <!--Group mask-->
-                                                </div>
-                                               <!--
-                                                    @if (product.product_sell > 0)
-                                                {
-                                                    <div class="product-label">
-                                                        <div class="label-element deal-label">
-                                                            <span>@product.product_sell%</span>
+                                                    <input type="hidden" id="prodDescription" name="quantity" value="product.product_description">
+                                                    <div class="row-right animMix">
+                                                        <div class="rating-star">
+                                                            <span class="spr-badge" data-rating="0.0">
+                                                                <span class="spr-starrating spr-badge-starrating"><i class="spr-icon spr-icon-star-empty" style=""></i><i class="spr-icon spr-icon-star-empty" style=""></i><i class="spr-icon spr-icon-star-empty" style=""></i><i class="spr-icon spr-icon-star-empty" style=""></i><i class="spr-icon spr-icon-star-empty" style=""></i></span><span class="spr-badge-caption">No reviews</span>
+                                                            </span>
+                                                        </div>
+                                                        <div class="product-title"><a id="{{prod.id}}" href="/{{prod.slug}}/{{prod.id}}" class="title-5"> {{prod.product_title}} </a></div>
+                                                        <div class="product-price">
+                                                            <span class="price">
+                                                                <span id="prodPrice" class="money" data-currency-usd="৳{{prod.price}}">৳ {{prod.price}}</span>
+                                                            </span>
                                                         </div>
                                                     </div>
-                                                }
-                                                else if (product.id == item.hot_id)
-                                                {
-                                                    <div class="product-label">
-                                                        <div class="label-element hotting-label">
-                                                            <span>Hot</span>
-                                                        </div>
-                                                    </div>
-                                                }
-                                                else if (product.id == item.best_id)
-                                                {
-                                                    <div class="product-label">
-                                                        <div class="label-element best-label">
-                                                            <span>Best</span>
-                                                        </div>
-                                                    </div>
-
-                                                }
-                                                else
-                                                {}                                               -->
-                                                    <div class="product-label">
-                                                        <div class="label-element new-label">
-                                                            <span>New</span>
-                                                        </div>
-                                                    </div>
-                                                
-
-                                            </div>
-                                            <input type="hidden" id="prodDescription" name="quantity" value="product.product_description">
-                                            <div class="row-right animMix">
-                                                <div class="rating-star">
-                                                    <span class="spr-badge" data-rating="0.0">
-                                                        <span class="spr-starrating spr-badge-starrating"><i class="spr-icon spr-icon-star-empty" style=""></i><i class="spr-icon spr-icon-star-empty" style=""></i><i class="spr-icon spr-icon-star-empty" style=""></i><i class="spr-icon spr-icon-star-empty" style=""></i><i class="spr-icon spr-icon-star-empty" style=""></i></span><span class="spr-badge-caption">No reviews</span>
-                                                    </span>
-                                                </div>
-                                                <div class="product-title"><a id="prodName" asp-area="Visitor" asp-controller="Home" asp-action="Details" asp-route-id="product.id" class="title-5">product.product_name</a></div>
-                                                <div class="product-price">
-                                                    <span class="price">
-                                                        <span id="prodPrice" class="money" data-currency-usd="৳20.00">৳product.product_price</span>
-                                                    </span>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
+                                    
+                                        <!--End: Product Body-->
+                                        {% endfor %}
                                 
-                                <!--End: Product Body-->
+
 
                             </div>
                         </div>
@@ -254,7 +258,7 @@
             </section>
         </div>
     </div>
-}
+    {% endfor %}
 <div class="shopify-section index-section index-section-product">
     <div data-section-id="1509012370397" data-section-type="product-section">
         <section class="home-product-layout">
