@@ -121,11 +121,15 @@ class Product(models.Model):
     status = models.CharField(max_length=100,choices= PRODUCT_STATUS, default= PRODUCT_STOCKED)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+
+    def __str__(self) -> str:
+        return u'{0}'.format(self.product_title)
 #-----------------------------------------------------------------------------------------------------------------
 #-----------------------------------------------------------------------------------------------------------------
 class ProductImage(models.Model):
-    product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
-    product_img_src = models.ImageField()
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product_img_src = models.ImageField(max_length=500, null= True, blank= True)
     img_title = models.CharField(max_length=100, null=  True)
     img_alt = models.CharField(max_length= 400, null= True)
 #-----------------------------------------------------------------------------------------------------------------

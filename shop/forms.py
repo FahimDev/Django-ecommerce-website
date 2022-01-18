@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm,UserChangeForm
 from django.contrib.auth.models import User
 from django import forms
 
-from shop.models import BillingAddress, Category,Customer, Product
+from shop.models import BillingAddress, Category,Customer, Product, ProductImage
 
 
 from PIL import Image
@@ -133,3 +133,37 @@ class CreateProductForm(ModelForm):
         fields = '__all__'
 
     
+#-------------------------------------------------------------------------------------------------
+
+class AddProductImagesForm(ModelForm):
+
+    img_title = forms.CharField(label='Image Title', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Image title attribute is only visible on mouse hover'}))
+    img_alt = forms.CharField(label='Alt text (SEO)', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Make sure all of your images include alt text (with relevant keywords included)'}))
+
+    x = forms.FloatField(widget=forms.HiddenInput())
+    y = forms.FloatField(widget=forms.HiddenInput())
+    image_width = forms.FloatField(widget=forms.HiddenInput())
+    image_height = forms.FloatField(widget=forms.HiddenInput())
+
+    class Meta:
+        model = ProductImage
+        fields = '__all__'
+
+    def save(self):
+        photo = super(AddProductImagesForm, self).save(commit=False)
+
+        x = self.cleaned_data.get('x')
+        y = self.cleaned_data.get('y')
+        w = self.cleaned_data.get('image_width')
+        h = self.cleaned_data.get('image_height')
+
+        image = Image.open(photo.product_img_src)
+       
+        cropped_image = image.crop((x, y, w + x, h + y))
+        c_path = photo.product_img_src.path
+        c_name = photo.product_img_src
+        cropped_image.save(c_path)
+        photo.product_img_src = c_name.name
+
+        return super(AddProductImagesForm, self).save(commit=True)
+

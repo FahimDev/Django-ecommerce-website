@@ -25,89 +25,57 @@
                 <div class="col-lg-3"></div>
                 <div class="col-lg-6">
                     <div class="card">
-                        <div class="card-header"><strong>Create</strong><small> {{title}}</small></div>
-                        <form method="post" accept-charset="UTF-8">
+                        <div class="card-header"><strong>Add</strong><small> {{title}}</small></div>
+                        {% for message in messages %}
+                                    
+                            {% if 'success' in message.tags %}
+        
+                                    <div id ="messages" class="alert alert-success" role="alert">
+                                        {{message}}
+                                    </div>
+    
+                            {% else %}
+                
+                                    <div id ="messages" class="alert alert-danger" role="alert">
+                                        {{message}}
+                                    </div>
+                
+                            {% endif %}
+                        {% endfor %}
+                        <form method="post" enctype="multipart/form-data" accept-charset="UTF-8">
                             {% csrf_token %}
                             <!--enctype="multipart/form-data"-->
                             <div class="card-body card-block">
                                 <div class="card-body">
-                                    <label for="company" class=" form-control-label">{{ form.category.label }}</label>
-                                    {{ form.category }}
+                                    <label for="product" class=" form-control-label">{{ form_image.product.label }}</label>
+                                    {{ form_image.product }}
                                 </div>
-                                <span asp-validation-for="category_id" class="text-danger"></span>
                                 <!-- HERE WILL BE A DropDown List OF COMPANY ID-->
 
                                 <div class="form-group">
-                                    <label for="productName" class=" form-control-label">{{ form.product_title.label }}</label>{{ form.product_title}}
+                                    <label for="title" class=" form-control-label">{{ form_image.img_title.label }}</label>
+                                    {{ form_image.img_title }}
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="url" class=" form-control-label">{{ form.video_url.label}}</label>{{ form.video_url}}
+                                    <label for="alt text" class=" form-control-label">{{ form_image.img_alt.label }}</label>
+                                    {{ form_image.img_alt }}
                                 </div>
-                                
-                                <div class="row form-group">
-                                    <div class="col col-md-12"><label for="description" class=" form-control-label">{{ form.product_description.label}}</label></div>
-                                    <div class="col-12 col-md-12">
-                                        {{ form.product_description}}
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="packing" class=" form-control-label">{{ form.packing_type.label }}</label>
-                                    {{ form.packing_type}}
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="brand" class=" form-control-label">{{ form.product_brand.label }}</label>
-                                    {{ form.product_brand }}
-                                </div>
-                                <div class="form-group">
-                                    <label for="ingredients" class=" form-control-label">{{ form.product_material.label }}</label>
-                                    {{ form.product_material }}
-                                </div>
-
-                                    
-                                <div class="form-group">
-                                    <label for="brand" class=" form-control-label">{{ form.product_sale.label }}</label>
-                                    {{ form.product_sale }}
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="brand" class=" form-control-label">{{ form.price.label }}</label>
-                                    {{ form.price }}
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="brand" class=" form-control-label">{{ form.status.label }}</label>
-                                    {{ form.status }}
-                                </div>
-
-                                <hr>
-                                <div class="form-group">
-                                    <div class="col col-md-12"><label for="description" class=" form-control-label">{{ form.meta_keywords.label }}</label></div>
-                                    <div class="col-12 col-md-12">{{ form.meta_keywords }}</div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="col col-md-12"><label for="description" class=" form-control-label">{{ form.meta_description.label }}</label></div>
-                                    <div class="col-12 col-md-12">{{ form.meta_description }}</div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="col col-md-12"><label for="description" class=" form-control-label">{{ form.slug.label }}</label></div>
-                                    <div class="col-12 col-md-12">{{ form.slug }}</div>
-                                    
-                                </div> 
                                 </br>
                                 
                                 <div class="form-group">
-                                    <label for="displayImage" class=" form-control-label">Display Image</label>
-                                    <input type="file" class="m-image" id="file-input" name="product_image">
-                                    <input type="hidden" class="m-image" name="h_product_image" id="product_image" />
+                                    <label for="displayImage" class=" form-control-label">  {{ form_image.product_img_src.label }}</label>
+                                    {{ form_image.product_img_src }}
+
+                                    {{form_image.x}}
+                                    {{form_image.y}}
+                                    {{form_image.image_width}}
+                                    {{form_image.image_height}}
                                 </div>
 
                                 
                                 <div class="form-group">
-                                    <input class="btn btn-success btn-lg btn-block" type="submit" value="Create">
+                                    <input class="btn btn-success btn-lg btn-block" type="submit" value="Add Image">
                                 </div>
 
                             </div>
@@ -150,7 +118,7 @@
                                 data-dismiss="modal">
                             Cancel
                         </button>
-                        <button type="button" class="btn btn-primary" id="crop">
+                        <button type="button" class="btn btn-primary" id="crop" data-dismiss="modal">
                             Crop
                         </button>
                     </div>
@@ -169,7 +137,7 @@
 
             var idName = "";
 
-            $("body").on("change", ".m-image", function (e) {
+            $("body").on("change", "#id_product_img_src", function (e) {
                 var files = e.target.files;
                 console.log("------------>h_" + e.target.name)
                 idName = e.target.name;
@@ -201,6 +169,14 @@
                         preview: ".preview",
                         dragMode: "none",
                         cropBoxResizable: false,
+                        crop: function(e){
+                        let data = e.detail;
+                        $("#id_x").val(data.x);
+                        $("#id_y").val(data.y);
+                        $("#id_image_height").val(data.height);
+                        $("#id_image_width").val(data.width);
+
+                        }
                     });
                 })
                 .on("hidden.bs.modal", function () {
@@ -208,51 +184,6 @@
                     cropper = null;
                 });
 
-            $("#crop").click(function () {
-                canvas = cropper.getCroppedCanvas({
-                    width: 160,
-                    height: 160,
-                });
-                console.log("------------>" + idName);
-                canvas.toBlob(function (blob) {
-                    url = URL.createObjectURL(blob);
-                    var reader = new FileReader();
-                    reader.readAsDataURL(blob);
-                    reader.onloadend = function () {
-                        var base64data = reader.result;
-
-                        canvas = cropper.getCroppedCanvas({
-                            width: 380,
-                            height: 200,
-                        });
-
-                        canvas.toBlob(function (blob) {
-                            url = URL.createObjectURL(blob);
-                            var reader = new FileReader();
-                            reader.readAsDataURL(blob);
-                            reader.onloadend = function () {
-                                var base64data = reader.result;
-                                //let file = new File([base64data], "name.png");
-                                $("#" + idName).val(base64data.toString());
-                                //console.log($("#imageblob").val())
-                                bs_modal.modal("hide");
-                            };
-                        });
-                    };
-                });
-            });
-        </script>
-
-        <script type="text/javascript">
-
-        $(function () {
-            var noti = '@TempData["action"]';
-            if (noti.length > 0) {
-                alertify.success(noti);
-            }
-        })
-
         </script>
     
-
 {% endblock %}

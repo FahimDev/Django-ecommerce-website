@@ -32,6 +32,6 @@ urlpatterns = [
     path('add-category', views.vendor.createCategory, name= 'add_category'),
 
     path('add-product', views.vendor.createProduct, name= 'add_product'),
-    path('add-product-photos', views.vendor.createProduct, name= 'add_prod_photo'),
+    path('add-product-photos', views.vendor.addProductPhotos, name= 'add_prod_photo'),
 
 ]

@@ -13,7 +13,7 @@ from shop.decorator import auth_user_page_restriction,allowed_user #Custom Desig
 
 
 from django.urls.conf import path
-from shop.forms import CreateCategoryForm, CreateProductForm
+from shop.forms import CreateCategoryForm, CreateProductForm, AddProductImagesForm
 
 from shop.models import Customer
 
@@ -51,9 +51,11 @@ def createCategory(request):
 def createProduct(request):
 
     form = CreateProductForm
+    form_image = AddProductImagesForm
     context = {
         'title' : 'Create Product',
-        'form' : form
+        'form' : form,
+        'form_image' : form_image
     }
 
     if request.method == 'POST':
@@ -71,3 +73,27 @@ def createProduct(request):
                 return redirect('add_product')
 
     return render(request, 'vendor/add_product.html', context)
+
+def addProductPhotos(request):
+
+    form_image = AddProductImagesForm
+    context = {
+        'title' : 'Product Photo',
+        'form_image' : form_image
+    }
+
+    if request.method == 'POST':
+        form_image = AddProductImagesForm(request.POST,request.FILES)
+        
+        print(form_image.errors)
+        if form_image.is_valid():
+            try:
+                form_image.save()
+                messages.success(request, 'New Product Image Added')
+                return redirect('add_prod_photo')
+            except Exception as e:
+                messages.info(request, 'Something went wrong!')
+                print(e)
+                return redirect('add_prod_photo')
+
+    return render(request, 'vendor/add_product_images.html', context)
