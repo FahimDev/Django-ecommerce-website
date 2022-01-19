@@ -191,13 +191,17 @@
                                     </div>
                                     <div class="collection-items clearfix">
                                         <div class="products">
-                                            
+                                            {% for prod in products.all %}
                                                 <div class="content_product col-sm-4 not-animated" data-animate="fadeInUp" data-delay="100">
                                                     <div class="row-container product list-unstyled clearfix product-circle">
                                                         <div class="row-left">
-                                                            <a href="./product.html" class="hoverBorder container_item">
+                                                            <a href="{% url 'prod_details' prod.slug prod.id %}" class="hoverBorder container_item">
                                                                 <div class="hoverBorderWrapper">
-                                                                    <img id="prodImg" src="https://www.ctgrentacar.com/upload/29389259_1723713254352724_8108795673849102336_n.jpg" class="img-responsive front" alt="@item.prodImage">
+                                                                    {% if prod.productimage_set.first.product_img_src is None %}
+                                                                        <img src="{% static 'default_images/no-product-image-.jpg' %}" id="prodImg" class="img-responsive front" title="{{prod}}" alt="{{prod}} Image" />
+                                                                    {% else %}
+                                                                    <img id="prodImg" src="{% static 'media/' %}{{prod.productimage_set.first.product_img_src}}" class="img-responsive front" title="{{prod.productimage_set.first.img_title}}" alt="{{prod.productimage_set.first.img_alt}}">
+                                                                    {% endif %}
                                                                     <div class="mask"></div>
                                                                 </div>
                                                             </a>
@@ -222,12 +226,12 @@
                                                                                 </li>
                                                                             </ul>
                                                                         </div>
-                                                                        <form action="./cart.html" method="post">
-                                                                            <div class="effect-ajax-cart">
-                                                                                <input type="hidden" name="quantity" value="1">
-                                                                                <button class="_btn add-to-cart" data-parent=".parent-fly" type="submit" name="add" title="Add To Cart">Add to cart</button>
-                                                                            </div>
-                                                                        </form>
+                                                                        
+                                                                        <div class="effect-ajax-cart">
+                                                                            <input type="hidden" name="quantity" value="1">
+                                                                            <button class="_btn add-to-cart" data-parent=".parent-fly" type="submit" name="add" title="Add To Cart">Add to cart</button>
+                                                                        </div>
+                                                                        
                                                                     </div>
                                                                     <!--inner-mask-->
                                                                 </div>
@@ -291,16 +295,16 @@
                                                                     </span>
                                                                 </span>
                                                             </div>
-                                                            <div class="product-title"><a id="prodName" href="{% url 'prod_details' %}" class="title-5">@item.prodName</a></div>
+                                                            <div class="product-title"><a id="prodName" href="{% url 'prod_details' prod.slug prod.id %}" class="title-5">{{prod}}</a></div>
                                                             <div class="product-price">
                                                                 <span class="price">
-                                                                    <span id="prodPrice" class="money" data-currency-usd="৳20.00">৳@item.price</span>
+                                                                    <span id="prodPrice" class="money" data-currency-usd="৳{{prod.price}}">{{prod.price}}</span>
                                                                 </span>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            
+                                            {% endfor %}
                                         </div>
                                     </div>
                                     <div class="collection-bottom-toolbar">

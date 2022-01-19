@@ -19,7 +19,9 @@
                         <div class="home-slideshow-content slideshow_1507179171162">
                             <ul>
                                 <li data-transition="random-static" data-masterspeed="2000" data-saveperformance="on">
+
                                     <img src="{% static '/assets/webImages/foodCover.jpg' %}" data-lazyload="{% static '/assets/webImages/foodCover.jpg' %}" alt="" data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
+                                    
                                     <div class="slideshow-caption position-left transition-fade">
                                         <div class="group">
                                             <a href="">
@@ -154,10 +156,13 @@
                                             <div class="content_product col-sm-3 not-animated" data-animate="fadeInUp" data-delay="100">
                                                 <div class="row-container product list-unstyled clearfix product-circle">
                                                     <div class="row-left">
-                                                        <a href="/{{prod.slug}}/{{prod.id}}" class="hoverBorder container_item">
+                                                        <a href="{% url 'prod_details' prod.slug prod.id %}" class="hoverBorder container_item">
                                                             <div class="hoverBorderWrapper">
-                                                                
-                                                                <img id="prodImg" src="{% static 'media/' %}{{prod.productimage_set.first.product_img_src}}" class="img-responsive front" title="{{prod.productimage_set.first.img_title}}" alt="{{prod.productimage_set.first.img_alt}}">
+                                                                {% if prod.productimage_set.first.product_img_src is None %}
+                                                                    <img src="{% static 'default_images/no-product-image-.jpg' %}" id="prodImg" class="img-responsive front" title="{{prod}}" alt="{{prod}} Image" />
+                                                                {% else %}
+                                                                    <img id="prodImg" src="{% static 'media/' %}{{prod.productimage_set.first.product_img_src}}" class="img-responsive front" title="{{prod.productimage_set.first.img_title}}" alt="{{prod.productimage_set.first.img_alt}}">
+                                                                {% endif %}
                                                                 <div class="mask"></div>
                                                             </div>
                                                         </a>
@@ -236,7 +241,7 @@
                                                                 <span class="spr-starrating spr-badge-starrating"><i class="spr-icon spr-icon-star-empty" style=""></i><i class="spr-icon spr-icon-star-empty" style=""></i><i class="spr-icon spr-icon-star-empty" style=""></i><i class="spr-icon spr-icon-star-empty" style=""></i><i class="spr-icon spr-icon-star-empty" style=""></i></span><span class="spr-badge-caption">No reviews</span>
                                                             </span>
                                                         </div>
-                                                        <div class="product-title"><a id="{{prod.id}}" href="/{{prod.slug}}/{{prod.id}}" class="title-5"> {{prod.product_title}} </a></div>
+                                                        <div class="product-title"><a id="{{prod.id}}" href="{% url 'prod_details' prod.slug prod.id %}" class="title-5"> {{prod.product_title}} </a></div>
                                                         <div class="product-price">
                                                             <span class="price">
                                                                 <span id="prodPrice" class="money" data-currency-usd="৳{{prod.price}}">৳ {{prod.price}}</span>

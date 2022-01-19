@@ -22,9 +22,10 @@ from pprint import pp, pprint
 def welcome(request):
 
     categories = Category.objects.all()
-    #pprint(dir(obj))
 
     contex = {
+        'meta_title' : 'The New Day a Cloud kitchen of Bangladesh',
+        'meta_description' : 'The New Day (TND) is a Cloud Kitchen of Fast Food & Restaurant with Multi Cuisine',
         'title' : 'Home Page',
         'h1_tag' : 'The New Day (TND) is a Cloud Kitchen of Fast Food & Restaurant with Multi Cuisine',
         'class' : 'index-template fastfood_1',
@@ -43,6 +44,8 @@ def welcome(request):
 def category(request):
     categories = Category.objects.all()
     context = {
+        'meta_title' : 'The New Day a Cloud kitchen of Bangladesh',
+        'meta_description' : 'The New Day (TND) is a Cloud Kitchen of Fast Food & Restaurant with Multi Cuisine',
         'title' : 'Category Collections',
         'h1_tag' : 'The New Day (TND) is a Cloud Kitchen of Fast Food & Restaurant with Multi Cuisine',
         'class' : 'fastfood_1',
@@ -51,20 +54,31 @@ def category(request):
 
     return render(request, 'visitors/category.html',context)
 
-def categoryProducts(request):
+def categoryProducts(request, sent_slug, sent_pk):
+    products = Product.objects.filter(category = sent_pk, category__slug = sent_slug)
+    pprint(dir(products))
+    pprint(products.reverse)
+
     context = {
+        'meta_title' : products,
+        'meta_description' : 'The New Day (TND) is a Cloud Kitchen of Fast Food & Restaurant with Multi Cuisine',
         'title' : 'Products by Category',
         'h1_tag' : 'The New Day (TND) is a Cloud Kitchen of Fast Food & Restaurant with Multi Cuisine',
-        'class' : 'fastfood_1'
+        'class' : 'fastfood_1',
+        'products' : products
     }
 
     return render(request, 'visitors/category_products.html',context)
 
-def details(request):
+def details(request, sent_slug, sent_pk):
+    product = Product.objects.get(pk = sent_pk, slug = sent_slug)
+    categories = Category.objects.all()
     context = {
         'title' : 'Product Detail',
         'h1_tag' : 'The New Day (TND) is a Cloud Kitchen of Fast Food & Restaurant with Multi Cuisine',
-        'class' : 'fastfood_1'       
+        'class' : 'fastfood_1',  
+        'product' : product,     
+        'categories' : categories
     }
 
     return render(request,'visitors/product_details.html',context)

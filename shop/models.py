@@ -196,8 +196,8 @@ class OrderItems(models.Model):
 
 #-----------------------------------------------------------------------------------------------------------------
 class Review(models.Model):
-    customer_id = models.ForeignKey(Customer, on_delete= models.CASCADE)
-    product_id = models.ForeignKey(Product, on_delete= models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete= models.CASCADE)
+    product = models.ForeignKey(Product, on_delete= models.CASCADE)
     review_title = models.CharField(max_length= 100, default= 'Product Review')
     review_body = models.TextField()
     rating = models.SmallIntegerField()

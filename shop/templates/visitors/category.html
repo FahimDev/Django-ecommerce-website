@@ -48,7 +48,7 @@
                                                 <h4 class="title">{{cat}}</h4>
                                                 <span class="price">{{cat.products.count}} Products</span>
                                                 <div class="hover_button">
-                                                    <a href="{% url 'prod_collection' %}">
+                                                    <a href="{% url 'prod_collection' cat.slug cat.id %}">
                                                         View More
                                                     </a>
                                                 </div>
