@@ -84,9 +84,10 @@
                                             </h3>
                                             <div class="sidebar-content">
                                                 <ul class="list-cat">
-                                                    <li class="active"><a href="./collections.html">All Collections </a></li>
-                                                    <li><a href="">Drinks </a></li>
-                                                    <li><a href="">Fast food </a></li>
+                                                    <li class="active"><a href="{% url 'collections' %}">All Collections </a></li>
+                                                    {% for category in categories %}
+                                                    <li><a href="{% url 'prod_collection' category.slug category.id %}">{{category}} </a></li>
+                                                    {% endfor %}
                                                 </ul>
                                             </div>
                                         </div>
@@ -101,7 +102,7 @@
                                                         <div class="row-container product-circle">
                                                             <div class="product home_product">
                                                                 <div class="row-left">
-                                                                    <a href="./product.html" class="container_item">
+                                                                    <a href="" class="container_item">
                                                                         <div class="hoverBorderWrapper">
                                                                             <img src="{% static '/assets/images/800x800.png' %}" class="not-rotation img-responsive front" alt="Coke">
                                                                             <div class="mask"></div>
@@ -282,23 +283,31 @@
                                                         <input type="hidden" id="prodDescription" name="quantity" value="DESCIPTION">
                                                         <div class="row-right animMix">
                                                             <div class="rating-star">
-                                                                <span class="spr-badge" data-rating="@item.rating">
+                                                                <span class="spr-badge" data-rating="{{prod.rating}}">
 
                                                                     <span class="spr-starrating spr-badge-starrating">
-                                                                        <!--
-                                                                        @for (int j = 1; j <= item.rating; j++)
-                                                                        {
-                                                                            <i class="spr-icon spr-icon-star" style=""></i>
-                                                                        }
-                                                                        -->
-                                                                        <i class="spr-icon spr-icon-star" style=""></i>
+                                                                        {% if prod.rating is None %}
+                                                                        <i class="spr-icon spr-icon-star spr-icon-star-empty"></i>
+                                                                        <i class="spr-icon spr-icon-star spr-icon-star-empty"></i>
+                                                                        <i class="spr-icon spr-icon-star spr-icon-star-empty"></i>
+                                                                        <i class="spr-icon spr-icon-star spr-icon-star-empty"></i>
+                                                                        <i class="spr-icon spr-icon-star spr-icon-star-empty"></i>
+                                                                        {% else %}
+                                                                            {% with ''|center:prod.rating as range %}
+                                                                            {% for _ in range %} 
+                                                                            <i class="spr-icon spr-icon-star"></i>
+                                                                            {% endfor %}
+                                                                            {% endwith %}
+                                                                        {% endif %}
+                                                                        
+                                                                        
                                                                     </span>
                                                                 </span>
                                                             </div>
-                                                            <div class="product-title"><a id="prodName" href="{% url 'prod_details' prod.slug prod.id %}" class="title-5">{{prod}}</a></div>
+                                                            <div class="product-title"><a id="prodName" href="{% url 'prod_details' prod.slug prod.id %}" class="title-5">{{prod}} {{prod.rating}}</a></div>
                                                             <div class="product-price">
                                                                 <span class="price">
-                                                                    <span id="prodPrice" class="money" data-currency-usd="৳{{prod.price}}">{{prod.price}}</span>
+                                                                    <span id="prodPrice" class="money" data-currency-usd="৳{{prod.price}}">{{prod.price}} </span>
                                                                 </span>
                                                             </div>
                                                         </div>

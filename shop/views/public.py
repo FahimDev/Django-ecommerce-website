@@ -1,3 +1,4 @@
+from numbers import Rational
 from django.contrib.auth.models import Group
 from django.forms.models import inlineformset_factory
 from django.shortcuts import redirect, render
@@ -9,13 +10,13 @@ from django.db import transaction
 from django.contrib.auth import authenticate,login, logout
 from shop.decorator import auth_user_page_restriction,allowed_user #Custom DesignPattern
 
-
-
+from django.db.models import Sum
+from django.db.models import Avg
 
 from django.urls.conf import path
 from shop.forms import RegisterCustomerForm
 
-from shop.models import Customer,Product,ProductImage,Category
+from shop.models import Customer,Product,ProductImage,Category, Review
 
 from pprint import pp, pprint
 
@@ -55,16 +56,23 @@ def category(request):
     return render(request, 'visitors/category.html',context)
 
 def categoryProducts(request, sent_slug, sent_pk):
+    
     products = Product.objects.filter(category = sent_pk, category__slug = sent_slug)
-    pprint(dir(products))
-    pprint(products.reverse)
+    
+    category = Category.objects.get(pk = sent_pk, slug = sent_slug)
+        
+    products = Product.objects.annotate(rating = Avg('review__rating')).filter(category = sent_pk, category__slug = sent_slug).exclude(review__verification = 0)
+
+    categories = Category.objects.all()
 
     context = {
-        'meta_title' : products,
-        'meta_description' : 'The New Day (TND) is a Cloud Kitchen of Fast Food & Restaurant with Multi Cuisine',
+        'meta_title' : category,
+        'meta_keywords' : category.meta_keywords,
+        'meta_description' : category.meta_description,
         'title' : 'Products by Category',
         'h1_tag' : 'The New Day (TND) is a Cloud Kitchen of Fast Food & Restaurant with Multi Cuisine',
         'class' : 'fastfood_1',
+        'categories' : categories,
         'products' : products
     }
 
@@ -73,12 +81,26 @@ def categoryProducts(request, sent_slug, sent_pk):
 def details(request, sent_slug, sent_pk):
     product = Product.objects.get(pk = sent_pk, slug = sent_slug)
     categories = Category.objects.all()
+
+    reviews = Review.objects.filter(product = sent_pk, 	verification = 1)
+    #----> This section is experimental. Optimized AVG code is at categoryProducts() [Line:64]
+    if reviews.count() < 1 :
+        rating = 0
+    else:
+        rating = reviews.aggregate(Sum('rating')) 
+        rating = rating.get('rating__sum') // reviews.count()
+
     context = {
+        'meta_title' : product,
+        'meta_keywords' : product.meta_keywords,
+        'meta_description' : product.meta_description,
         'title' : 'Product Detail',
         'h1_tag' : 'The New Day (TND) is a Cloud Kitchen of Fast Food & Restaurant with Multi Cuisine',
         'class' : 'fastfood_1',  
-        'product' : product,     
-        'categories' : categories
+        'product' : product,    
+        'reviews' : reviews, 
+        'categories' : categories,
+        'rating' : rating
     }
 
     return render(request,'visitors/product_details.html',context)

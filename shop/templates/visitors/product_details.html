@@ -88,8 +88,16 @@
                                                 <span class="spr-badge" data-rating="@Model.rating">
                                                     
                                                     <span class="spr-starrating spr-badge-starrating">
-                                                        <i class="spr-icon spr-icon-star" style=""></i>
-                                                    </span><span class="spr-badge-caption">{{product.review_set.count}} review</span>
+
+                                                        
+
+                                                        {% with ''|center:rating as range %}
+                                                        {% for _ in range %} 
+                                                        <i class="spr-icon spr-icon-star"></i>
+                                                        {% endfor %}
+                                                        {% endwith %}
+                                                        
+                                                    </span><span class="spr-badge-caption">{{reviews.count}} review</span>
                                                 </span>
                                                 <span class="review-link"><a href="#review">Write a review</a></span>
                                             </div>
@@ -258,10 +266,14 @@
                                                                             <meta itemprop="average" content="5.0">
                                                                             <meta itemprop="best" content="5">
                                                                             <meta itemprop="worst" content="1">
-                                                                            <i class="spr-icon spr-icon-star" style=""></i><i class="spr-icon spr-icon-star" style=""></i><i class="spr-icon spr-icon-star" style=""></i><i class="spr-icon spr-icon-star" style=""></i><i class="spr-icon spr-icon-star" style=""></i>
+                                                                            {% with ''|center:rating as range %}
+                                                                            {% for _ in range %} 
+                                                                                <i class="spr-icon spr-icon-star"></i>
+                                                                            {% endfor %}
+                                                                            {% endwith %}
                                                                         </span>
                                                                         <span class="spr-summary-caption">
-                                                                            <span class="spr-summary-actions-togglereviews">Based on 1 review</span>
+                                                                            <span class="spr-summary-actions-togglereviews">Based on {{reviews.count}} review</span>
                                                                         </span>
                                                                         <span class="spr-summary-actions">
                                                                             <a href="#" class="spr-summary-actions-newreview" onclick="active_review_form();return false">Write a review</a>
@@ -270,7 +282,7 @@
                                                                 </div>
                                                                 <div class="spr-content">
                                                                     <div class="spr-form" id="form_6537875078" style="display: none;">
-                                                                        <form method="post" action="./product.html" id="new-review-form_6537875078" class="new-review-form" onsubmit="SPR.submitForm(this);return false;">
+                                                                        <form method="post" action="" id="new-review-form_6537875078" class="new-review-form">
                                                                             <input type="hidden" name="review[rating]"><input type="hidden" name="product_id" value="6537875078">
                                                                             <h3 class="spr-form-title">Write a review</h3>
                                                                             <fieldset class="spr-form-contact">
@@ -314,14 +326,14 @@
                                                                     <div class="spr-reviews" id="reviews_6537875078">
                                                                         <div class="spr-review" id="spr-review-7003642">
                                                                            
-                                                                                {% for review in product.review_set.all %}
+                                                                                {% for review in reviews %}
                                                                                 <div class="spr-review-header">
                                                                                     <span class="spr-starratings spr-review-header-starratings">
                                                                                         {% with ''|center:review.rating as range %}
                                                                                         {% for _ in range %} 
                                                                                         <i class="spr-icon spr-icon-star"></i> 
-                                                                                         {% endfor %}
-                                                                                         {% endwith %}
+                                                                                        {% endfor %}
+                                                                                        {% endwith %}
                                                                                     </span>
                                                                                         <h3 class="spr-review-header-title">{{review.review_title}}</h3>
                                                                                         <span class="spr-review-header-byline"><strong>{{review.customer.user}}</strong> on <strong>{{review.created_at}}</strong></span>
@@ -330,7 +342,7 @@
                                                                                     <p class="spr-review-content-body">{{review.review_body}}</p>
                                                                                 </div>
                                                                                 <div class="spr-review-footer">
-                                                                                    <a href="#" class="spr-review-reportreview" onclick="SPR.reportReview(7003642);return false" id="report_7003642" data-msg="This review has been reported">Report as Inappropriate</a>
+                                                                                    <!--<a href="#" class="spr-review-reportreview" onclick="SPR.reportReview(7003642);return false" id="report_7003642" data-msg="This review has been reported">Report as Inappropriate</a> -->
                                                                                 </div>
                                                                                 {% endfor %}
 
@@ -428,7 +440,7 @@
                                 
                                 <div class="sidebar-block banner-block">
                                     <div class="sidebar-content">
-                                        <a href="./collections.html">
+                                        <a href="">
                                             <img src="~/assets/images/269x349.png" alt="" title="">
                                         </a>
                                     </div>
