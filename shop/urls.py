@@ -1,5 +1,5 @@
 from django.conf.urls import handler404
-from django.urls import path
+from django.urls import path, include
 from django.contrib import admin
 
 from shop.views import public
@@ -19,19 +19,27 @@ urlpatterns = [
 
     path('test', views.public.unlock, name= 'unlock'),
 
+    path('cart/getproductdetails', views.public.cartProduct, name= 'cart_item'),
 
-    #-------------------->customer
-    path('profile', views.customer.profile, name= 'cus_profile'),
-    path('update-customer-profile', views.customer.editProfile, name= 'update_customer'),
-    path('add-billing-address', views.customer.addBillingAddress, name= 'create_address'),
-    path('set-billing-address/<str:sent_pk>/', views.customer.setBillingAddress, name= 'set_address'),
-    path('flush-billing-address/<str:sent_pk>/', views.customer.deleteBillingAddress, name= 'flush_address'),
+
+    #-------------------->Customer
+    path('customer/', include([
+        path('profile', views.customer.profile, name= 'cus_profile'),
+        path('update-customer-profile', views.customer.editProfile, name= 'update_customer'),
+        path('add-billing-address', views.customer.addBillingAddress, name= 'create_address'),
+        path('set-billing-address/<str:sent_pk>/', views.customer.setBillingAddress, name= 'set_address'),
+        path('flush-billing-address/<str:sent_pk>/', views.customer.deleteBillingAddress, name= 'flush_address'),
+    ])),
+    
 
     #-------------------->Vendor
-    path('vendor-office', views.vendor.dashboard, name= 'dash'),
-    path('add-category', views.vendor.createCategory, name= 'add_category'),
+    path('vendor/',include([
+        path('dashboard', views.vendor.dashboard, name= 'dash'),
+        path('add-category', views.vendor.createCategory, name= 'add_category'),
 
-    path('add-product', views.vendor.createProduct, name= 'add_product'),
-    path('add-product-photos', views.vendor.addProductPhotos, name= 'add_prod_photo'),
+        path('add-product', views.vendor.createProduct, name= 'add_product'),
+        path('add-product-photos', views.vendor.addProductPhotos, name= 'add_prod_photo'),
+    ])),
+   
 
 ]

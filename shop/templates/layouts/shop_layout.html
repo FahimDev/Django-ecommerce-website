@@ -659,46 +659,110 @@
                 updateCart();
             }
 
-            function updateCart() {
+            let csrf = "{{ csrf_token }}";
+            async function updateCart() {
+                
+                let urls = {
+                    getItems: "{% url 'cart_item' %}",
+                }
                 let products = localStorage.getItem("products")
+                
+                let formData = new FormData();
+                
+                formData.append("data", products);
 
-                if (products) {
-                    $.ajax({
-                        url: `/visitor/cart/getproductdetails/${products}`,
-                        type: 'get',
-                        success: function (result) {
-                            //console.log(result);
-                            let html = '';
+                let res = await fetchPost(urls.getItems, formData);
 
-                            result.products.forEach(prod => {
-                                html += `
-                                <div id="itembody${prod.id}" class="group_cart_item">
-                                    <div class="cart-left"><a class="cart-image" href="./product.html"><img src="/assets/prod/${prod.product_img}" alt="${prod.product_img}" title=""></a></div>
-                                        <div class="cart-right">
-                                            <div class="cart-title"><a href="./product.html">${prod.product_name}</a></div>
-                                            <div class="cart-price"><span class="money" data-currency-bdt="৳${prod.product_price}" data-currency="bdt">৳${prod.product_price}</span></div>
-                                            <div class="cart-qty">
-                                                <span class="quantity">qty: ${prod.quantity}</span>
-                                                <a title="add to wishlist" id="${prod.id}" class="wishlist-extra-crispy-1" onclick="" href="#">
-                                                    <span class="cs-icon icon-heart"></span>
-                                                </a>
-                                                <a class="cart-close cart-item-remove" id="${prod.id}" title="remove"">
-                                                    <span class="cs-icon icon-bin"></span>
-                                                </a>
-                                             </div>
+                res = JSON.parse(res)
+                console.log(res)
+
+                let html = '';
+//${prod.id}
+                res.forEach(prod => {
+                    html += `
+                    <div id="itembody" class="group_cart_item">
+                        <div class="cart-left"><a class="cart-image" href=""><img src="{% static 'default_images/no-product-image-.jpg' %}" alt="" title=""></a></div>
+                            <div class="cart-right">
+                                <div class="cart-title"><a href="product-detail/${prod.fields.slug}/${prod.pk}">${prod.fields.product_title}</a></div>
+                                <div class="cart-price"><span class="money" data-currency-bdt="৳${prod.fields.price}" data-currency="bdt">৳${prod.fields.price}</span></div>
+                                <div class="cart-qty">
+                                    <span class="quantity">qty: ${prod.fields.quantity}</span>
+                                    <a title="add to wishlist" id="${prod.pk}" class="wishlist-extra-crispy-1" onclick="" href="#">
+                                        <span class="cs-icon icon-heart"></span>
+                                    </a>
+                                    <a class="cart-close cart-item-remove" id="${prod.pk}" title="remove"">
+                                        <span class="cs-icon icon-bin"></span>
+                                    </a>
                                     </div>
-                                </div>
-                                    `
-                            })
-                            //console.log(html);
-                            $('.items').html(html);
-                            $('.subtotal').html(
-                                `<span>Subtotal:</span><span class="cart-total-right money" data-currency-bdt="${result.total}" data-currency="bdt">৳${result.total}</span>`
-                            );
+                        </div>
+                    </div>
+                        `
+                })
+                //console.log(html);
+                $('.items').html(html);
+                $('.subtotal').html(
+                    `<span>Subtotal:</span><span class="cart-total-right money" data-currency-bdt="${result.total}" data-currency="bdt">৳${result.total}</span>`
+                );
+    //----------------------------------------------------------------------------------       
+                // if(res == "success"){
+                //     console.log("OK!")
+                // }
+//                 if (products) {
+//                     $.ajax({
+//                         url: `cart/getproductdetails`,
+//                         type: 'post',
+//                         data: formData,
+//                         headers:{
+//                             "X-CSRFToken" : csrf
+//                         },
+//                         success: function (result) {
+//                             console.log(result);
+//                             let html = '';
+// //${prod.id}
+//                             result.products.forEach(prod => {
+//                                 html += `
+//                                 <div id="itembody" class="group_cart_item">
+//                                     <div class="cart-left"><a class="cart-image" href=""><img src="{% static 'media/' %}" alt="" title=""></a></div>
+//                                         <div class="cart-right">
+//                                             <div class="cart-title"><a href="./product.html">${prod.product_title}</a></div>
+//                                             <div class="cart-price"><span class="money" data-currency-bdt="৳${prod.price}" data-currency="bdt">৳${prod.price}</span></div>
+//                                             <div class="cart-qty">
+//                                                 <span class="quantity">qty: ${prod.quantity}</span>
+//                                                 <a title="add to wishlist" id="${prod.id}" class="wishlist-extra-crispy-1" onclick="" href="#">
+//                                                     <span class="cs-icon icon-heart"></span>
+//                                                 </a>
+//                                                 <a class="cart-close cart-item-remove" id="${prod.id}" title="remove"">
+//                                                     <span class="cs-icon icon-bin"></span>
+//                                                 </a>
+//                                              </div>
+//                                     </div>
+//                                 </div>
+//                                     `
+//                             })
+//                             //console.log(html);
+//                             $('.items').html(html);
+//                             $('.subtotal').html(
+//                                 `<span>Subtotal:</span><span class="cart-total-right money" data-currency-bdt="${result.total}" data-currency="bdt">৳${result.total}</span>`
+//                             );
                             
-                        }
-                    });
-                }              
+//                         },
+                        
+//                     });
+//                 }              
+            }
+
+            async function fetchPost(url, data) {
+                let response = await fetch(
+                    url,{
+                        method: "POST",
+                        body: data,
+                        headers:{
+                            "X-CSRFToken" : csrf
+                        },
+                    }
+                );
+                let res = await response.text();
+                return res;
             }
 
             setCount(null);
@@ -710,7 +774,7 @@
                         let products = JSON.parse(localStorage.getItem("products"));  // Converted to object                      
                         let changed = false;    // pore
                         products.some(prod => {         //Check Quantity with ID (some is like Break)
-                            if (prod.id == prodID) {
+                            if (prod.pk == prodID) {
                                 prod.quantity = parseInt(prod.quantity) + 1;
                                 changed = true;
                             }
@@ -748,6 +812,7 @@
             })
             $(".cart-clear").click(() => {              
                 $("#cart-infos").hide(); 
+                //localStorage.removeItem
             })
         });
     </script>

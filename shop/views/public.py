@@ -1,8 +1,10 @@
+from http.client import HTTPResponse
+from itertools import product
 from numbers import Rational
 from django.contrib.auth.models import Group
 from django.forms.models import inlineformset_factory
 from django.shortcuts import redirect, render
-from django.http import HttpRequest,HttpResponseRedirect
+from django.http import HttpRequest, HttpResponse,HttpResponseRedirect
 from django.urls import reverse
 
 from django.contrib import messages
@@ -10,7 +12,7 @@ from django.db import transaction
 from django.contrib.auth import authenticate,login, logout
 from shop.decorator import auth_user_page_restriction,allowed_user #Custom DesignPattern
 
-from django.db.models import Sum
+from django.db.models import Sum,Value,F
 from django.db.models import Avg
 
 from django.urls.conf import path
@@ -20,10 +22,15 @@ from shop.models import Customer,Product,ProductImage,Category, Review
 
 from pprint import pp, pprint
 
+
+from django.core import serializers
+from django.http import JsonResponse
+import json
+
 def welcome(request):
-
     categories = Category.objects.all()
-
+    for cat in categories:
+        cat.product_list = cat.products.annotate(rating = Avg('review__rating')).exclude(review__verification = 0)
     contex = {
         'meta_title' : 'The New Day a Cloud kitchen of Bangladesh',
         'meta_description' : 'The New Day (TND) is a Cloud Kitchen of Fast Food & Restaurant with Multi Cuisine',
@@ -41,6 +48,33 @@ def welcome(request):
     }
     return render(request,'visitors/welcome.html', contex)
 
+
+def cartProduct(request): 
+    
+    products = request.POST.get('data')
+    products = json.loads(products)
+
+    # the result is a Python dictionary:
+    prod_id = []
+    prod_q = []
+    for p in products:
+        prod_id.append(int(p["id"]))
+        prod_q.append(int(p["quantity"]))
+
+    item_list = Product.objects.filter(pk__in=prod_id)
+    #item_list = list(Product.objects.filter(pk__in=prod_id).annotate(related_value=F('productimage__product_img_src')))
+    #.annotate(quantity = Value(5))
+    #pprint(dir(item_list))
+
+    # for item in item_list:
+    #     item.new = item.productimage_set.first()
+        # for p in products:
+        #     if p["id"] == str(item.pk):
+        #         item.updated = item.productimage_set.first()#.annotate(quantity = p["quantity"])
+    pprint(item_list)
+
+    data = serializers.serialize('json', item_list)
+    return HttpResponse(data, content_type="application/json")
 
 def category(request):
     categories = Category.objects.all()

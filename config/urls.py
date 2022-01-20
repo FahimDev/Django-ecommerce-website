@@ -27,6 +27,10 @@ admin.site.site_title = 'Super Admin'
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     path('', include('shop.urls'))
+    #For other App Route we will use 'namespace'
+    # Demo:
+    # path('', include('blog.urls', namespace = 'blog'))    
+    # & add app_name='blog' at the local app urls.py file 
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT )

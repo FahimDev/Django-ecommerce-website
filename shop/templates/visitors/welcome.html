@@ -151,7 +151,7 @@
                             <div class="home-product-content">
                                 
                                 
-                                        {% for prod in cat.products.all %}
+                                        {% for prod in cat.product_list.all %}
                                         <!--Strat: Product Body-->
                                             <div class="content_product col-sm-3 not-animated" data-animate="fadeInUp" data-delay="100">
                                                 <div class="row-container product list-unstyled clearfix product-circle">
@@ -238,10 +238,25 @@
                                                     <div class="row-right animMix">
                                                         <div class="rating-star">
                                                             <span class="spr-badge" data-rating="0.0">
-                                                                <span class="spr-starrating spr-badge-starrating"><i class="spr-icon spr-icon-star-empty" style=""></i><i class="spr-icon spr-icon-star-empty" style=""></i><i class="spr-icon spr-icon-star-empty" style=""></i><i class="spr-icon spr-icon-star-empty" style=""></i><i class="spr-icon spr-icon-star-empty" style=""></i></span><span class="spr-badge-caption">No reviews</span>
+                                                                <span class="spr-starrating spr-badge-starrating">
+                                                                    {% if prod.rating is None %}
+                                                                        <i class="spr-icon spr-icon-star spr-icon-star-empty"></i>
+                                                                        <i class="spr-icon spr-icon-star spr-icon-star-empty"></i>
+                                                                        <i class="spr-icon spr-icon-star spr-icon-star-empty"></i>
+                                                                        <i class="spr-icon spr-icon-star spr-icon-star-empty"></i>
+                                                                        <i class="spr-icon spr-icon-star spr-icon-star-empty"></i>
+                                                                    {% else %}
+                                                                        {% with ''|center:prod.rating as range %}
+                                                                        {% for _ in range %} 
+                                                                        <i class="spr-icon spr-icon-star"></i>
+                                                                        {% endfor %}
+                                                                        {% endwith %}
+                                                                    {% endif %}
+                                                                </span>
+                                                                <span class="spr-badge-caption">No reviews</span>
                                                             </span>
                                                         </div>
-                                                        <div class="product-title"><a id="{{prod.id}}" href="{% url 'prod_details' prod.slug prod.id %}" class="title-5"> {{prod.product_title}} </a></div>
+                                                        <div class="product-title"><a id="{{prod.id}}" href="{% url 'prod_details' prod.slug prod.id %}" class="title-5">{{prod.product_title}} </a></div>
                                                         <div class="product-price">
                                                             <span class="price">
                                                                 <span id="prodPrice" class="money" data-currency-usd="৳{{prod.price}}">৳ {{prod.price}}</span>
@@ -817,7 +832,7 @@
                                     <div class="form-right">
                                         <div class="others-bottom">
                                             <a class="_btn btn-quick-shop" href="./wish-list.html">View Wishlist</a>
-                                            <a href="./cart.html" class="_btn add-to-cart">Add to cart</a>
+                                            <a href="" class="_btn add-to-cart">Add to cart</a>
                                         </div>
                                     </div>
                                 </form>
@@ -872,7 +887,7 @@
                                     <div class="form-right">
                                         <div class="others-bottom">
                                             <a class="_btn btn-quick-shop" href="./wish-list.html">View Compare</a>
-                                            <a href="./cart.html" class="_btn add-to-cart">Add to cart</a>
+                                            <a href="" class="_btn add-to-cart">Add to cart</a>
                                         </div>
                                     </div>
                                 </form>
