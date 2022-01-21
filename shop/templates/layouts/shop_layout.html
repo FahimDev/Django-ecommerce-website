@@ -368,55 +368,7 @@
                                                     </a>
                                                     <div class="navigation_dropdown_scroll dropdown-menu">
                                                         <ul class="navigation_links_mobile">
-                                                            <li class="nav-item navigation navigation_mobile">
-                                                                <a href="./collections.html" class="menu-mobile-link">
-                                                                    Hamburger
-                                                                </a>
-                                                                <a href="javascript:void(0)" class="arrow_sub arrow">
-                                                                    <i class="arrow-plus"></i>
-                                                                </a>
-                                                                <ul class="menu-mobile-container" style="display: none;">
-                                                                    <li class=" li-sub-mega">
-                                                                        <a tabindex="-1" href="./collections.html">Whopper</a>
-                                                                    </li>
-                                                                    <li class=" li-sub-mega">
-                                                                        <a tabindex="-1" href="./collections.html">Chicken Burger</a>
-                                                                    </li>
-                                                                    <li class=" li-sub-mega">
-                                                                        <a tabindex="-1" href="./collections.html">Beef Burger</a>
-                                                                    </li>
-                                                                    <li class=" li-sub-mega">
-                                                                        <a tabindex="-1" href="./collections.html">DOUBLE WHOPPER</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </li>
-                                                            <li class="nav-item navigation navigation_mobile">
-                                                                <a href="./collections.html" class="menu-mobile-link">
-                                                                    Pizza
-                                                                </a>
-                                                                <a href="javascript:void(0)" class="arrow_sub arrow">
-                                                                    <i class="arrow-plus"></i>
-                                                                </a>
-                                                                <ul class="menu-mobile-container" style="display: none;">
-                                                                    <li class=" li-sub-mega">
-                                                                        <a tabindex="-1" href="./collections.html">Popular pizzas</a>
-                                                                    </li>
-                                                                    <li class=" li-sub-mega">
-                                                                        <a tabindex="-1" href="./collections.html">Meats</a>
-                                                                    </li>
-                                                                    <li class=" li-sub-mega">
-                                                                        <a tabindex="-1" href="./collections.html">Chicken</a>
-                                                                    </li>
-                                                                    <li class=" li-sub-mega">
-                                                                        <a tabindex="-1" href="./collections.html">Veggie</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </li>
-                                                            <li class="nav-item">
-                                                                <a href="./collections.html">
-                                                                    Fast food
-                                                                </a>
-                                                            </li>
+                                                            
                                                             {% if user.id is None %}
                                                             <li class="nav-item">
                                                                 <a href="{% url 'cus_reg' %}">
@@ -626,7 +578,7 @@
 
             $('.cart_checkout').click(function () {
 
-                window.location.href = "/customer/order/checkout";
+                window.location.href = "{% url 'checkout' %}";
 
             });
             
@@ -701,7 +653,7 @@
                 //console.log(html);
                 $('.items').html(html);
                 $('.subtotal').html(
-                    `<span>Subtotal:</span><span class="cart-total-right money" data-currency-bdt="${result.total}" data-currency="bdt">৳${result.total}</span>`
+                    `<span>Subtotal:</span><span class="cart-total-right money" data-currency-bdt="${res.total}" data-currency="bdt">৳${res.total}</span>`
                 );
     //----------------------------------------------------------------------------------       
                 // if(res == "success"){

@@ -1,0 +1,305 @@
+{% extends '../layouts/shop_layout.html' %}
+{% load static %}
+{% block content %}
+
+
+<section class="heading-content">
+    <div class="heading-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="page-heading-inner heading-group">
+                    <div class="breadcrumb-group">
+                        <h1 class="hidden">Your Cart</h1>
+                        <div class="breadcrumb clearfix">
+                            <span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                                <a href="{% url 'welcome' %}" title="Fast Food" itemprop="url"><span itemprop="title"><i class="fa fa-home"></i></span></a>
+                            </span>
+                            <span class="arrow-space"></span>
+                            <span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                                <a href="{% url 'checkout' %}" title="Your Cart" itemprop="url"><span itemprop="title">Your Cart</span></a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="cart-content">
+    <div class="cart-wrapper">
+        <div class="container">
+            <div class="row">
+                <div id="shopify-section-cart-template" class="shopify-section">
+                    <div class="cart-inner">
+                        <div id="cart">
+                            <div class="cart-form">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th class="image" colspan="2">Product</th>
+                                                <th class="price">Price</th>
+                                                <th class="qty">Quantity</th>
+                                                <th class="total">Total</th>
+                                                <th class="remove">Remove</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="orderContent">
+                                            
+                                        </tbody>
+                                    </table>
+                                    <div class="group-button">
+                                        <a href="{% url 'collections' %}" class="_btn">Continue Shopping</a>
+                                        <div class="group_btn_right">
+                                            <input type="button" class="_btn clearAllCart" value="Clear all">
+                                        </div>
+                                    </div>
+
+                                    
+                                    <div class="group-checkout-input">
+                                        <div class="shipping-calculator col-sm-6 col-xs-12 ">
+                                            <div id="shipping-calculator">
+                                                <h3>Get shipping estimates</h3>
+                                                <div class="group_form">
+                                                    {% if user.id is None %}
+                                                    <div class="form-item">
+                                                        <label for="address_country">Name</label>
+                                                        <input type ="text" value="">
+                                                    </div>
+                                                    <div class="form-item">
+                                                        <label for="address_country">Contact</label>
+                                                        <input type ="number" value="">
+                                                    </div>
+                                                    <div class="form-item">
+                                                        <label for="address_country">City</label>
+                                                        <input type ="text" value="">
+                                                    </div>
+                                                    <div class="form-item" id="address_province_container">
+                                                        <label for="address_province" id="address_province_label">Zip Code</label>
+                                                        <input type="text" value="">    
+                                                    </div>
+                                                    <div class="form-item">
+                                                        <label for="address_zip">Area</label>
+                                                        <textarea id="area" name="area" placeholder="Enter text here...">  </textarea>
+                                                    </div>
+                                                    {% else %}
+                                                        
+                                                    <div class="form-item">
+                                                        <a type="button" class="_btn" href="{% url 'cus_profile' %}">Change / Add Billing Address</a>
+                                                        </br>
+                                                        <label for="address_zip">Billing Address</label>
+                                                        
+                                                        <p style="border-style: dashed;">{{billing_address.address}}, {{billing_address.city}}, {{billing_address.division}}, {{billing_address.zip_code}} </p>
+                                                    </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="checkout-buttons col-sm-6 col-xs-12">
+                                            <div class="note-content group_form">
+                                                <div class="form-item">
+                                                    <label for="note">Add special instructions for your order</label>
+                                                    <textarea id="note" name="note" placeholder="Enter text here..."></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="checkout-content">
+                                                <div class="buttons clearfix">
+                                                    <input type="button" id="checkout-btn" class="_btn" name="checkout" value="Check Out">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        $(window).ready(function ($) {
+                            $(".quantity-mobile input").change(function () {
+                                var qty = $(this).val();
+                                $(this).parents('tr').find('.item-quantity').val(qty);
+                            });
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <script>
+
+        $(document).ready(function () {
+
+            loadCart();
+
+            function deleteFromCart(id) {
+                let products = JSON.parse(localStorage.getItem("products"));
+                let currentProds = products.filter(item => {
+                    if (id != item.id) return true;
+                    else {
+                        setCount(-item.quantity)
+                        return false;
+                    }
+                });
+                //console.log(currentProds)
+                localStorage.setItem("products", JSON.stringify(currentProds));
+                loadCart();
+            }
+
+                       
+
+            function setCount(value) {
+                let count = localStorage.getItem("count");
+                if (value == 0) count = 0;
+                else if (!value) count = localStorage.getItem("count") ? localStorage.getItem("count") : 0
+                else {
+                    if (count) {
+                        count = parseInt(count);
+                        count += value;
+                    }
+                    else count = 0;
+                }
+                localStorage.setItem("count", count)
+                $('.cart-count').html(count);
+            }
+
+
+            $("#checkout-btn").click(() => {
+                placeOrder();
+            }) 
+
+
+            async function placeOrder() {
+                let products = localStorage.getItem("products");
+                let comment = $('textarea#note').val();
+
+                let formData = new FormData();
+
+                let urls = {
+                    getItems: "{% url 'checkout' %}",
+                }
+                
+                formData.append("data", products);
+                formData.append("comment", JSON.stringify(comment));
+
+                if (products) {
+                    let res = await fetchPost(urls.getItems, formData);
+                    JSON.parse(res)
+                    console.log(res);
+                    if (res == "201"){
+                        localStorage.removeItem('products');
+                        setCount(0)
+                        alert("Order Placed Successfully!")
+                        window.location.href = "{% url 'collections' %}";
+                    }else if (res == "401"){
+                        window.location.href = "{% url 'login' %}";
+                    }else{
+                        alert("Someting Went Wrong! Order not Placed. Please refresh the page and try again.")
+                    }
+                }else{
+                    alert("Please, add some produts in your cart.")
+                }
+            }
+
+
+            $(document).on("click", ".cart-item-remove", (e) => {
+                deleteFromCart(e.currentTarget.id);
+            })
+
+            
+            
+
+
+            
+            async function loadCart() {
+
+                let products = localStorage.getItem("products");
+
+                let formData = new FormData();
+
+                let urls = {
+                    getItems: "{% url 'cart_item' %}",
+                }
+                
+                formData.append("data", products);
+
+                let res = await fetchPost(urls.getItems, formData);
+
+                res = JSON.parse(res)
+                console.log(res)
+
+                let html = '';
+                res.forEach(prod => {
+                    html += `
+                                            <tr>
+                                                <td class="image">
+                                                    <div class="product_image">
+                                                        <a href="./product.html">
+                                                            <img src="{% static 'default_images/no-product-image-.jpg' %}" alt="${prod.fields.product_title}">
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                                <td class="image-info">
+                                                    <div class="product_name">
+                                                        <a href="product-detail/${prod.fields.slug}/${prod.pk}">
+                                                            ${prod.fields.product_title}
+                                                        </a>
+                                                        <div class="group_mobile">
+                                                            <span class="price-mobile"><span class="money" data-currency-usd="৳ ${prod.fields.price}">৳ ${prod.fields.price}</span></span>
+                                                            <div class="quantity-mobile">
+                                                                <div class="quantity-wrapper">
+                                                                    <div class="wrapper">
+                                                                        <span class="quantity-title">Quantity</span>
+                                                                        <input type="text" size="4" value="${prod.quantity}" class="tc item-quantity-mobile">
+                                                                    </div>
+                                                                    <!--End wrapper-->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="group_mobile">
+                                                            <div class="remove-mobile">
+                                                                <a href="#" id="${prod.pk}" class="cart cart-item-remove"><span class="lnr lnr-trash"></span></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="price"><span class="money" data-currency-usd="৳ ${prod.fields.price}">৳ ${prod.fields.price}</span> </td>
+                                                <td class="qty">
+                                                    <div class="quantity-wrapper">
+                                                        <div class="wrapper">
+                                                            <input type="text" size="4" name="updates[]" value="${prod.quantity}" class="tc item-quantity">
+                                                        </div>
+                                                        <!--End wrapper-->
+                                                    </div>
+                                                    <!--End quantily wrapper-->
+                                                </td>
+                                                <td class="total title-1"><span class="money" data-currency-usd="৳ ${prod.fields.price}">৳ ${prod.fields.price * prod.quantity}</span></td>
+                                                <td class="remove"><a href="#" id="${prod.pk}" class="cart cart-item-remove"><span class="lnr lnr-trash"></span></a></td>
+                                            </tr>
+                                    `
+                            })
+                            
+                            $('#orderContent').html(html);
+
+            }
+
+            async function fetchPost(url, data) {
+                let csrf = "{{ csrf_token }}";
+                let response = await fetch(
+                    url,{
+                        method: "POST",
+                        body: data,
+                        headers:{
+                            "X-CSRFToken" : csrf
+                        },
+                    }
+                );
+                let res = await response.text();
+                return res;
+            }
+
+        });
+
+    </script>
+
+{% endblock %}

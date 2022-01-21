@@ -175,9 +175,9 @@ class Order(models.Model):
         (ORDER_FAILED, 'Failed')
     ]
 
-    customer_id = models.ForeignKey(Customer, on_delete= models.PROTECT)
+    customer = models.ForeignKey(Customer, on_delete= models.PROTECT)
     #discount_id = 
-    billing_addr_id = models.ForeignKey(BillingAddress, on_delete=  models.PROTECT)
+    billing_addr = models.ForeignKey(BillingAddress, on_delete=  models.PROTECT)
     comment = models.TextField(null= True) 
     status = models.CharField(max_length= 100, choices= ORDER_STATUS, default= ORDER_PENDING)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -187,8 +187,8 @@ class Order(models.Model):
 
 #-----------------------------------------------------------------------------------------------------------------
 class OrderItems(models.Model):
-    order_id = models.ForeignKey(Customer, on_delete= models.CASCADE)
-    product_id = models.ForeignKey(Product, on_delete= models.SET_NULL, null= True)
+    order = models.ForeignKey(Order, on_delete= models.CASCADE)
+    product = models.ForeignKey(Product, on_delete= models.SET_NULL, null= True)
     quantity = models.PositiveIntegerField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

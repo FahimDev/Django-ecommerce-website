@@ -19,7 +19,8 @@ urlpatterns = [
 
     path('test', views.public.unlock, name= 'unlock'),
 
-    path('cart/getproductdetails', views.public.cartProduct, name= 'cart_item'),
+    path('cart/getproductdetails', views.order.cartProduct, name= 'cart_item'),
+    path('cart/order/checkout', views.order.checkout, name= 'checkout'),
 
 
     #-------------------->Customer
