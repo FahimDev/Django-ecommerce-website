@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.contrib import messages
 from django.db import transaction
 from django.contrib.auth import authenticate,login, logout
-from shop.decorator import auth_user_page_restriction,allowed_user #Custom DesignPattern
+from shop.decorator import allowed_users,allowed_user #Custom DesignPattern
 
 
 
@@ -17,13 +17,17 @@ from shop.forms import CreateCategoryForm, CreateProductForm, AddProductImagesFo
 
 from shop.models import Customer
 
+
+@allowed_users(allowed_roles = ['Merchant'])
 def dashboard(request):
     context = {
-        'title' : 'DAD',
+        'title' : 'Dashboard',
     }
 
     return render(request, 'vendor/dashboard.html', context)
 
+
+@allowed_users(allowed_roles = ['Merchant'])
 def createCategory(request):
 
     form = CreateCategoryForm
@@ -48,6 +52,8 @@ def createCategory(request):
 
     return render(request, 'vendor/add_category.html', context)
 
+
+@allowed_users(allowed_roles = ['Merchant'])
 def createProduct(request):
 
     form = CreateProductForm
@@ -74,6 +80,8 @@ def createProduct(request):
 
     return render(request, 'vendor/add_product.html', context)
 
+
+@allowed_users(allowed_roles = ['Merchant'])
 def addProductPhotos(request):
 
     form_image = AddProductImagesForm

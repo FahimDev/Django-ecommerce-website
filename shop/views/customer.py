@@ -1,5 +1,5 @@
 from django.contrib.auth import authenticate,login, logout
-from shop.decorator import auth_user_page_restriction,allowed_user #Custom DesignPattern
+from shop.decorator import allowed_users,allowed_user #Custom DesignPattern
 
 from django.urls.conf import path
 from django.contrib.auth.models import Group
@@ -15,7 +15,7 @@ from django.db import transaction
 from shop.models import BillingAddress, Customer
 
 
-@allowed_user
+@allowed_users(allowed_roles = ['Customer'])
 def profile(request):
     
 

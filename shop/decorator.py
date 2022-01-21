@@ -4,7 +4,7 @@ Decorator is a structural design pattern that lets you attach new behaviors to
 objects by placing these objects inside special wrapper objects that contain the behaviors.
 In simple language Decorator is a FUNCTION which takes another FUNCTION as a parameter 
 '''
-from django.http import HttpResponse,HttpResponseRedirect,HttpRequest
+from django.http import HttpResponse,HttpResponseRedirect,HttpRequest, request
 from django.shortcuts import redirect,render
 from django.urls.base import reverse
 
@@ -37,7 +37,22 @@ def allowed_user(view_func_allow):
 
         if group == 'Customer':
             return view_func_allow(request, *args, **kwargs)
+        
         else:
             return redirect('admin:index')
     return wrapper_func_allow
 
+
+def allowed_users(allowed_roles = []):
+    def decorator(view_func_list):
+        def wrapper_func_list(request, *args, **kwargs):
+            group = None
+            if request.user.groups.exists():
+                group = request.user.groups.all()[0].name
+
+            if group in allowed_roles:
+                return view_func_list(request, *args, **kwargs)
+            else:
+                return HttpResponse("You are not Authorized!")
+        return wrapper_func_list
+    return decorator

@@ -165,7 +165,7 @@ def loginPage(request):
             return redirect('unlock')
         else:
             messages.info(request, 'Please enter the correct username and password for a staff account. Note that both fields may be case-sensitive.')
-            return render(request, 'login.html', context)
+            return render(request, 'visitors/login.html', context)
 
     return render(request, 'visitors/login.html', context)
 
@@ -188,7 +188,11 @@ def error(request,exception=None):
 
 @allowed_user
 def unlock(request):
-    return redirect('cus_profile')
+
+    if request.user.groups.all()[0].name == 'Customer':
+        return redirect('cus_profile')
+    else:
+        return redirect('dash')
 
 def demo(request):
     pass
