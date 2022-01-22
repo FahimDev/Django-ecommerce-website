@@ -108,6 +108,17 @@ DATABASES = {
 }
 
 
+# SMTP Email
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.mailtrap.io'
+EMAIL_PORT = 2525
+EMAIL_HOST_USER = '7656696082656e'
+EMAIL_HOST_PASSWORD = '293e77ca21ea81'
+EMAIL_USE_TLS = True
+
+
+
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 

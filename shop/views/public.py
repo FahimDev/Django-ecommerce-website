@@ -1,3 +1,4 @@
+import email
 from http.client import HTTPResponse
 from itertools import product
 from numbers import Rational
@@ -23,9 +24,13 @@ from shop.models import BillingAddress, Customer,Product,ProductImage,Category, 
 from pprint import pp, pprint
 
 
+
 from django.core import serializers
 from django.http import JsonResponse
 import json
+
+from django.template.loader import render_to_string
+from shop.views.email import send_email
 
 def welcome(request):
     categories = Category.objects.all()
@@ -194,5 +199,6 @@ def unlock(request):
     else:
         return redirect('dash')
 
-def demo(request):
-    pass
+def review(request):
+    email_temp = render_to_string('email/review_approve.html', {'name': 'TestName'})
+    send_email('subject', email_temp, 'example@gmail.com')

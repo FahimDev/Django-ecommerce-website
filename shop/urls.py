@@ -17,6 +17,8 @@ urlpatterns = [
     path('flush-logout', views.public.logoutUser, name= 'logout_flush'),
     path('404', views.public.error, name= '404'),
 
+    path('email', views.public.review, name= 'mail_test'),
+
     path('test', views.public.unlock, name= 'unlock'),
 
     path('cart/getproductdetails', views.order.cartProduct, name= 'cart_item'),
