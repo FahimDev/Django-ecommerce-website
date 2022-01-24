@@ -43,6 +43,7 @@ urlpatterns = [
 
         path('add-product', views.vendor.createProduct, name= 'add_product'),
         path('add-product-photos', views.vendor.addProductPhotos, name= 'add_prod_photo'),
+        path('view-all-orders', views.vendor.viewOrder, name= 'view_orders'),
     ])),
    
 

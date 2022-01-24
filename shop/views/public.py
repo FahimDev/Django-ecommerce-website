@@ -11,7 +11,7 @@ from django.urls import reverse
 from django.contrib import messages
 from django.db import transaction
 from django.contrib.auth import authenticate,login, logout
-from shop.decorator import auth_user_page_restriction,allowed_user #Custom DesignPattern
+from shop.decorator import allowed_users, auth_user_page_restriction,allowed_user #Custom DesignPattern
 
 from django.db.models import Sum,Value,F
 from django.db.models import Avg
@@ -198,7 +198,7 @@ def error(request,exception=None):
     return render(request, 'visitors/404.html', context)
 
 
-@allowed_user
+@allowed_users(allowed_roles = ['Customer','Merchant'])
 def unlock(request):
 
     if request.user.groups.all()[0].name == 'Customer':

@@ -6,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm,UserChangeForm
 from django.contrib.auth.models import User
 from django import forms
 
-from shop.models import BillingAddress, Category,Customer, Product, ProductImage, Review
+from shop.models import BillingAddress, Category,Customer, Order, Product, ProductImage, Review
 
 
 from PIL import Image
@@ -177,4 +177,13 @@ class ReviewForm(ModelForm):
     class Meta:
         model = Review
         fields = ['review_body', 'review_title', 'rating', 'product', 'customer']
+
+
+#-------------------------------------------------------------------------------------------------
+
+class OrderForm(ModelForm):
+
+    class Meta:
+        model = Order
+        fields = ['status']
 

@@ -1,7 +1,8 @@
+from pprint import pprint
 from django.contrib.auth.models import Group
 from django.forms.models import inlineformset_factory
 from django.shortcuts import redirect, render
-from django.http import HttpRequest,HttpResponseRedirect
+from django.http import HttpResponse,HttpResponseRedirect,HttpRequest, request
 from django.urls import reverse
 
 from django.contrib import messages
@@ -10,12 +11,12 @@ from django.contrib.auth import authenticate,login, logout
 from shop.decorator import allowed_users,allowed_user #Custom DesignPattern
 
 
-
+from django.db.models import Sum
 
 from django.urls.conf import path
-from shop.forms import CreateCategoryForm, CreateProductForm, AddProductImagesForm
+from shop.forms import CreateCategoryForm, CreateProductForm, AddProductImagesForm, OrderForm
 
-from shop.models import Customer
+from shop.models import Customer, Order
 
 
 @allowed_users(allowed_roles = ['Merchant'])
@@ -105,3 +106,20 @@ def addProductPhotos(request):
                 return redirect('add_prod_photo')
 
     return render(request, 'vendor/add_product_images.html', context)
+
+
+@allowed_users(allowed_roles = ['Merchant'])
+def viewOrder(request):
+    try:
+        orders = Order.objects.annotate(total= Sum('orderitems__product__price')).all()
+        form = OrderForm
+        pprint(dir(orders))
+        context = {
+        'title' : 'View Orders',
+        'orders' : orders,
+        'form' : form
+        }
+        return render(request, 'vendor/orders.html', context)
+    except Exception as e:
+        print(e)
+        return HttpResponse("Data retrive problem!")
