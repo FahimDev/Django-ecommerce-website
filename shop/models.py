@@ -196,11 +196,27 @@ class OrderItems(models.Model):
 
 #-----------------------------------------------------------------------------------------------------------------
 class Review(models.Model):
-    customer = models.ForeignKey(Customer, on_delete= models.CASCADE)
-    product = models.ForeignKey(Product, on_delete= models.CASCADE)
+
+    REVIEW_ONE = 1
+    REVIEW_TWO = 2
+    REVIEW_THREE = 3
+    REVIEW_FOUR = 4
+    REVIEW_FIVE = 5
+
+    REVIEW_LEVEL = [
+        (REVIEW_ONE, '⭐'),
+        (REVIEW_TWO, '⭐⭐'),
+        (REVIEW_THREE, '⭐⭐⭐'),
+        (REVIEW_FOUR, '⭐⭐⭐⭐'),
+        (REVIEW_FIVE, '⭐⭐⭐⭐⭐')
+    ]
+
+
+    customer = models.ForeignKey(Customer, null= True, on_delete= models.CASCADE)
+    product = models.ForeignKey(Product, null= True, on_delete= models.CASCADE)
     review_title = models.CharField(max_length= 100, default= 'Product Review')
     review_body = models.TextField()
-    rating = models.SmallIntegerField()
+    rating = models.SmallIntegerField(choices=REVIEW_LEVEL, default= REVIEW_FIVE)
     verification = models.BooleanField(default= False)
     #if reviewer is email verified status will be True | Registered Customer status will be auto True after login.
     created_at = models.DateTimeField(auto_now_add=True)

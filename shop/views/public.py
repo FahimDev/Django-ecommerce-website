@@ -17,7 +17,7 @@ from django.db.models import Sum,Value,F
 from django.db.models import Avg
 
 from django.urls.conf import path
-from shop.forms import RegisterCustomerForm
+from shop.forms import RegisterCustomerForm, ReviewForm
 
 from shop.models import BillingAddress, Customer,Product,ProductImage,Category, Review
 
@@ -95,6 +95,12 @@ def details(request, sent_slug, sent_pk):
     categories = Category.objects.all()
 
     reviews = Review.objects.filter(product = sent_pk, 	verification = 1)
+
+    if request.user.is_anonymous:
+        review_form = ReviewForm
+    else:
+        review_form = ReviewForm(initial={'customer': request.user.customer.id,'product': product})
+
     #----> This section is experimental. Optimized AVG code is at categoryProducts() [Line:64]
     if reviews.count() < 1 :
         rating = 0
@@ -112,7 +118,8 @@ def details(request, sent_slug, sent_pk):
         'product' : product,    
         'reviews' : reviews, 
         'categories' : categories,
-        'rating' : rating
+        'rating' : rating,
+        'review_form' : review_form
     }
 
     return render(request,'visitors/product_details.html',context)

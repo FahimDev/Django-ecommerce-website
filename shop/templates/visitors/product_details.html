@@ -27,7 +27,26 @@
         </div>
     </div>
 </section>
-
+{% for message in messages %}
+                                    
+{% if 'success' in message.tags %}
+<div class="card">
+    <div class="card-body">
+        <div id ="messages" class="alert alert-success" role="alert">
+            {{message}}
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="card">
+    <div class="card-body">
+        <div id ="messages" class="alert alert-danger" role="alert">
+            {{message}}
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endfor %}
 <section class="product-detail-layout">
     <div class="product-detail-wrapper">
         <div class="container">
@@ -275,17 +294,27 @@
                                                                         <span class="spr-summary-caption">
                                                                             <span class="spr-summary-actions-togglereviews">Based on {{reviews.count}} review</span>
                                                                         </span>
+                                                                        {% if user.id is not None %}
                                                                         <span class="spr-summary-actions">
                                                                             <a href="#" class="spr-summary-actions-newreview" onclick="active_review_form();return false">Write a review</a>
                                                                         </span>
+                                                                        {% else %}
+                                                                        <a href="#" class="spr-summary-actions-newreview">Login to write a review</a>
+                                                                        {% endif %}
                                                                     </div>
                                                                 </div>
                                                                 <div class="spr-content">
+                                                                    {% if user.id is not None %}
                                                                     <div class="spr-form" id="form_6537875078" style="display: none;">
-                                                                        <form method="post" action="" id="new-review-form_6537875078" class="new-review-form">
-                                                                            <input type="hidden" name="review[rating]"><input type="hidden" name="product_id" value="6537875078">
+                                                                        <form method="post" action="{% url 'add_review' %}" id="new-review-form_6537875078" class="new-review-form">
+                                                                            {% csrf_token %}
+
+                                                                            <input type="hidden" name="product-pk" id="id_product_pk" value="{{product.id}}" >
+                                                                            <input type="hidden" name="slug" id="id_slug" value="{{product.slug}}">
+                                                                            {{review_form.product.as_hidden}}
+                                                                            {{review_form.customer.as_hidden}}
                                                                             <h3 class="spr-form-title">Write a review</h3>
-                                                                            <fieldset class="spr-form-contact">
+                                                                            <!-- <fieldset class="spr-form-contact">
                                                                                 <div class="spr-form-contact-name">
                                                                                     <label class="spr-form-label" for="review_author_6537875078">Name</label>
                                                                                     <input class="spr-form-input spr-form-input-text " id="review_author_6537875078" type="text" name="review[author]" value="" placeholder="Enter your name">
@@ -294,27 +323,20 @@
                                                                                     <label class="spr-form-label" for="review_email_6537875078">Email</label>
                                                                                     <input class="spr-form-input spr-form-input-email " id="review_email_6537875078" type="email" name="review[email]" value="" placeholder="john.smith@example.com">
                                                                                 </div>
-                                                                            </fieldset>
+                                                                            </fieldset> -->
                                                                             <fieldset class="spr-form-review">
                                                                                 <div class="spr-form-review-rating">
                                                                                     <label class="spr-form-label">Rating</label>
-                                                                                    <div class="spr-form-input spr-starrating ">
-                                                                                        <a href="#" class="spr-icon spr-icon-star spr-icon-star-empty" data-value="1">&nbsp;</a>
-                                                                                        <a href="#" class="spr-icon spr-icon-star spr-icon-star-empty" data-value="2">&nbsp;</a>
-                                                                                        <a href="#" class="spr-icon spr-icon-star spr-icon-star-empty" data-value="3">&nbsp;</a>
-                                                                                        <a href="#" class="spr-icon spr-icon-star spr-icon-star-empty" data-value="4">&nbsp;</a>
-                                                                                        <a href="#" class="spr-icon spr-icon-star spr-icon-star-empty" data-value="5">&nbsp;</a>
-                                                                                    </div>
+                                                                                    {{review_form.rating}}
                                                                                 </div>
                                                                                 <div class="spr-form-review-title">
                                                                                     <label class="spr-form-label" for="review_title_6537875078">Review Title</label>
-                                                                                    <input class="spr-form-input spr-form-input-text " id="review_title_6537875078" type="text" name="review[title]" value="" placeholder="Give your review a title">
+                                                                                    {{review_form.review_title}}
                                                                                 </div>
                                                                                 <div class="spr-form-review-body">
                                                                                     <label class="spr-form-label" for="review_body_6537875078">Body of Review <span class="spr-form-review-body-charactersremaining">(1500)</span></label>
                                                                                     <div class="spr-form-input">
-                                                                                        <textarea class="spr-form-input spr-form-input-textarea " id="review_body_6537875078" data-product-id="6537875078" name="review[body]" rows="10" placeholder="Write your comments here"></textarea>
-
+                                                                                        {{review_form.review_body}}
                                                                                     </div>
                                                                                 </div>
                                                                             </fieldset>
@@ -323,6 +345,7 @@
                                                                             </fieldset>
                                                                         </form>
                                                                     </div>
+                                                                    {% endif %}
                                                                     <div class="spr-reviews" id="reviews_6537875078">
                                                                         <div class="spr-review" id="spr-review-7003642">
                                                                            

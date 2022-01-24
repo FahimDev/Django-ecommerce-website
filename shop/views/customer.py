@@ -1,3 +1,4 @@
+from itertools import product
 from django.contrib.auth import authenticate,login, logout
 from shop.decorator import allowed_users,allowed_user #Custom DesignPattern
 
@@ -5,14 +6,14 @@ from django.urls.conf import path
 from django.contrib.auth.models import Group
 from django.forms.models import inlineformset_factory
 from django.shortcuts import redirect, render
-from django.http import HttpRequest,HttpResponseRedirect
+from django.http import HttpResponse,HttpResponseRedirect,HttpRequest, request
 
-from shop.forms import BillingAddressForm,UpdateCustomerForm,CustomerInfoFrom
+from shop.forms import BillingAddressForm, ReviewForm,UpdateCustomerForm,CustomerInfoFrom
 from django.contrib import messages
 
 from django.contrib.auth.models import User
 from django.db import transaction
-from shop.models import BillingAddress, Customer
+from shop.models import BillingAddress, Customer, Product
 
 
 @allowed_users(allowed_roles = ['Customer'])
@@ -48,7 +49,7 @@ def profile(request):
     }
     return render(request, 'customer/profile.html', context)
 
-@allowed_user
+@allowed_users(allowed_roles = ['Customer'])
 def editProfile(request):
 
     customer_info = Customer.objects.get(user_id = request.user.id)
@@ -90,7 +91,7 @@ def editProfile(request):
     return render(request, 'customer/update_profile.html', context)
 
 
-@allowed_user
+@allowed_users(allowed_roles = ['Customer'])
 def addBillingAddress(request):
     if request.method == 'POST':
         address_form = BillingAddressForm(request.POST)
@@ -120,7 +121,7 @@ def setBillingAddress(request, sent_pk):
         messages.info(request, 'Something went wrong! Please try again.')
         return redirect('cus_profile')
             
-@allowed_user
+@allowed_users(allowed_roles = ['Customer'])
 def deleteBillingAddress(request, sent_pk):
     try:
         address = BillingAddress(pk = sent_pk, customer_id = request.user.customer.id)
@@ -130,5 +131,25 @@ def deleteBillingAddress(request, sent_pk):
     except:
         messages.info(request, 'Something went wrong!')
         return redirect('cus_profile')
+
+def addReview(request):
+    if request.method == 'POST':
+        review_form = ReviewForm(request.POST)
+        print(review_form.errors)
+        if review_form.is_valid():
+            try:
+                product = Product.objects.get(pk = request.POST.get('product-pk'))
+                instance = review_form.instance
+                instance.customer = request.user.customer
+                instance.product = product
+                instance.verification = 1
+                instance.save()
+                messages.success(request, 'Review added')
+                return redirect('prod_details', sent_slug = request.POST.get('slug'), sent_pk = request.POST.get('product'))
+            except:
+                messages.info(request, 'Something went wrong!')
+                return redirect('prod_details', sent_slug = request.POST.get('slug'), sent_pk = request.POST.get('product'))
+        else:
+            return HttpResponse("Form is not valid")
 
 

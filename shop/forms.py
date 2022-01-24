@@ -1,3 +1,4 @@
+from pyexpat import model
 from django.db import models
 from django.db.models.fields import files
 from django.forms import ModelForm, fields
@@ -5,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm,UserChangeForm
 from django.contrib.auth.models import User
 from django import forms
 
-from shop.models import BillingAddress, Category,Customer, Product, ProductImage
+from shop.models import BillingAddress, Category,Customer, Product, ProductImage, Review
 
 
 from PIL import Image
@@ -166,4 +167,14 @@ class AddProductImagesForm(ModelForm):
         photo.product_img_src = c_name.name
 
         return super(AddProductImagesForm, self).save(commit=True)
+
+
+#-------------------------------------------------------------------------------------------------
+
+class ReviewForm(ModelForm):
+    #product = forms.CharField(label='product', required= False, widget=forms.TextInput(attrs={'placeholder': 'product'}))
+    #customer = forms.CharField(label='customer', required= False, widget=forms.TextInput(attrs={'placeholder': 'customer'}))
+    class Meta:
+        model = Review
+        fields = ['review_body', 'review_title', 'rating', 'product', 'customer']
 
