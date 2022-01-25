@@ -33,6 +33,7 @@ urlpatterns = [
         path('set-billing-address/<str:sent_pk>/', views.customer.setBillingAddress, name= 'set_address'),
         path('flush-billing-address/<str:sent_pk>/', views.customer.deleteBillingAddress, name= 'flush_address'),
         path('add-review', views.customer.addReview, name= 'add_review'),
+        path('my-orders', views.customer.viewOrders, name= 'cus_orders'),
     ])),
     
 

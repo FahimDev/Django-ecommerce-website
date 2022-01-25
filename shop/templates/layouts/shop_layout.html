@@ -101,6 +101,34 @@
                                                         <span>Sign Up</span>
                                                     </a>
                                                 </li>
+                                                {% else %}
+                                                <li class="nav-item dropdown navigation">
+													<a href="" class="dropdown-toggle dropdown-link" data-toggle="dropdown">
+														<span>Options</span>
+														<i class="fa fa-angle-down"></i>
+														<i class="sub-dropdown1  visible-sm visible-md visible-lg"></i>
+														<i class="sub-dropdown visible-sm visible-md visible-lg"></i>
+													</a>
+													<ul class="dropdown-menu">
+                                                        {% if user.groups.first.name == 'Customer' %}
+														<li class="li-sub-mega">
+															<a tabindex="-1" href="{% url 'cus_profile' %}">Profile</a>
+														</li>
+														<li class="li-sub-mega">
+															<a tabindex="-1" href="{% url 'cus_orders' %}">Current Orders</a>
+														</li>
+                                                        {% else %}
+                                                        <li class="li-sub-mega"></li>
+                                                            <a href="{% url 'dash' %}" tabindex="-1">
+                                                                Dashboard 
+                                                            </a>
+                                                        </li>
+                                                        {% endif %}
+                                                        <li class="li-sub-mega">
+															<a tabindex="-1" href="{% url 'logout_flush' %}">Logout</a>
+														</li>
+													</ul>
+												</li>
                                                 {% endif %}
 
                                             </ul>
@@ -208,25 +236,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            {% else %}
-                                            <li class="nav-item dropdown navigation">
-                                                <a href="" type="button" class="dropdown-toggle dropdown-link btn btn-info" data-toggle="dropdown">
-                                                    <span><i class="fa fa-angle-down"></i> User</span>
-                                                    <i class="fa fa-angle-down"></i>
-                                                    <i class="sub-dropdown1  visible-sm visible-md visible-lg"></i>
-                                                    <i class="sub-dropdown visible-sm visible-md visible-lg"></i>
-                                                </a>
-                                                <ul class="dropdown-menu">
-                                                    <li class="li-sub-mega">
-                                                        <a href="{% url 'cus_profile' %}" tabindex="-1" href="#">
-                                                            Profile
-                                                        </a>
-                                                    </li>
-                                                    <li class="li-sub-mega">
-                                                        <a href="{% url 'logout_flush' %}" type="button" class="btn btn-info"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                                                    </li>
-                                                </ul>
-                                            </li>
                                             
                                             {% endif %}
 
@@ -353,10 +362,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {% else %}
-                                                <li class="nav-item">
-                                                    <a href="{% url 'logout_flush' %}" type="button" class="btn btn-info">Logout</a>
-                                                </li>
+                                                
                                                 {% endif %}
                                             </div>
                                             <div class="navMobile-menu">
@@ -374,6 +380,34 @@
                                                                 <a href="{% url 'cus_reg' %}">
                                                                     <span>Sign Up</span>
                                                                 </a>
+                                                            </li>
+                                                            {% else %}
+                                                            <li class="nav-item navigation navigation_mobile">
+                                                                <a href="" class="menu-mobile-link" data-toggle="dropdown">
+                                                                    <span>Options</span>
+                                                                    <a href="javascript:void(0)" class="arrow_sub arrow">
+                                                                        <i class="arrow-plus"></i>
+                                                                    </a>
+                                                                </a>
+                                                                <ul class="menu-mobile-container" style="display: none;">
+                                                                    {% if user.groups.first.name == 'Customer' %}
+                                                                    <li class="li-sub-mega">
+                                                                        <a tabindex="-1" href="{% url 'cus_profile' %}">Profile</a>
+                                                                    </li>
+                                                                    <li class="li-sub-mega">
+                                                                        <a tabindex="-1" href="{% url 'cus_orders' %}">Current Orders</a>
+                                                                    </li>
+                                                                    {% else %}
+                                                                    <li class="li-sub-mega"></li>
+                                                                        <a href="{% url 'dash' %}" tabindex="-1">
+                                                                            Dashboard 
+                                                                        </a>
+                                                                    </li>
+                                                                    {% endif %}
+                                                                    <li class="li-sub-mega">
+                                                                        <a tabindex="-1" href="{% url 'logout_flush' %}">Logout</a>
+                                                                    </li>
+                                                                </ul>
                                                             </li>
                                                             {% endif %}
                                                             <li class="nav-item">

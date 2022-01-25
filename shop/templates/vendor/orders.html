@@ -6,30 +6,44 @@
 
 
 <div id="right-panel" class="right-panel">
+{% for message in messages %}
+                                
+{% if 'success' in message.tags %}
 
+        <div id ="messages" class="alert alert-success" role="alert">
+            {{message}}
+        </div>
+
+{% else %}
+
+        <div id ="messages" class="alert alert-danger" role="alert">
+            {{message}}
+        </div>
+
+{% endif %}
+{% endfor %}
     <div class="content mt-3">
         <div class="animated fadeIn">
             <div class="row">
                 <div class="col-lg-2"></div>
                 <div class="col-lg-8">
                     <div class="card">
-                        <div class="card-header"><strong>List</strong><small> Product</small></div>
+                        <div class="card-header"><strong>List</strong><small> Orders</small></div>
                         <div class="card-body card-block table-responsive-md">
                             <table class="table">
                                 <thead class="thead-dark">
                                     <tr>
-                                        <th scope="col">Token ID</th>
                                         <th scope="col">Order By</th>
                                         <th scope="col">Total Quantity</th>
                                         <th scope="col">Total Price</th>
                                         <th scope="col">Ordered At</th>
                                         <th scope="col">Ordered Status</th>
+                                        <th scope="col">Change Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {% for order in orders %}
                                     <tr>
-                                        <th scope="row">{{order.id}}</th>
                                         <td>{{order.customer.user.first_name}} {{order.customer.user.last_name}}</td>
                                         <td>{{order.orderitems_set.count}}</td>
                                         <td>{{order.total}} Taka</td>
@@ -37,16 +51,26 @@
                                         <td>
                                                 {{ order.get_status_display }}
                                         </td>
+                                        <td>
+                                            <form method="POST" >
+                                                <button class="btn btn-success" type='submit' > Change </button>
+                                                {% csrf_token %}
+                                                <input type="hidden" name="order_id" value="{{order.id}}">
+                                                {{form.status}}
+                                            </form>
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="6">
+                                        <td colspan="7">
                                             <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                                                 <i class="fa fa-info"></i>
                                             </button>
                                             <div class="collapse" id="collapseExample">
                                                 <div class="card card-body">
                                                     <div class="alert alert-warning" role="alert">
+                                                        <code>Token: {{order.id}}</code> </br>
                                                         <strong>Comment:</strong>{{order.comment}} 
+                                                        
                                                     </div>
                                                     </br> <hr>
                                                     <strong>Address:</strong>{{order.billing_addr.address}}, {{order.billing_addr.city}}, {{order.billing_addr.division}} {{order.billing_addr.zip_code}} </br> <hr>

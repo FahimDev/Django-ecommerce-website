@@ -1,0 +1,104 @@
+{% extends '../layouts/shop_layout.html' %}
+{% load static %}
+{% block content %}
+
+
+<section class="heading-content">
+    <div class="heading-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="page-heading-inner heading-group">
+                    <div class="breadcrumb-group">
+                        <h1 class="hidden">Your Orders</h1>
+                        <div class="breadcrumb clearfix">
+                            <span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                                <a href="{% url 'welcome' %}" title="Fast Food" itemprop="url"><span itemprop="title"><i class="fa fa-home"></i></span></a>
+                            </span>
+                            <span class="arrow-space"></span>
+                            <span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                                <a href="{% url 'checkout' %}" title="Your Cart" itemprop="url"><span itemprop="title">Your Orders</span></a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="cart-content">
+    <div class="cart-wrapper">
+        <div class="container">
+            <div class="row">
+                <div id="shopify-section-cart-template" class="shopify-section">
+                    <div class="cart-inner">
+                        <div id="cart">
+                            <div class="cart-form">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th class="qty">Quantity</th>
+                                            <th class="total">Total</th>
+                                            <th class="total">Comment</th>
+                                            <th class="remove">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="orderContent">
+                                        {% for order in orders %}
+                                        <tr>
+                                            <td class="total title-1"><span class="money" data-currency-usd="৳ ${prod.fields.price}">{{order.orderitems_set.count}}</span></td>
+                                            <td class="total title-1"><span class="money" data-currency-usd="৳ ${prod.fields.price}">{{order.total}} (৳)</span></td>
+                                            <td class="total title-1"><span class="money" data-currency-usd="৳ ${prod.fields.price}">{{order.comment}}</span></td>
+                                            <td class="total title-1"><span class="money" data-currency-usd="৳ ${prod.fields.price}">{{order.get_status_display}}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">
+                                                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                                    <i class="fa fa-info"></i>
+                                                </button>
+                                                <div class="collapse" id="collapseExample">
+                                                    <div class="card card-body">
+                                                        <div class="alert alert-warning" role="alert">
+                                                            <code>Token: {{order.id}}</code> </br>
+                                                            <strong>Comment:</strong>{{order.comment}} 
+                                                            
+                                                        </div>
+                                                        </br> <hr>
+                                                        <strong>Address:</strong>{{order.billing_addr.address}}, {{order.billing_addr.city}}, {{order.billing_addr.division}} {{order.billing_addr.zip_code}} </br> <hr>
+                                                        {% for product in order.orderitems_set.all %}
+                                                        <dl>
+                                                            {% if product.product.productimage_set.first.product_img_src is None %}
+                                                                <img src="{% static 'default_images/no-product-image-.jpg' %}" height="60" width="60" alt="{{product.product}} image missing" title="{{product.product}}">
+                                                            {% else %}
+                                                            <img id="prodImg" src="{% static 'media/' %}{{product.product.productimage_set.first.product_img_src}}" height="60" width="60" title="{{product.product.productimage_set.first.img_title}}" alt="{{product.product.productimage_set.first.img_alt}}">
+                                                            {% endif %}
+                                                            <dt>
+                                                                {{product.product}} 
+                                                            </dt>
+                                                                <dd>
+                                                                <strong>Price:</strong> {{product.product.price}} 
+                                                                </dd>
+                                                                <dd>
+                                                                <strong>Quantity:</strong>{{product.quantity}} 
+                                                                </dd>
+                                                            
+                                                        </dl>
+                                                        {% endfor %}
+    
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

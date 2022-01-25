@@ -13,8 +13,9 @@ from django.contrib import messages
 
 from django.contrib.auth.models import User
 from django.db import transaction
-from shop.models import BillingAddress, Customer, Product
+from shop.models import BillingAddress, Customer, Order, Product
 
+from django.db.models import Sum
 
 @allowed_users(allowed_roles = ['Customer'])
 def profile(request):
@@ -110,6 +111,7 @@ def addBillingAddress(request):
                 messages.info(request, 'Something went wrong! Please Try again')
                 return redirect('cus_profile')
 
+@allowed_users(allowed_roles = ['Customer'])
 def setBillingAddress(request, sent_pk):
     try:
         with transaction.atomic():
@@ -132,6 +134,9 @@ def deleteBillingAddress(request, sent_pk):
         messages.info(request, 'Something went wrong!')
         return redirect('cus_profile')
 
+
+
+@allowed_users(allowed_roles = ['Customer'])
 def addReview(request):
     if request.method == 'POST':
         review_form = ReviewForm(request.POST)
@@ -153,3 +158,19 @@ def addReview(request):
             return HttpResponse("Form is not valid")
 
 
+
+
+@allowed_users(allowed_roles = ['Customer'])
+def viewOrders(request):
+    try:
+        orders = Order.objects.filter(customer = request.user.customer).annotate(total= Sum('orderitems__product__price'))
+        context = {
+        'title' : 'My Orders',
+        'h1_tag' : 'The New Day (TND) is a Cloud Kitchen of Fast Food & Restaurant with Multi Cuisine',
+        'class' : 'fastfood_1',  
+        'orders' : orders
+        }
+        return render(request, 'customer/view_orders.html', context)
+    except:
+        messages.info(request, 'Something went wrong!')
+        return redirect('cus_profile')

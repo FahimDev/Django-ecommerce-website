@@ -159,12 +159,12 @@ class BillingAddress(models.Model):
 
 class Order(models.Model):
 
-    ORDER_PENDING = 0
-    ORDER_ON_PROGRESS = 1
-    ORDER_ON_THE_WAY = 2
-    ORDER_DELIVERED = 3
-    ORDER_CANCEL = 4
-    ORDER_FAILED = 5
+    ORDER_PENDING = 'P'
+    ORDER_ON_PROGRESS = 'Q'
+    ORDER_ON_THE_WAY = 'R'
+    ORDER_DELIVERED = 'D'
+    ORDER_CANCEL = 'C'
+    ORDER_FAILED = 'F'
 
     ORDER_STATUS = [
         (ORDER_PENDING, 'Pending'),

@@ -110,10 +110,21 @@ def addProductPhotos(request):
 
 @allowed_users(allowed_roles = ['Merchant'])
 def viewOrder(request):
+    if request.method == 'POST':
+        form = OrderForm(request.POST)
+        print(form.errors)
+        if form.is_valid():
+            try:
+                
+                Order.objects.filter(pk = request.POST.get('order_id')).update(status = request.POST.get('status'))
+                messages.success(request, 'Order status updated.')
+            except Exception as e:
+                messages.info(request, 'Something went wrong!')
+        else:
+            return HttpResponse("Form is not valid.")
     try:
         orders = Order.objects.annotate(total= Sum('orderitems__product__price')).all()
         form = OrderForm
-        pprint(dir(orders))
         context = {
         'title' : 'View Orders',
         'orders' : orders,
