@@ -7,6 +7,9 @@ from django.core import serializers
 from django.http import JsonResponse
 import json
 
+from django.db.models import Sum,Value,F
+
+from django.core.serializers.json import DjangoJSONEncoder
 from django.db import transaction
 
 
@@ -25,20 +28,19 @@ def cartProduct(request):
             prod_id.append(int(p["id"]))
             prod_q.append(int(p["quantity"]))
 
-        item_list = Product.objects.filter(pk__in=prod_id)
-        #item_list = list(Product.objects.filter(pk__in=prod_id).annotate(related_value=F('productimage__product_img_src')))
-        #.annotate(quantity = Value(5))
-        #pprint(dir(item_list))
-
+        #item_list = Product.objects.filter(pk__in=prod_id)
+        item_list = Product.objects.annotate(related_value=F('productimage__product_img_src')).filter(pk__in=prod_id)
+       
         # for item in item_list:
-        #     item.new = item.productimage_set.first()
         #     for p in products:
         #         if p["id"] == str(item.pk):
-        #             item.updated = item.productimage_set.first()#.annotate(quantity = p["quantity"])
-        # pprint(item_list)
+        #             item.qty = p["quantity"]
 
-        data = serializers.serialize('json', item_list)
-        return HttpResponse(data, content_type="application/json")
+        # pprint(item_list.values)
+        json_items = json.dumps(list(item_list.values()),cls= DjangoJSONEncoder)
+
+        #data = serializers.serialize('json', item_list)
+        return HttpResponse(json_items, content_type="application/json")
     else:
         pass
 

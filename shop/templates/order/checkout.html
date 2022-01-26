@@ -235,22 +235,22 @@
                                                 <td class="image">
                                                     <div class="product_image">
                                                         <a href="./product.html">
-                                                            <img src="{% static 'default_images/no-product-image-.jpg' %}" alt="${prod.fields.product_title}">
+                                                            <img src="{% static 'default_images/no-product-image-.jpg' %}" alt="${prod.product_title}">
                                                         </a>
                                                     </div>
                                                 </td>
                                                 <td class="image-info">
                                                     <div class="product_name">
-                                                        <a href="product-detail/${prod.fields.slug}/${prod.pk}">
-                                                            ${prod.fields.product_title}
+                                                        <a href="product-detail/${prod.slug}/${prod.pk}">
+                                                            ${prod.product_title}
                                                         </a>
                                                         <div class="group_mobile">
-                                                            <span class="price-mobile"><span class="money" data-currency-usd="৳ ${prod.fields.price}">৳ ${prod.fields.price}</span></span>
+                                                            <span class="price-mobile"><span class="money" data-currency-usd="৳ ${prod.price}">৳ ${prod.price}</span></span>
                                                             <div class="quantity-mobile">
                                                                 <div class="quantity-wrapper">
                                                                     <div class="wrapper">
                                                                         <span class="quantity-title">Quantity</span>
-                                                                        <input type="text" size="4" value="${prod.quantity}" class="tc item-quantity-mobile">
+                                                                        <input type="text" size="4" value="${prod.qty}" class="tc item-quantity-mobile">
                                                                     </div>
                                                                     <!--End wrapper-->
                                                                 </div>
@@ -263,17 +263,17 @@
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td class="price"><span class="money" data-currency-usd="৳ ${prod.fields.price}">৳ ${prod.fields.price}</span> </td>
+                                                <td class="price"><span class="money" data-currency-usd="৳ ${prod.price}">৳ ${prod.price}</span> </td>
                                                 <td class="qty">
                                                     <div class="quantity-wrapper">
                                                         <div class="wrapper">
-                                                            <input type="text" size="4" name="updates[]" value="${prod.quantity}" class="tc item-quantity">
+                                                            <input type="text" size="4" name="updates[]" value="${prod.qty}" class="tc item-quantity">
                                                         </div>
                                                         <!--End wrapper-->
                                                     </div>
                                                     <!--End quantily wrapper-->
                                                 </td>
-                                                <td class="total title-1"><span class="money" data-currency-usd="৳ ${prod.fields.price}">৳ ${prod.fields.price * prod.quantity}</span></td>
+                                                <td class="total title-1"><span class="money" data-currency-usd="৳ ${prod.price}">৳ ${prod.price * prod.qty}</span></td>
                                                 <td class="remove"><a href="#" id="${prod.pk}" class="cart cart-item-remove"><span class="lnr lnr-trash"></span></a></td>
                                             </tr>
                                     `

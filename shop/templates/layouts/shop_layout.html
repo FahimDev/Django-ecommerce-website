@@ -663,31 +663,33 @@
                 console.log(res)
 
                 let html = '';
+                let total = 0;
 //${prod.id}
                 res.forEach(prod => {
                     html += `
                     <div id="itembody" class="group_cart_item">
                         <div class="cart-left"><a class="cart-image" href=""><img src="{% static 'default_images/no-product-image-.jpg' %}" alt="" title=""></a></div>
                             <div class="cart-right">
-                                <div class="cart-title"><a href="product-detail/${prod.fields.slug}/${prod.pk}">${prod.fields.product_title}</a></div>
-                                <div class="cart-price"><span class="money" data-currency-bdt="৳${prod.fields.price}" data-currency="bdt">৳${prod.fields.price}</span></div>
+                                <div class="cart-title"><a href="product-detail/${prod.slug}/${prod.id}">${prod.product_title}</a></div>
+                                <div class="cart-price"><span class="money" data-currency-bdt="৳${prod.price}" data-currency="bdt">৳${prod.price}</span></div>
                                 <div class="cart-qty">
-                                    <span class="quantity">qty: ${prod.fields.quantity}</span>
-                                    <a title="add to wishlist" id="${prod.pk}" class="wishlist-extra-crispy-1" onclick="" href="#">
+                                    <span class="quantity">qty: ${prod.quantity}</span>
+                                    <a title="add to wishlist" id="${prod.id}" class="wishlist-extra-crispy-1" onclick="" href="#">
                                         <span class="cs-icon icon-heart"></span>
                                     </a>
-                                    <a class="cart-close cart-item-remove" id="${prod.pk}" title="remove"">
+                                    <a class="cart-close cart-item-remove" id="${prod.id}" title="remove"">
                                         <span class="cs-icon icon-bin"></span>
                                     </a>
                                     </div>
                         </div>
                     </div>
                         `
+                        total += prod.quantity*prod.price 
                 })
                 //console.log(html);
                 $('.items').html(html);
                 $('.subtotal').html(
-                    `<span>Subtotal:</span><span class="cart-total-right money" data-currency-bdt="${res.total}" data-currency="bdt">৳${res.total}</span>`
+                    `<span>Subtotal:</span><span class="cart-total-right money" data-currency-bdt="${total}" data-currency="bdt">৳${total}</span>`
                 );
     //----------------------------------------------------------------------------------       
                 // if(res == "success"){
