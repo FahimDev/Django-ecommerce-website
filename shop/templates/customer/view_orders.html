@@ -52,10 +52,10 @@
                                         </tr>
                                         <tr>
                                             <td colspan="4">
-                                                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseOrder{{order.id}}" aria-expanded="false" aria-controls="collapseOrder{{order.id}}">
                                                     <i class="fa fa-info"></i>
                                                 </button>
-                                                <div class="collapse" id="collapseExample">
+                                                <div class="collapse" id="collapseOrder{{order.id}}">
                                                     <div class="card card-body">
                                                         <div class="alert alert-warning" role="alert">
                                                             <code>Token: {{order.id}}</code> </br>
@@ -91,6 +91,28 @@
                                         {% endfor %}
                                     </tbody>
                                 </table>
+                                <div class="collection-bottom-toolbar">
+                                    <div class="product-counter col-sm-6">
+                                        <strong>Page {{ orders.number }} of {{ orders.paginator.num_pages }}.</strong>  (Total {{orders.paginator.count}} Orders)
+                                    </div>
+                                    <div class="product-pagination col-sm-6">
+                                        <div class="pagination_group">
+                                            <ul class="pagination pagination-collection">
+                                                {% if orders.has_previous %}
+                                                <li class="prev"><a class="disabled" href="?page={{ orders.previous_page_number }}">Prev</a></li>
+                                                <li class="active"><a href="?page=1">1</a></li>
+                                                {% endif %}
+                                                
+                                                
+                                                {% if orders.has_next %}
+                                                <li class="next"><a href="?page={{ orders.next_page_number }}">Next</a></li>
+                                                <li class="last"><a href="?page={{ orders.paginator.num_pages }}">Last &raquo;</a></li>
+
+                                                {% endif %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

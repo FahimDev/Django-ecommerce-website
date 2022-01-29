@@ -15,6 +15,8 @@ from django.contrib.auth.models import User
 from django.db import transaction
 from shop.models import BillingAddress, Customer, Order, Product
 
+from django.core.paginator import Paginator
+
 from django.db.models import Sum
 
 @allowed_users(allowed_roles = ['Customer'])
@@ -159,16 +161,23 @@ def addReview(request):
 
 
 
-
+from pprint import pprint 
 @allowed_users(allowed_roles = ['Customer'])
 def viewOrders(request):
     try:
-        orders = Order.objects.filter(customer = request.user.customer).annotate(total= Sum('orderitems__product__price'))
+        allOrders = Paginator(Order.objects.filter(customer = request.user.customer).annotate(total= Sum('orderitems__product__price')).order_by('-id'), 2)
+        page_number  = request.GET.get('page')
+
+        orders = allOrders.get_page(page_number )
+
+        pprint(dir(orders.object_list))
+        pprint(orders.object_list.values())
+
         context = {
         'title' : 'My Orders',
         'h1_tag' : 'The New Day (TND) is a Cloud Kitchen of Fast Food & Restaurant with Multi Cuisine',
         'class' : 'fastfood_1',  
-        'orders' : orders
+        'orders' : orders,
         }
         return render(request, 'customer/view_orders.html', context)
     except:

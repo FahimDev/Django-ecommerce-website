@@ -10,6 +10,7 @@ from django.db import transaction
 from django.contrib.auth import authenticate,login, logout
 from shop.decorator import allowed_users,allowed_user #Custom DesignPattern
 
+from django.core.paginator import Paginator
 
 from django.db.models import Sum
 
@@ -123,7 +124,12 @@ def viewOrder(request):
         else:
             return HttpResponse("Form is not valid.")
     try:
-        orders = Order.objects.annotate(total= Sum('orderitems__product__price')).all()
+
+        allOrders = Paginator(Order.objects.annotate(total= Sum('orderitems__product__price')).all().order_by('-id'),2)
+
+        page_number = request.GET.get('page')
+        orders = allOrders.get_page(page_number)
+
         form = OrderForm
         context = {
         'title' : 'View Orders',
@@ -131,6 +137,7 @@ def viewOrder(request):
         'form' : form
         }
         return render(request, 'vendor/orders.html', context)
+
     except Exception as e:
         print(e)
         return HttpResponse("Data retrive problem!")

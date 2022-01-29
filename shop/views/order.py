@@ -25,6 +25,8 @@ def cartProduct(request):
         prod_id = []
         prod_q = []
         for p in products:
+            if len(p["id"]) < 1:
+                continue
             prod_id.append(int(p["id"]))
             prod_q.append(int(p["quantity"]))
 
@@ -42,7 +44,8 @@ def cartProduct(request):
         #data = serializers.serialize('json', item_list)
         return HttpResponse(json_items, content_type="application/json")
     else:
-        pass
+        print("Data retrive problem!")
+        return HttpResponse("Data retrive problem!")
 
 def checkout(request):
 
@@ -71,6 +74,8 @@ def checkout(request):
 
                     
                     for p in products:
+                        if len(p["id"]) < 1:
+                            continue
                         items = OrderItems()
                         prod = Product.objects.get(pk=p["id"])
                         items.order = order
