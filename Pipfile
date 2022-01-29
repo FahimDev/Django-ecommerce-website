@@ -9,8 +9,8 @@ pillow = "*"
 mysqlclient = "*"
 mysql-connector-python = "*"
 pymysql = "*"
-django-image-cropping = "*"
 easy-thumbnails = "*"
+django-debug-toolbar = "*"
 
 [dev-packages]
 
