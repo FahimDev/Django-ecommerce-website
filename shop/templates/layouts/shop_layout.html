@@ -634,6 +634,7 @@
             function deleteFromCart(id) {
                 let products = JSON.parse(localStorage.getItem("products"));
                 let currentProds = products.filter(item => {
+
                     if (id != item.id) return true;
                     else {
                         setCount(-item.quantity)
@@ -664,11 +665,17 @@
 
                 let html = '';
                 let total = 0;
+                let product_image = null;
 //${prod.id}
                 res.forEach(prod => {
+                    if(prod.image == null){
+                        product_image = 'default_images/no-product-image-.jpg';
+                    }else{
+                        product_image = 'media/'+prod.image;
+                    }
                     html += `
                     <div id="itembody" class="group_cart_item">
-                        <div class="cart-left"><a class="cart-image" href=""><img src="{% static 'default_images/no-product-image-.jpg' %}" alt="" title=""></a></div>
+                        <div class="cart-left"><a class="cart-image" href=""><img src="{% static '' %}${product_image}" alt="" title=""></a></div>
                             <div class="cart-right">
                                 <div class="cart-title"><a href="product-detail/${prod.slug}/${prod.id}">${prod.product_title}</a></div>
                                 <div class="cart-price"><span class="money" data-currency-bdt="৳${prod.price}" data-currency="bdt">৳${prod.price}</span></div>
@@ -762,7 +769,7 @@
                         let products = JSON.parse(localStorage.getItem("products"));  // Converted to object                      
                         let changed = false;    // pore
                         products.some(prod => {         //Check Quantity with ID (some is like Break)
-                            if (prod.pk == prodID) {
+                            if (prod.id == prodID) {
                                 prod.quantity = parseInt(prod.quantity) + 1;
                                 changed = true;
                             }
@@ -796,7 +803,9 @@
             })
 
             $(document).on("click", ".cart-item-remove", (e) => {
+
                 deleteFromCart(e.currentTarget.id);
+
             })
             $(".cart-clear").click(() => {              
                 $("#cart-infos").hide(); 

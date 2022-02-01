@@ -12,6 +12,8 @@ from django.db.models import Sum,Value,F
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db import transaction
 
+from django.forms import model_to_dict
+
 
 def cartProduct(request): 
     
@@ -22,26 +24,36 @@ def cartProduct(request):
         
         # the result is a Python dictionary:
         products = json.loads(products)
+
         prod_id = []
         prod_q = []
         for p in products:
             if len(p["id"]) < 1:
                 continue
             prod_id.append(int(p["id"]))
-            prod_q.append(int(p["quantity"]))
+            prod_q.append(int(p["quantity"]))  
 
-        #item_list = Product.objects.filter(pk__in=prod_id)
-        item_list = Product.objects.annotate(related_value=F('productimage__product_img_src')).filter(pk__in=prod_id)
-       
-        # for item in item_list:
-        #     for p in products:
-        #         if p["id"] == str(item.pk):
-        #             item.qty = p["quantity"]
+        item_list = Product.objects.filter(pk__in=prod_id).values()
 
-        # pprint(item_list.values)
-        json_items = json.dumps(list(item_list.values()),cls= DjangoJSONEncoder)
+        cartItem = { }
+        cart = []
+        for item in list(item_list):
+            for p in products:
+                if p["id"] == str(item['id']):
+                    id = item['id']
+                    for index in item.keys():
+                        cartItem[index] = item[index]
 
-        #data = serializers.serialize('json', item_list)
+                    cartItem['quantity'] = p["quantity"]
+                    cartItem['image'] = ProductImage.objects.filter(product = Product.objects.get(pk = id)).values_list('product_img_src', flat=True).first()
+
+                    temp = cartItem.copy()
+                    cart.append(temp)
+                
+                cartItem.clear()
+
+        json_items = json.dumps(cart,cls= DjangoJSONEncoder)
+
         return HttpResponse(json_items, content_type="application/json")
     else:
         print("Data retrive problem!")
