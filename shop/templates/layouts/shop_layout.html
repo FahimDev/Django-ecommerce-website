@@ -626,73 +626,92 @@
                         count += value;
                     }
                     else count = 0;
-                }                
+                }  
                 localStorage.setItem("count", count)                             
                 $('.cart-count').html(count);
             }
 
             function deleteFromCart(id) {
                 let products = JSON.parse(localStorage.getItem("products"));
+
                 let currentProds = products.filter(item => {
 
-                    if (id != item.id) return true;
-                    else {
-                        setCount(-item.quantity)
-                        return false;
+                    if (id != item.id) {
+                        return true;
+                    }
+                    else {               
+                        item.quantity += -1
+
+                        if(item.quantity == 0){
+                            setCount(-1)
+                            return false;
+                        }
+
+                        setCount(-1)
+                        return true;
                     }
                 });
-                //console.log(currentProds)
                 localStorage.setItem("products", JSON.stringify(currentProds));
                 updateCart();
             }
 
             let csrf = "{{ csrf_token }}";
             async function updateCart() {
-                
-                let urls = {
-                    getItems: "{% url 'cart_item' %}",
-                }
+
                 let products = localStorage.getItem("products")
                 
-                let formData = new FormData();
-                
-                formData.append("data", products);
-
-                let res = await fetchPost(urls.getItems, formData);
-
-                res = JSON.parse(res)
-                console.log(res)
-
                 let html = '';
                 let total = 0;
-                let product_image = null;
-//${prod.id}
-                res.forEach(prod => {
+                
+
+                if(products.length <= 2){
+                    html += '<strong> Cart Empty! </strong>'
+                }else{
+
+                    let urls = {
+                    getItems: "{% url 'cart_item' %}",
+                    }
+
+                    let formData = new FormData();
+                    
+                    formData.append("data", products);
+
+                    let res = await fetchPost(urls.getItems, formData);
+
+                    res = JSON.parse(res)
+
+
+                    let product_image = null;
+
+                    res.forEach(prod => {
                     if(prod.image == null){
                         product_image = 'default_images/no-product-image-.jpg';
                     }else{
                         product_image = 'media/'+prod.image;
                     }
-                    html += `
-                    <div id="itembody" class="group_cart_item">
-                        <div class="cart-left"><a class="cart-image" href=""><img src="{% static '' %}${product_image}" alt="" title=""></a></div>
-                            <div class="cart-right">
-                                <div class="cart-title"><a href="product-detail/${prod.slug}/${prod.id}">${prod.product_title}</a></div>
-                                <div class="cart-price"><span class="money" data-currency-bdt="৳${prod.price}" data-currency="bdt">৳${prod.price}</span></div>
-                                <div class="cart-qty">
-                                    <span class="quantity">qty: ${prod.quantity}</span>
-                                    <a title="add to wishlist" id="${prod.id}" class="wishlist-extra-crispy-1" onclick="" href="#">
-                                        <span class="cs-icon icon-heart"></span>
-                                    </a>
-                                    <a class="cart-close cart-item-remove" id="${prod.id}" title="remove"">
-                                        <span class="cs-icon icon-bin"></span>
-                                    </a>
-                                    </div>
+                        html += `
+                        <div id="itembody" class="group_cart_item">
+                            <div class="cart-left"><a class="cart-image" href=""><img src="{% static '' %}${product_image}" alt="" title=""></a></div>
+                                <div class="cart-right">
+                                    <div class="cart-title"><a href="product-detail/${prod.slug}/${prod.id}">${prod.product_title}</a></div>
+                                    <div class="cart-price"><span class="money" data-currency-bdt="৳${prod.price}" data-currency="bdt">৳${prod.price}</span></div>
+                                    <div class="cart-qty">
+                                        <span class="quantity">qty: ${prod.quantity}</span>
+                                        <a title="add to wishlist" id="${prod.id}" class="wishlist-extra-crispy-1" onclick="" href="#">
+                                            <span class="cs-icon icon-heart"></span>
+                                        </a>
+                                        <a class="cart-close cart-item-remove" id="${prod.id}" title="remove"">
+                                            <span class="cs-icon icon-bin"></span>
+                                        </a>
+                                        </div>
+                            </div>
                         </div>
-                    </div>
-                        `
+                            `
                         total += prod.quantity*prod.price 
-                })
+                    })
+                }
+
+
                 //console.log(html);
                 $('.items').html(html);
                 $('.subtotal').html(
